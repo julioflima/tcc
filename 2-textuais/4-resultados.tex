@@ -1,71 +1,389 @@
-\chapter{Resultados}
-\label{chap:resultados}
+\chapter{Proposta do Sistema}
+\label{cap:resultados}
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+Este capítulo apresenta a proposta detalhada de um mercado financeiro poupador baseado em blockchain como alternativa ao sistema previdenciário atual. A proposta é estruturada em cinco componentes principais: arquitetura geral, mecanismo de contribuição e investimento, sistema de governança, regras operacionais e mecanismos de herança.
 
-\section{Resultados do Experimento A}
-\label{sec:resultados-do-experimento-a}
+\section{Visão Geral da Proposta}
 
-Procure deixar as figuras dos resultados o maior possível preenchendo a largura do texto do documento que possui $16~cm$.
+O sistema proposto visa criar um mercado financeiro poupador que substitua gradualmente o INSS e o FGTS, permitindo que os trabalhadores brasileiros acumulem patrimônio próprio através de investimentos em empresas nacionais. A proposta combina elementos do modelo australiano de Superannuation com as capacidades da tecnologia blockchain para criar um sistema transparente, seguro e com governança compartilhada.
 
-\begin{figure}[h!]
-        \captionsetup{width=16cm}
-		\Caption{\label{fig:tensaoimpedanciahumana} Gráfico de tensão considerando a impedância humana}
-		%\centering
-		\UFCfig{}{
-			\fbox{\includegraphics[width=16cm]{figuras/tensaoimpedanciahumana}}
-		}{
-			\Fonte{elaborado pelo autor (2016).}
-		}	
+Os princípios fundamentais do sistema são:
+\begin{alineas}
+    \item \textbf{Propriedade individual}: Os recursos pertencem ao trabalhador, não ao Estado;
+    \item \textbf{Investimento produtivo}: Os recursos são direcionados a empresas reais, gerando retorno econômico;
+    \item \textbf{Governança compartilhada}: Controle dividido entre trabalhador e governo, evitando uso indevido;
+    \item \textbf{Transparência total}: Todas as transações são públicas e auditáveis;
+    \item \textbf{Automatização}: Regras executadas por smart contracts, reduzindo burocracia.
+\end{alineas}
+
+\section{Arquitetura do Sistema}
+
+A arquitetura proposta é composta por três camadas principais, conforme ilustrado na Figura \ref{fig:arquitetura}.
+
+\begin{figure}[htb]
+    \centering
+    \caption{Arquitetura do Sistema Proposto}
+    \label{fig:arquitetura}
+    \begin{tikzpicture}[
+        node distance=1.5cm,
+        box/.style={rectangle, draw, minimum width=4cm, minimum height=1cm, align=center},
+        arrow/.style={->, >=stealth, thick}
+    ]
+        % Camada de Usuário
+        \node[box, fill=blue!20] (user) {Camada de Usuário\\(Interface Web/Mobile)};
+        
+        % Camada de Aplicação
+        \node[box, fill=green!20, below=of user] (app) {Camada de Aplicação\\(Smart Contracts)};
+        
+        % Camada de Blockchain
+        \node[box, fill=orange!20, below=of app] (chain) {Camada de Blockchain\\(Rede Distribuída)};
+        
+        % Conexões
+        \draw[arrow] (user) -- (app);
+        \draw[arrow] (app) -- (chain);
+        
+        % Atores externos
+        \node[box, fill=gray!20, right=2cm of user] (trab) {Trabalhador};
+        \node[box, fill=gray!20, right=2cm of app] (gov) {Governo};
+        \node[box, fill=gray!20, right=2cm of chain] (emp) {Empresas};
+        
+        \draw[arrow] (trab) -- (user);
+        \draw[arrow] (gov) -- (app);
+        \draw[arrow] (emp) -- (chain);
+    \end{tikzpicture}
+    \fonte{Elaborado pelo autor (2026).}
 \end{figure}
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+\subsection{Camada de Blockchain}
 
-\begin{figure}[h!]
-	\captionsetup{width=16cm}
-	\Caption{\label{fig-grafico-1}Produção anual das dissertações de mestrado e teses de doutorado entre os anos de 1990 e 2008}		
-	\IBGEtab{}{
-		\fbox{\includegraphics[width=16cm]{figuras/figura-3}}
-	}{
-	\Fonte{elaborado pelo autor (2016).}
-}
+A camada base utiliza uma blockchain permissionada, operada por nós validadores distribuídos entre diferentes instituições (Banco Central, órgãos reguladores, grandes instituições financeiras). A escolha por blockchain permissionada, em vez de pública, justifica-se por:
+
+\begin{alineas}
+    \item Maior controle sobre quem pode validar transações;
+    \item Melhor desempenho em termos de transações por segundo;
+    \item Conformidade regulatória mais facilitada;
+    \item Menor consumo energético comparado a redes de prova de trabalho.
+\end{alineas}
+
+\subsection{Camada de Smart Contracts}
+
+Esta camada implementa toda a lógica de negócio do sistema através de smart contracts, incluindo:
+
+\begin{alineas}
+    \item \textbf{Contrato de Contribuição}: Recebe os depósitos mensais e registra na conta do trabalhador;
+    \item \textbf{Contrato de Investimento}: Gerencia as ordens de compra e venda de ativos;
+    \item \textbf{Contrato Multi-sig}: Implementa a governança compartilhada;
+    \item \textbf{Contrato de Herança}: Gerencia a transferência de ativos em caso de falecimento;
+    \item \textbf{Contrato de Compliance}: Verifica o cumprimento das regras operacionais.
+\end{alineas}
+
+\subsection{Camada de Usuário}
+
+A interface de usuário consiste em aplicativo móvel e plataforma web que permitem ao trabalhador:
+
+\begin{alineas}
+    \item Visualizar seu saldo e histórico de contribuições;
+    \item Consultar sua carteira de investimentos;
+    \item Solicitar a operação mensal permitida;
+    \item Acompanhar a rentabilidade de seus investimentos;
+    \item Gerenciar beneficiários para herança.
+\end{alineas}
+
+\section{Mecanismo de Contribuição e Investimento}
+
+\subsection{Fluxo de Contribuição}
+
+O fluxo de contribuição proposto mantém a estrutura atual de desconto em folha, porém com destino diferente:
+
+\begin{enumerate}
+    \item O empregador desconta o percentual do salário do trabalhador (similar ao atual);
+    \item O valor é convertido em tokens estáveis (stablecoins pareadas ao Real);
+    \item Os tokens são depositados automaticamente na carteira multi-sig do trabalhador;
+    \item O smart contract registra a transação e atualiza o saldo disponível para investimento.
+\end{enumerate}
+
+\subsection{Universo de Investimentos}
+
+Os recursos podem ser investidos exclusivamente em ativos de empresas brasileiras, incluindo:
+
+\begin{alineas}
+    \item Ações de empresas listadas na B3;
+    \item Debêntures de empresas brasileiras;
+    \item Fundos de investimento em infraestrutura (FI-Infra);
+    \item Fundos imobiliários (FIIs);
+    \item Títulos públicos federais (como opção conservadora).
+\end{alineas}
+
+A restrição a ativos nacionais tem como objetivo:
+\begin{alineas}
+    \item Fomentar o mercado de capitais brasileiro;
+    \item Financiar o crescimento de empresas nacionais;
+    \item Evitar a evasão de divisas;
+    \item Criar um ciclo virtuoso de poupança e investimento interno.
+\end{alineas}
+
+\subsection{Tokenização de Ativos}
+
+Os ativos elegíveis seriam tokenizados, ou seja, representados por tokens na blockchain. Cada token representa uma fração do ativo subjacente, permitindo:
+
+\begin{alineas}
+    \item Investimentos fracionados, acessíveis a pequenos poupadores;
+    \item Liquidação instantânea de operações;
+    \item Registro imutável de propriedade;
+    \item Auditabilidade completa das transações.
+\end{alineas}
+
+\section{Sistema de Governança Multi-sig}
+
+O elemento central da proposta é o sistema de governança baseado em carteiras multi-assinatura, que implementa o controle compartilhado entre trabalhador e governo.
+
+\subsection{Estrutura das Chaves}
+
+Cada carteira previdenciária opera com um esquema 2-de-3, onde três chaves são necessárias, mas apenas duas são suficientes para autorizar transações:
+
+\begin{alineas}
+    \item \textbf{Chave do Trabalhador}: Controlada exclusivamente pelo titular da conta, armazenada em dispositivo pessoal seguro;
+    \item \textbf{Chave do Governo}: Controlada por órgão regulador (ex: Banco Central ou nova autarquia), utilizada para co-assinar transações válidas;
+    \item \textbf{Chave de Recuperação}: Armazenada em cofre seguro, para uso apenas em casos de perda de uma das outras chaves.
+\end{alineas}
+
+\subsection{Fluxo de Autorização}
+
+Para realizar qualquer movimentação, o seguinte fluxo é executado:
+
+\begin{enumerate}
+    \item O trabalhador inicia a solicitação através do aplicativo, assinando com sua chave;
+    \item O smart contract verifica se a operação está dentro das regras permitidas;
+    \item Se válida, a solicitação é encaminhada ao sistema governamental;
+    \item O sistema governamental co-assina automaticamente se todas as regras forem cumpridas;
+    \item A transação é executada e registrada na blockchain.
+\end{enumerate}
+
+Este modelo garante que:
+\begin{alineas}
+    \item O governo sozinho não pode mover os recursos do trabalhador;
+    \item O trabalhador sozinho não pode violar as regras do sistema;
+    \item Há transparência total sobre todas as operações realizadas.
+\end{alineas}
+
+\subsection{Diagrama do Sistema Multi-sig}
+
+A Figura \ref{fig:multisig} ilustra o funcionamento do sistema de governança multi-sig.
+
+\begin{figure}[htb]
+    \centering
+    \caption{Sistema de Governança Multi-sig}
+    \label{fig:multisig}
+    \begin{tikzpicture}[
+        node distance=2cm,
+        key/.style={circle, draw, minimum size=1.5cm, align=center, fill=yellow!30},
+        wallet/.style={rectangle, draw, minimum width=3cm, minimum height=2cm, align=center, fill=green!20},
+        arrow/.style={->, >=stealth, thick}
+    ]
+        % Carteira central
+        \node[wallet] (wallet) {Carteira\\Multi-sig\\(2 de 3)};
+        
+        % Chaves
+        \node[key, above left=of wallet] (key1) {Chave\\Trabalhador};
+        \node[key, above right=of wallet] (key2) {Chave\\Governo};
+        \node[key, below=of wallet] (key3) {Chave\\Recuperação};
+        
+        % Conexões
+        \draw[arrow] (key1) -- (wallet);
+        \draw[arrow] (key2) -- (wallet);
+        \draw[arrow, dashed] (key3) -- (wallet);
+        
+        % Legenda
+        \node[right=3cm of wallet, align=left] {
+            Linha contínua: uso regular\\
+            Linha tracejada: uso emergencial
+        };
+    \end{tikzpicture}
+    \fonte{Elaborado pelo autor (2026).}
 \end{figure}
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+\section{Regras Operacionais}
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+Para garantir que o sistema cumpra seu objetivo previdenciário, são impostas regras operacionais rígidas, implementadas diretamente nos smart contracts.
 
-\section{Resultados do Experimento B}
-\label{sec:resultados-do-experimento-b}
+\subsection{Restrição de Operações}
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto ..
+Cada trabalhador pode realizar no máximo uma operação de compra ou venda por mês. Esta restrição visa:
 
-\begin{table}[h!]	
-	%\centering
-	\captionsetup{width=11.3cm}%ATENÇÃO: Ajuste a largura do título
-	\Caption{\label{tab:notas} Notas dos participantes nas avaliações A, B e C}	
-	\IBGEtab{}{
-		\begin{tabular}{crrr}
-			\toprule
-			Identificação dos participantes & Avaliação A & Avaliação B &                        Avaliação C \\
-			\midrule \midrule
-			Participante 1 & 7 & 9 & 10\\
-			Participante 2 & 8 & 2 & 1\\
-			Participante 3 & 5 & 10 & 6 \\
-			Participante 4 & 3 & 1 & 4\\
-			Participante 5 & 2 & 4 & 1\\
-			Participante 6 & 0 & 7 & 2\\
-			\bottomrule
-		\end{tabular}
-	}{
-	\Fonte{elaborado pelo autor (2016).}
-}
+\begin{alineas}
+    \item Evitar comportamento especulativo de curto prazo;
+    \item Incentivar visão de longo prazo nos investimentos;
+    \item Reduzir custos operacionais e de processamento;
+    \item Simplificar a gestão da carteira pelo trabalhador médio.
+\end{alineas}
+
+\subsection{Bloqueio de Liquidação}
+
+Os recursos são bloqueados até a aposentadoria, com exceções limitadas:
+
+\begin{alineas}
+    \item Aposentadoria por idade ou tempo de contribuição;
+    \item Invalidez permanente comprovada;
+    \item Doenças graves especificadas em lei;
+    \item Falecimento (transferência para herdeiros).
+\end{alineas}
+
+Diferentemente do FGTS atual, não há saque para compra de imóvel ou demissão, reforçando o caráter estritamente previdenciário dos recursos.
+
+\subsection{Limites de Concentração}
+
+Para proteção do trabalhador, são impostos limites de diversificação:
+
+\begin{alineas}
+    \item Máximo de 10\% do patrimônio em uma única empresa;
+    \item Máximo de 30\% em um único setor da economia;
+    \item Mínimo de 20\% em ativos de baixo risco (títulos públicos ou equivalentes).
+\end{alineas}
+
+\subsection{Tabela de Regras Operacionais}
+
+A Tabela \ref{tab:regras} resume as principais regras operacionais do sistema.
+
+\begin{table}[htb]
+    \centering
+    \caption{Resumo das Regras Operacionais}
+    \label{tab:regras}
+    \begin{tabular}{p{5cm}p{8cm}}
+        \toprule
+        \textbf{Regra} & \textbf{Descrição} \\
+        \midrule
+        Operações mensais & Máximo 1 operação de compra/venda por mês \\
+        Ativos elegíveis & Apenas empresas/ativos brasileiros \\
+        Concentração máxima & 10\% por empresa, 30\% por setor \\
+        Reserva obrigatória & Mínimo 20\% em baixo risco \\
+        Saque & Apenas na aposentadoria ou exceções legais \\
+        Governança & Multi-sig 2-de-3 (trabalhador + governo) \\
+        \bottomrule
+    \end{tabular}
+    \fonte{Elaborado pelo autor (2026).}
 \end{table}
 
- Texto texto Referenciando a \autoref{tab:notas}  texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+\section{Mecanismo de Herança}
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+Um diferencial importante do sistema proposto é o tratamento da herança, que difere fundamentalmente do INSS atual.
 
-Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+\subsection{Herança Total do Patrimônio}
 
-Texto texto  Referenciando a \autoref{tab:notas}  texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+No sistema proposto, em caso de falecimento do titular, 100\% do patrimônio acumulado é transferido para os herdeiros designados. Isso contrasta com o sistema atual, onde o trabalhador que falece antes de se aposentar perde grande parte de suas contribuições.
+
+O trabalhador pode, a qualquer momento, cadastrar seus beneficiários no sistema, especificando:
+
+\begin{alineas}
+    \item Nome e identificação dos beneficiários;
+    \item Percentual destinado a cada beneficiário;
+    \item Condições especiais (ex: liberação gradual para filhos menores).
+\end{alineas}
+
+\subsection{Processo de Transferência}
+
+Em caso de falecimento:
+
+\begin{enumerate}
+    \item A família apresenta certidão de óbito ao sistema;
+    \item O smart contract verifica a autenticidade do documento (integração com cartórios digitais);
+    \item O patrimônio é transferido para novas carteiras multi-sig dos herdeiros;
+    \item Os herdeiros assumem o controle, mantendo as mesmas regras operacionais;
+    \item Herdeiros podem optar por liquidar gradualmente ou manter os investimentos.
+\end{enumerate}
+
+\subsection{Proteção contra Fraudes}
+
+Para evitar fraudes, o sistema implementa:
+
+\begin{alineas}
+    \item Período de carência de 30 dias antes da transferência;
+    \item Verificação cruzada com bases de óbito oficiais;
+    \item Notificação a todos os beneficiários cadastrados;
+    \item Possibilidade de contestação durante o período de carência.
+\end{alineas}
+
+\section{Transição do Sistema Atual}
+
+A implementação do sistema proposto requer um período de transição cuidadosamente planejado.
+
+\subsection{Estratégia de Transição Gradual}
+
+Propõe-se uma transição de 30 anos:
+
+\begin{alineas}
+    \item \textbf{Anos 1-5}: Sistema piloto voluntário para novos entrantes no mercado de trabalho;
+    \item \textbf{Anos 6-15}: Obrigatoriedade para novos trabalhadores, opcional para demais;
+    \item \textbf{Anos 16-30}: Migração gradual dos trabalhadores em atividade que optarem pelo novo sistema;
+    \item \textbf{Após ano 30}: INSS mantido apenas para aposentados atuais e trabalhadores que não migraram.
+\end{alineas}
+
+\subsection{Financiamento da Transição}
+
+O principal desafio da transição é o financiamento dos benefícios atuais enquanto as contribuições são direcionadas ao novo sistema. Propõe-se:
+
+\begin{alineas}
+    \item Utilização de receitas do patrimônio público (royalties, dividendos de estatais);
+    \item Redução gradual do déficit primário através de reformas administrativas;
+    \item Emissão de títulos de longo prazo específicos para a transição previdenciária.
+\end{alineas}
+
+\section{Benefícios Esperados}
+
+A implementação do sistema proposto traria benefícios em múltiplas dimensões:
+
+\subsection{Para o Trabalhador}
+
+\begin{alineas}
+    \item Propriedade real sobre os recursos poupados;
+    \item Rentabilidade potencialmente superior à inflação;
+    \item Herança garantida para a família;
+    \item Transparência total sobre aplicações e rendimentos.
+\end{alineas}
+
+\subsection{Para a Economia}
+
+\begin{alineas}
+    \item Aumento da taxa de poupança nacional;
+    \item Desenvolvimento do mercado de capitais;
+    \item Redução do custo de capital para empresas;
+    \item Financiamento de investimentos produtivos.
+\end{alineas}
+
+\subsection{Para o Estado}
+
+\begin{alineas}
+    \item Eliminação gradual do déficit previdenciário;
+    \item Liberação de recursos para investimentos públicos;
+    \item Redução da carga tributária potencial no longo prazo;
+    \item Modernização da infraestrutura financeira.
+\end{alineas}
+
+\section{Desafios e Riscos}
+
+A proposta também apresenta desafios significativos:
+
+\subsection{Desafios Técnicos}
+
+\begin{alineas}
+    \item Escalabilidade da blockchain para milhões de usuários;
+    \item Segurança cibernética e proteção das chaves privadas;
+    \item Integração com sistemas legados e bases governamentais;
+    \item Educação financeira da população.
+\end{alineas}
+
+\subsection{Desafios Políticos}
+
+\begin{alineas}
+    \item Resistência de grupos beneficiados pelo sistema atual;
+    \item Necessidade de reforma constitucional;
+    \item Coordenação entre múltiplos órgãos governamentais;
+    \item Comunicação efetiva com a população.
+\end{alineas}
+
+\subsection{Riscos de Mercado}
+
+\begin{alineas}
+    \item Exposição dos trabalhadores a volatilidade do mercado;
+    \item Possibilidade de perdas em períodos de crise;
+    \item Necessidade de mecanismos de proteção para trabalhadores próximos à aposentadoria.
+\end{alineas}

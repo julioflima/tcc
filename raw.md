@@ -58,6 +58,7 @@ Um sistema multidisciplinar garantiria que o indivíduo, apenas com a autorizaç
 
 1. Fizesse **1 trade por mês**
 2. **Não liquidasse os papéis** antes da data da aposentadoria
+3. Houvesse compatilhamento de chaves e responsabilidades entre indivíduo e governo
 
 Após a data de vencimento da aposentadoria, a chave do governo tornaria-se desnecessária e o indivíduo estaria livre para acesso total aos bens.
 

@@ -1,155 +1,105 @@
-\chapter{Título do segundo capítulo}
+\chapter{Fundamentação Teórica}
 \label{cap:fundamentacao-teorica}
 
-Alguns autores preferem fazer uma ``fundamentação teórica'' no segundo capítulo, outros, preferem fazer uma ``revisão da literatura''. Entretanto, isto é particular de cada trabalho e o autor deve escolher o título mais adequado para o capítulo. Consultar o orientador é importante para determinar o título apropriado.
+Este capítulo apresenta os fundamentos teóricos necessários para a compreensão da proposta deste trabalho. Inicialmente, são discutidas as duas principais correntes econômicas que influenciam o debate sobre política econômica brasileira. Em seguida, analisa-se o sistema previdenciário brasileiro atual. Posteriormente, apresenta-se o modelo australiano de aposentadoria como referência internacional. Por fim, introduz-se a tecnologia blockchain e suas aplicações potenciais.
 
-Evite começar da seção secundária, ou seja, não passe direto do título do capítulo para o título da seção secundária. Escreva um texto para introduzir as seções subsequentes. Lembre-se de utilizar primeira letra maiúscula quando estiver se referindo a um objeto com numeração específica como capítulo, seção, subseção, figura, tabela, quadro, equação, normalmente, se escreve a primeira letra maiúscula da palavra do objeto seguido do \textit{label}. Por exemplo, a Seção \ref{sec:citacoes} explica como fazer citações bibliográficas. Observe no código fonte deste texto como foi feita a referência cruzada. Isso permite enumerar a seção do modo automático o que facilita caso novas seções sejam criadas.  
+\section{Escolas Econômicas e o Debate Brasileiro}
 
-\section{Citações bibliográficas}\label{sec:citacoes}
+O debate econômico brasileiro é historicamente marcado pela contraposição entre duas visões distintas sobre o papel do Estado e os mecanismos de desenvolvimento econômico.
 
-    Esta frase mostra como citar um livro sobre descargas atmosféricas \cite{rakov2003lightning}. Também podem ser citados \textit{sites} como \citeonline{elat2015densidade}. Você precisa escrever o código da referência no arquivo "referencia.bib" dentro da pasta "elementos-pos-textuais". Veja esse, onde estão alguns exemplos que já foram testados.        
+\subsection{Escola Austríaca de Economia}
 
-    Referenciando outro livro \cite{LangtangenLogg2017}. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+A Escola Austríaca de Economia, cujos principais expoentes incluem Ludwig von Mises, Friedrich Hayek e Carl Menger, fundamenta-se em princípios que enfatizam o papel da poupança e do livre mercado no desenvolvimento econômico \cite{mises1949}.
 
-    Referenciando outro site \cite{secretaria1999}. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Citando uma norma \cite{NBR10520:2002}.
-        
-    Citação de duas referências que concordam entre si \cite{Almeida2018,Gondim2017}. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Citando um manual \cite{manuais1989}. 
-        
-    Outro tipo de citação é a citação literal ou direta com mais de três linhas. Este tipo de citação deve ser destacada com recuo de $4~cm$ da margem esquerda com letra menor (tamanho 10), sem aspas e com espaçamento simples.  Para exemplificar esse tipo de citação, considere a afirmação de \citeonline{feitosa2016}:
-    \begin{citacao}
-        A cultura é o processo através do qual o homem cria o algo onde antes imperava o nada. Esse algo é toda complexidade de criações simbólicas, de sentidos e significados que damos às coisas e ao mundo. Um ``algo'' que não se sustenta se não se entender os processos culturais como mecanismos de mediação entre nós e os fenômenos. Assim, mais do que apenas um elemento da comunicação, a mediação é, por excelência, cultural. As diversas modalidades de mediação são apenas sotaques diferenciados dessa mediação cultural. Assim é a mediação informacional.
-    \end{citacao}
-        
-    A afirmação do parágrafo anterior também pode ser reproduzida com a citação na final como mostra o exemplo a seguir: 
-    \begin{citacao}
-        A cultura é o processo através do qual o homem cria o algo onde antes imperava o nada. Esse algo é toda complexidade de criações simbólicas, de sentidos e significados que damos às coisas e ao mundo. Um “algo” que não se sustenta se não se entender os processos culturais como mecanismos de mediação entre nós e os fenômenos. Assim, mais do que apenas um elemento da comunicação, a mediação é, por excelência, cultural. As diversas modalidades de mediação são apenas sotaques diferenciados dessa mediação cultural. Assim é a mediação informacional. \cite{feitosa2016}.
-    \end{citacao}
-        
-%Mais exemplos e opções de citações podem ser encontradas em:
-%        https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management
-%        https://github.com/cfgnunes/latex-cefetmg/blob/master/latex-cefetmg/03-elementos-pos-textuais/apendices.tex            
+Segundo esta corrente, a poupança é a base fundamental para o investimento produtivo. A acumulação de capital através da poupança voluntária permite o financiamento de projetos de longo prazo, aumentando a produtividade e, consequentemente, o padrão de vida da população. Para os austríacos, a interferência governamental no sistema de preços e na alocação de recursos gera distorções que resultam em má alocação de capital e ciclos econômicos \cite{hayek1944}.
 
-\section{Inserindo figuras}\label{sec:figuras}
-    
-    A Figura \ref{fig:reitoria} apresenta a fotografia da reitoria da Universidade Federal do Ceará. Observe a estrutura do código para ver como inserir figuras. No título, comece especificando o tipo de figura. Por exemplo, fotografia, desenho, diagrama, fluxograma, gráfico e etc. O espaçamento entre linhas no título é de $1~pt$ (espaçamento simples), apenas a primeira letra da frase é maiúscula. As demais palavras são escritas com letra maiúsculas somente quando são nomes próprios e não há ponto final. 
-    
-    As margens do título da figura são delimitadas pelo tamanho da figura. Por isso, procure ajustar o tamanho da figura para preencher a largura delimitada pelas margens esquerda e direita da página que possui $16~cm$ de largura. Não esqueça de indicar fonte da figura. O autor deve evitar deixar figuras pequenas menores do que $7~cm$ de largura.
-    
-    A posição da figura deve ser o mais próximo logo após ter sido chamada no texto (a figura nunca deve aparecer antes de ter sido anunciada no texto). 
-    
-    %troque h pelo b ou t para mudar a posição da figura.
- 	\begin{figure}[h!] 
-   	    \captionsetup{width=16cm}%Da mesma largura que a figura
-		\Caption{\label{fig:reitoria} Fotografia da reitoria da Universidade Federal do Ceará}
-		\UFCfig{}{
-			\includegraphics[width=16cm]{figuras/exemplo-1}
-		}{
-			\Fonte{\citeonline{UFC2012}.}
-		}	
-	\end{figure}
-	
-    Texto1 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto1.
+A teoria austríaca defende que o livre mercado, através do sistema de preços, é o mecanismo mais eficiente para coordenar as decisões econômicas de milhões de indivíduos. A intervenção estatal, mesmo bem-intencionada, tende a gerar consequências não previstas que frequentemente agravam os problemas que pretendia resolver.
 
-    Texto2 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto2.
+\subsection{Escola Desenvolvimentista}
 
-    Texto3 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto3.
+Em contraposição, a escola desenvolvimentista, influenciada pelo pensamento keynesiano e cepalino, argumenta que países em desenvolvimento necessitam de intervenção estatal ativa para superar o subdesenvolvimento \cite{furtado1961}.
 
-    Texto4 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto4.
+Esta corrente defende que o Estado deve atuar como indutor do desenvolvimento, coordenando investimentos estratégicos, protegendo a indústria nascente e redistribuindo renda para estimular o mercado interno. O desenvolvimentismo brasileiro influenciou fortemente as políticas econômicas desde a Era Vargas, com a criação de empresas estatais e mecanismos de fomento.
 
-    A Figura \ref{fig:sondas} Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto3.
+Os desenvolvimentistas argumentam que o livre mercado, em países periféricos, tende a perpetuar a condição de exportador de commodities e importador de manufaturados, impedindo o desenvolvimento industrial autônomo.
 
-	\begin{figure}[h!]
-		\centering
-		\captionsetup{width=14cm}%Da mesma largura que a figura
-		\Caption{\label{fig:sondas} Gráfico da Atmosfera Superior}	
-		\UFCfig{}{
-			\includegraphics[width=14cm]{figuras/sondas}
-		}{
-			\Fonte{adaptado da \citeonline{NASA2016}.}}	
-	\end{figure}
+\subsection{Implicações para a Política Previdenciária}
 
-    Texto5 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto5.
+A tensão entre estas duas visões manifesta-se claramente no debate previdenciário. A perspectiva austríaca tenderia a favorecer sistemas de capitalização individual, onde cada trabalhador acumula sua própria poupança para aposentadoria. Já a visão desenvolvimentista justifica sistemas de repartição solidária, onde o Estado coordena a redistribuição intergeracional.
 
-    Texto6 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto5.
+O sistema brasileiro atual, baseado na repartição, reflete historicamente a influência desenvolvimentista. Contudo, as dificuldades fiscais crescentes têm levado a questionamentos sobre sua sustentabilidade de longo prazo.
 
-    Texto7 texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto6.
+\section{O Sistema Previdenciário Brasileiro}
 
-    Evite terminar seções, capítulos e etc com figura. Procure escrever mais.
+O sistema previdenciário brasileiro é composto por três pilares principais: o Regime Geral de Previdência Social (RGPS), administrado pelo INSS; os Regimes Próprios de Previdência Social (RPPS), para servidores públicos; e a Previdência Complementar, de caráter facultativo.
 
-\section{Inserindo tabelas}\label{sec:tabelas}
-    
-    A Tabela \ref{tab:exemplo-1}... texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto. Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
-	
-	\begin{table}[!h]
-	\captionsetup{width=7cm}%Deixe da mesma largura que a tabela
-	\Caption{\label{tab:exemplo-1} Um Exemplo de tabela alinhada que pode ser longa ou curta}%
-	\IBGEtab{}{%
-		\begin{tabular}{ccc}
-			\toprule
-			Nome & Nascimento & Documento \\
-			\midrule \midrule
-			Maria da Silva & 11/11/1111 & 111.111.111-11 \\
-			Maria da Silva & 11/11/1111 & 111.111.111-11 \\
-			Maria da Silva & 11/11/1111 & 111.111.111-11 \\
-			\bottomrule
-		\end{tabular}%
-	}{%
-	\Fonte{o autor.}%
-	\Nota{esta é uma nota, que diz que os dados são baseados na
-		regressão linear.}%
-	\Nota[Anotações]{uma anotação adicional, seguida de várias outras.}%
-    }
-    \end{table}
+\subsection{INSS: Estrutura e Funcionamento}
 
-	%\begin{table}[h!]	
-	%	\centering
-	%	\Caption{\label{tab:exemplo-1} Exemplo de tabela}	
-	%	\UFCtab{}{
-	%		\begin{tabular}{cll}
-	%			\toprule
-	%			Ranking & Exon Coverage & Splice Site Support \\
-	%			\midrule \midrule
-	%			E1 & Complete coverage by a single transcript & Both splice sites\\
-	%			E2 & Complete coverage by more than a single transcript & Both splice sites\\
-	%			E3 & Partial coverage & Both splice sites\\
-	%			E4 & Partial coverage & One splice site\\
-	%			E5 & Complete or partial coverage & No splice sites\\
-	%			E6 & No coverage & No splice sites\\
-	%			\bottomrule
-	%		\end{tabular}
-	%	}{
-	%	\Fonte{elaborado pelo autor.}
-	%}
-	%\end{table}
+O Instituto Nacional do Seguro Social (INSS) é responsável pela administração do RGPS, que cobre a maioria dos trabalhadores brasileiros do setor privado. O sistema opera sob o regime de repartição simples, onde as contribuições correntes dos trabalhadores ativos financiam os benefícios dos aposentados e pensionistas \cite{gentil2006}.
 
-\subsection{Exemplo de subseção} \label{sec:ex_sec}
-	
-    Texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto texto.
+As alíquotas de contribuição variam de 7,5\% a 14\% sobre o salário de contribuição, dependendo da faixa salarial, enquanto os empregadores contribuem com 20\% sobre a folha de pagamento. Estes recursos são destinados ao pagamento de aposentadorias por idade, por tempo de contribuição, aposentadorias especiais, pensões por morte e auxílios diversos.
 
-    %acrlong{DATASUS},\acrlong{DNV},\acrlong{DO},\acrlong{ESF},\acrlong{IBGE},\acrlong{MFC},\acrlong{MI},\acrlong{MS},\acrlong{NV},\acrlong{ODM},\acrlong{OI},\acrlong{OMS},\acrlong{ONU},\acrlong{PNI},\acrlong{PSF},\acrlong{RIPSA},\acrlong{RN},\acrlong{SIM},\acrlong{SINASC},\acrlong{SUS},\acrlong{TMI},\acrlong{TMMFC}
+O déficit do RGPS tem crescido consistentemente, atingindo valores superiores a R\$ 300 bilhões anuais. Este desequilíbrio decorre de fatores demográficos (envelhecimento populacional), estruturais (informalidade do mercado de trabalho) e políticos (regras de benefícios desconectadas da capacidade contributiva).
 
+\subsection{FGTS: Histórico e Problemas}
 
-    \begin{alineascomponto}
-	    \item Integer non lacinia magna. Aenean tempor lorem tellus, non sodales nisl commodo ut
-	    \item Proin mattis placerat risus sit amet laoreet. Praesent sapien arcu, maximus ac fringilla efficitur, vulputate faucibus sem. Donec aliquet velit eros, sit amet elementum dolor pharetra eget
-	    \item Integer eget mattis libero. Praesent ex velit, pulvinar at massa vel, fermentum dictum mauris. Ut feugiat accumsan augue, et ultrices ipsum euismod vitae
-	    \begin{subalineascomponto}
-		    \item Integer non lacinia magna. Aenean tempor lorem tellus, non sodales nisl commodo ut
-		    \item Proin mattis placerat risus sit amet laoreet.
-	    \end{subalineascomponto}
-    \end{alineascomponto}
+O Fundo de Garantia do Tempo de Serviço (FGTS) foi criado em 1966 como alternativa à estabilidade decenal no emprego. Mensalmente, os empregadores depositam 8\% do salário do trabalhador em conta vinculada, que pode ser sacada em situações específicas como demissão sem justa causa, aposentadoria, compra de imóvel ou doenças graves.
 
-\subsection{Uso de siglas} \label{sec:siglas}
+Contudo, o FGTS apresenta problemas estruturais significativos. A rentabilidade do fundo, limitada à Taxa Referencial (TR) mais 3\% ao ano, historicamente ficou abaixo da inflação, resultando em perda real do poder de compra do trabalhador \cite{afonso2016}. Estudos indicam que, ao longo de décadas de trabalho, o trabalhador pode perder até 40\% do valor real de suas contribuições.
 
-    Para utilizar siglas, primeiro defina a sigla no arquivo "lista-de-abreviaturas-e-siglas"~ dentro da pasta "1-pre-textuais" com o comando 
-    \begin{verbatim}
-        \newacronym{ABNT}{ABNT}{Associação Brasileira de Normas Técnicas}
-    \end{verbatim}
-    Depois chame a sigla com o comando:
-    \begin{verbatim}
-        \gls{ABNT}
-    \end{verbatim}
-    Fica assim: \gls{ABNT}. A primeira vez que o comando é usado para uma determinada sigla, aparece o significado por extenso da sigla com a sua abreviação em seguida. A partir da segunda vez que o comando para uma determinada sigla é usado, aparace apenas a sigla. Por exemplo: \gls{ABNT}.  
-    
-    Veja o código fonte de outros exemplos: Teste de siglas \gls{TEST}, outros exemplos de siglas: \gls{DA}, \gls{MCEG}. 
-    Repare que sempre as siglas estão sendo definidas primeiramente no arquivo ``lista-de-abreviaturas-e-siglas''.
+Os recursos do FGTS são utilizados pelo governo para financiar programas habitacionais (Minha Casa Minha Vida) e obras de infraestrutura e saneamento. Embora estes investimentos possam gerar benefícios sociais, representam uma transferência de riqueza dos trabalhadores para políticas públicas, sem a devida remuneração pelo custo de oportunidade.
+
+\subsection{Impacto Fiscal e Sustentabilidade}
+
+O sistema previdenciário brasileiro consome aproximadamente 13\% do PIB, percentual elevado para um país com estrutura demográfica ainda relativamente jovem. Projeções atuariais indicam que, sem reformas estruturais, este percentual pode ultrapassar 20\% nas próximas décadas \cite{tafner2019}.
+
+O comprometimento de cerca de 70\% do orçamento federal com benefícios previdenciários e assistenciais limita severamente a capacidade de investimento público em áreas essenciais. Esta rigidez orçamentária cria um círculo vicioso: a falta de investimento em infraestrutura e educação reduz a produtividade, que por sua vez diminui a arrecadação e agrava o déficit previdenciário.
+
+\section{O Modelo Australiano de Superannuation}
+
+A Austrália implementou, a partir de 1992, um sistema de aposentadoria baseado em capitalização individual obrigatória, conhecido como \textit{Superannuation}. Este modelo é frequentemente citado como referência internacional de sucesso \cite{bateman2001}.
+
+\subsection{Estrutura do Sistema}
+
+O \textit{Superannuation} obriga empregadores a contribuir com um percentual do salário do empregado (atualmente 11\%, com previsão de aumento para 12\%) para um fundo de aposentadoria em nome do trabalhador. Os recursos são geridos por fundos de pensão privados, sujeitos a regulamentação governamental.
+
+Os trabalhadores podem escolher entre diferentes fundos e estratégias de investimento, desde opções conservadoras até mais agressivas, de acordo com seu perfil de risco e horizonte temporal. Os recursos só podem ser acessados ao atingir a idade de preservação (atualmente entre 55 e 60 anos, dependendo da data de nascimento) ou em circunstâncias específicas como invalidez permanente.
+
+\subsection{Resultados e Lições}
+
+Após três décadas de operação, o sistema australiano acumulou mais de 3,5 trilhões de dólares australianos em ativos, equivalente a aproximadamente 170\% do PIB do país. Este volume de poupança de longo prazo contribuiu significativamente para o desenvolvimento do mercado de capitais australiano e para o financiamento de investimentos produtivos.
+
+O modelo demonstra que sistemas de capitalização individual podem ser implementados com sucesso, desde que acompanhados de regulamentação adequada, transparência e mecanismos de proteção ao investidor. A diversificação de investimentos e a gestão profissional resultaram em rentabilidade média superior à inflação ao longo do tempo.
+
+Contudo, o modelo também apresenta desafios, como a cobertura inadequada de trabalhadores informais, a complexidade do sistema para trabalhadores com baixa educação financeira e a exposição a riscos de mercado.
+
+\section{Tecnologia Blockchain}
+
+A tecnologia blockchain, popularizada inicialmente pelo Bitcoin em 2008, apresenta características que a tornam potencialmente aplicável a sistemas de registro e gestão de ativos previdenciários \cite{nakamoto2008}.
+
+\subsection{Conceitos Fundamentais}
+
+Blockchain é uma estrutura de dados distribuída que mantém um registro imutável e transparente de transações. As principais características incluem:
+
+\begin{alineas}
+    \item \textbf{Descentralização}: Os dados são replicados em múltiplos nós da rede, eliminando pontos únicos de falha;
+    \item \textbf{Imutabilidade}: Uma vez registradas, as transações não podem ser alteradas ou excluídas;
+    \item \textbf{Transparência}: Todas as transações são públicas e verificáveis por qualquer participante;
+    \item \textbf{Segurança criptográfica}: As transações são protegidas por algoritmos criptográficos robustos.
+\end{alineas}
+
+\subsection{Smart Contracts e Multi-sig}
+
+Smart contracts são programas autoexecutáveis armazenados na blockchain que executam automaticamente quando condições predefinidas são satisfeitas. Esta funcionalidade permite a automação de regras complexas de governança \cite{buterin2014}.
+
+Carteiras multi-assinatura (multi-sig) requerem múltiplas chaves privadas para autorizar uma transação. Por exemplo, uma carteira 2-de-3 requer que pelo menos duas de três chaves autorizem qualquer movimentação. Este mecanismo permite implementar sistemas de controle compartilhado, onde nenhuma parte individual possui controle total sobre os recursos.
+
+\subsection{Aplicações em Sistemas Financeiros}
+
+Diversas aplicações de blockchain em sistemas financeiros têm sido desenvolvidas, incluindo moedas digitais de bancos centrais (CBDCs), sistemas de liquidação de ativos, registro de propriedade e identidade digital. Estas aplicações demonstram a viabilidade técnica de utilizar blockchain para gerenciar ativos de valor significativo com segurança e transparência.
+
+A tokenização de ativos, processo de representar direitos de propriedade sobre ativos reais em tokens na blockchain, abre possibilidades para fracionamento de investimentos e aumento da liquidez de ativos tradicionalmente ilíquidos.
+
+\section{Síntese}
+
+A fundamentação teórica apresentada estabelece as bases para a proposta deste trabalho. O sistema previdenciário brasileiro enfrenta desafios fiscais estruturais que demandam soluções inovadoras. O modelo australiano demonstra a viabilidade de sistemas de capitalização individual. A tecnologia blockchain oferece mecanismos técnicos para implementar sistemas transparentes, seguros e com governança compartilhada. A convergência destes elementos fundamenta a proposta de um mercado financeiro poupador baseado em blockchain, a ser detalhada nos capítulos seguintes.
