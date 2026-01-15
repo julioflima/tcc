@@ -1,0 +1,52 @@
+# macOS
+.DS_Store
+
+# LaTeX build artifacts (generic)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.dvi
+*.fls
+*.fdb_latexmk
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.pdfsync
+*.ps
+*.run.xml
+*.synctex.gz
+*.toc
+*.vrb
+*.snm
+*.xdv
+
+# BibLaTeX auxiliary
+*.blx.bib
+
+# Minted (code highlighting)
+_minted-*/
+*.pyg
+
+# Auto-generated folders
+auto/
+.texpadtmp/
+temp/
+
+# Overleaf / latexmk runtime files
+*.ilg
+*.ind
+*.idx
+
+# Optional: ignore compiled PDFs (uncomment if desired)
+# *.pdf
