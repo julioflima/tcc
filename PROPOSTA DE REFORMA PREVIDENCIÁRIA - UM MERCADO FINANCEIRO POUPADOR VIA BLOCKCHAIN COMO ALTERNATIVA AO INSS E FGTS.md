@@ -77,6 +77,26 @@ E o governo estaria livre para confiscar os bens caso fossem oriundos de ilegali
   - O indivíduo teria plenos poderes após seus 65 anos.
   - A chave do governo atingiria plenos poderes após 100 anos.
 
+### Possibilidade para o problema da autocustódia
+A autocustódia é um dos maiores desafios do ecossistema cripto. Estima-se que **entre 3 e 4 milhões de Bitcoins** já foram perdidos permanentemente, representando aproximadamente **17-20% de todo o supply** — um valor que ultrapassa centenas de bilhões de dólares aos preços atuais.
+
+#### Métodos de Autocustódia
+
+1. **Hardware Wallets** (Ledger, Trezor, Coldcard): Dispositivos físicos que armazenam chaves offline
+2. **Paper Wallets**: Seed phrase escrita em papel ou metal resistente ao fogo
+3. **Multisig pessoal**: Divisão de chaves em múltiplos locais geográficos
+4. **Shamir's Secret Sharing**: Fragmentação da seed em partes que precisam ser reunidas
+
+#### Alternativas de Custódia Compartilhada
+
+Para mitigar o risco de perda sem entregar controle total ao governo, existem soluções intermediárias:
+
+- **Federações de custódia** (como Fedimint): Um grupo de guardiões independentes mantém partes das chaves, sem acesso individual aos fundos
+- **Custódia colaborativa** (Casa, Unchained Capital): Empresas privadas seguram uma das chaves de um esquema multisig, mas não conseguem mover fundos sozinhas
+- **Social Recovery Wallets**: Contratos inteligentes que permitem recuperação via guardiões pré-definidos (amigos, família, instituições)
+
+Essas soluções permitem que o indivíduo mantenha soberania sobre seus ativos enquanto possui um mecanismo de recuperação que **não depende do Estado** e **não expõe suas chaves** a terceiros sem autenticação própria (login/senha + fatores adicionais).
+
 ### Benefícios Esperados
 
 - Diminuição da evasão de capital para offshores
