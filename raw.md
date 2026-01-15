@@ -1,4 +1,3 @@
-
 # Proposta de Reforma Econômica: Um Mercado Financeiro Poupador via Blockchain
 
 ## As Duas Escolas Econômicas
@@ -7,7 +6,7 @@ Há basicamente duas escolas de economia em voga: **Desenvolvimentista** e **Aus
 
 ## Os Verdadeiros Problemas do Brasil
 
-O Brasil tem muitos problemas. Porém, talvez os maiores de todos, por mais que não sejam os que mais engajam, como corrupção, política ou até a polarização política, sejam or problemas de infraestrutura. Afinal, todo povo quer ser rico, independentemente de que lado político esteja. A corrupção nasce da natureza de autopreservação e interesses pessoais. Nesse ponto de vista, a definição de corrupção é quase a mesma de definição de política. O que invalida que sejam os maiores problemas, pois esses nascem da ação instrísecamente humana é intrínseco ao processo social.
+O Brasil tem muitos problemas. Porém, talvez os maiores de todos, por mais que não sejam os que mais engajam, como corrupção, política ou até a polarização política, sejam os problemas de infraestrutura. Afinal, todo povo quer ser rico, independentemente de que lado político esteja. A corrupção nasce da natureza de autopreservação e interesses pessoais. Nesse ponto de vista, a definição de corrupção é quase a mesma de definição de política. O que invalida que sejam os maiores problemas, pois esses nascem da ação intrinsecamente humana e são intrínsecos ao processo social.
 
 Os problemas que mais perturbam a vida do brasileiro há muito tempo são:
 
@@ -20,7 +19,7 @@ Os problemas que mais perturbam a vida do brasileiro há muito tempo são:
 
 É preciso investimento, mas falta dinheiro na balança comercial. O crédito é historicamente caro dentro do país e, fora, há uma competição muito acirrada — em um país pobre não haverá dinheiro ou cultura de salvar empresas que no futuro podem ser um diferencial (vide a empresa **Gurgel**).
 
-Não há pressão poupadora no país. O endividamento apenas cresce com o nível de inflação subindo, e o acesso a produtos de fino desenvolvimento se torna inacessível. **Onde não há poupança e investimento, não há uma cultura de geração de riqueza no país.** Citação do Luis Brasi
+Não há pressão poupadora no país. O endividamento apenas cresce com o nível de inflação subindo, e o acesso a produtos de fino desenvolvimento se torna inacessível. **Onde não há poupança e investimento, não há uma cultura de geração de riqueza no país.** Citação do Luiz Barasi
 
 ## O Fracasso do INSS e FGTS
 
@@ -28,7 +27,7 @@ O INSS deveria fazer esse papel junto com o FGTS: forçar a pressão poupadora. 
 
 ## Uma Solução: Aluguel do Patrimônio Nacional
 
-É completamente questionável que a venda do patrimônio natural do país para fazer caixa para um determinado governo que por natureza tem seus viezes, de fazer suas enviezadas reformas. Sabemos que culturalmente o a probabilidade de grande parte desse dinheiro será desviado é elevada. Porém, isso é totalmente invertido se esse dinheiro não for sacrificado — se não houver venda, mas **aluguel** — pois não há perda, apenas geração de renda. E se o propósito for enriquecer todos os brasileiros trabalhadores, a tendência de concordância tende a aumentar.
+É completamente questionável a venda do patrimônio natural do país para fazer caixa para um determinado governo que, por natureza, tem seus vieses, de fazer suas enviesadas reformas. Sabemos que culturalmente a probabilidade de grande parte desse dinheiro ser desviado é elevada. Porém, isso é totalmente invertido se esse dinheiro não for sacrificado — se não houver venda, mas **aluguel** — pois não há perda, apenas geração de renda. E se o propósito for enriquecer todos os brasileiros trabalhadores, a tendência de concordância tende a aumentar.
 
 Deveriam ser alugadas — por 5, 10, 20, 30 anos em contratos longos — todas as praias, parques, patrimônios tombados e prédios do governo, de modo a pagar a dívida do FGTS e INSS. Preferencialmente no mercado externo, para evitar movimentos de bancos nacionais financiarem o arrendamento, maquiando a operação de enriquecimento do país.
 
@@ -58,18 +57,22 @@ Um sistema multidisciplinar garantiria que o indivíduo, apenas com a autorizaç
 
 1. Fizesse **1 trade por mês**
 2. **Não liquidasse os papéis** antes da data da aposentadoria
-3. Houvesse compatilhamento de chaves e responsabilidades entre indivíduo e governo
+3. Houvesse compartilhamento de chaves e responsabilidades entre indivíduo e governo
 
 Após a data de vencimento da aposentadoria, a chave do governo tornaria-se desnecessária e o indivíduo estaria livre para acesso total aos bens.
 
-E o governo estaria livre para confiscar os bens caso fossem oriundos de ilegalidade. Porém o fator tempo aqui jogaria a favor do indivíduo trabalhador, já que possivelmente todas as ações estariam prescritas.
+E o governo estaria livre para confiscar os bens caso fossem oriundos de ilegalidade. Porém, o fator tempo aqui jogaria a favor do indivíduo trabalhador, já que possivelmente todas as ações estariam prescritas.
 
 ### Características
 
 - Durante o período de acumulação, tanto os depósitos de INSS e FGTS seriam possíveis;
 - Assim como aportes individuais;
 - Após falecimento do indivíduo, o governo poderia autorizar a liquidação dos bens para quem houvesse cadastro dentro da carteira, **não obedecendo à legislação vigente de herança**;
-- Após a aposentadoria o indivíduo poderia ter acesso aos dividendos, ou liquidar todos os ativos.
+- Após a aposentadoria, o indivíduo poderia ter acesso aos dividendos, ou liquidar todos os ativos.
+- Um Smart Contract por meio de uma Mult Sig. Uma chave controlada pelo governo, garantiria que o indivíduo nunca pudesse liquidar suas posições. Outra chave controlada pelo indivíduo garantiria que o individuo não permitisse que o governo confiscasse suas ações.
+  - A chave do indivíduo possibilitaria fazer venda e compra de ativos livremente.
+  - A chave do governo não conseguiria fazer venda e compra de ativos.
+  - O governo controlaria os ativos que são ofertado aos indivíduos no mercado.
 
 ### Benefícios Esperados
 
