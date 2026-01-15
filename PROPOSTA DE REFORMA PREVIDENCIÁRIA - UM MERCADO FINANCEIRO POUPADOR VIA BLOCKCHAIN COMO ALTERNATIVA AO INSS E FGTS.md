@@ -67,12 +67,15 @@ E o governo estaria livre para confiscar os bens caso fossem oriundos de ilegali
 
 - Durante o período de acumulação, tanto os depósitos de INSS e FGTS seriam possíveis;
 - Assim como aportes individuais;
-- Após falecimento do indivíduo, o governo poderia autorizar a liquidação dos bens para quem houvesse cadastro dentro da carteira, **não obedecendo à legislação vigente de herança**;
+- Após falecimento do indivíduo, o governo poderia autorizar a distribuição dos ativos para quem houvesse cadastro dentro da carteira, **não obedecendo à legislação vigente de herança**, dessa maneira esses ativos constariam na carteira previdênciária dos herdeiros, que apenas se aposentados poderia liquidar completamente;
+- Após 100 anos, em caso de não prova de vida o governo poderia liquidar o indivíduo, ou distribuir a seus herdeiros de carteira, ou herdeiros de inventário.
 - Após a aposentadoria, o indivíduo poderia ter acesso aos dividendos, ou liquidar todos os ativos.
-- Um Smart Contract por meio de uma Mult Sig. Uma chave controlada pelo governo, garantiria que o indivíduo nunca pudesse liquidar suas posições. Outra chave controlada pelo indivíduo garantiria que o individuo não permitisse que o governo confiscasse suas ações.
+- O governo controlaria os ativos que são ofertado aos indivíduos no mercado.
+- Um Smart Contract por meio de uma Mult Sig gerenciaria os poderes. Uma chave seria controlada  pelo governo, garantiria que o indivíduo nunca pudesse liquidar suas posições. Outra chave controlada pelo indivíduo garantiria que o individuo não permitisse que o governo confiscasse suas ações.
   - A chave do indivíduo possibilitaria fazer venda e compra de ativos livremente.
   - A chave do governo não conseguiria fazer venda e compra de ativos.
-  - O governo controlaria os ativos que são ofertado aos indivíduos no mercado.
+  - O indivíduo teria plenos poderes após seus 65 anos.
+  - A chave do governo atingiria plenos poderes após 100 anos.
 
 ### Benefícios Esperados
 
