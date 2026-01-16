@@ -180,7 +180,14 @@ Use `\gls{SIGLA}` para primeira ocorrência (expandida) e ocorrências subsequen
 
 ## Notas para IA
 
-1. **raw.md** contém as ideias originais em formato livre - use como referência para o espírito da proposta
+### ⚠️ REGRAS CRÍTICAS
+
+> **NUNCA alterar o arquivo `PROPOSTA DE REFORMA PREVIDENCIÁRIA - UM MERCADO FINANCEIRO POUPADOR VIA BLOCKCHAIN COMO ALTERNATIVA AO INSS E FGTS.md`**
+> Este arquivo contém as ideias gerais e originais do projeto. Deve ser usado APENAS como referência de leitura para entender o espírito da proposta. Todas as implementações e detalhamentos devem ser feitos em outros arquivos.
+
+### Diretrizes Gerais
+
+1. O arquivo de proposta original é **read-only** - use como referência para o espírito da proposta
 2. O trabalho usa a classe **abnTeX2** com template personalizado da UFC
 3. Prefira editar arquivos individuais em vez do documento principal
 4. Ao adicionar referências, atualize `referencias.bib`
