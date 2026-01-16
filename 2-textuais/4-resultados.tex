@@ -51,7 +51,7 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
         \draw[arrow] (gov) -- (app);
         \draw[arrow] (emp) -- (chain);
     \end{tikzpicture}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{figure}
 
 \subsection{Camada de Blockchain}
@@ -103,6 +103,7 @@ O fluxo de contribuição proposto mantém a estrutura atual de desconto em folh
 \end{enumerate}
 
 \subsection{Universo de Investimentos}
+\label{sec:universo-investimentos}
 
 O sistema propõe a criação de uma \textbf{bolsa tokenizada pareada em 1:1 com a B3}, onde cada ativo negociado na bolsa tradicional possui um token correspondente na blockchain previdenciária. Essa estrutura permite que os trabalhadores invistam nos mesmos ativos disponíveis no mercado convencional, porém com uma diferença fundamental: \textbf{privacidade de propriedade}.
 
@@ -201,7 +202,7 @@ A Figura \ref{fig:multisig} ilustra o funcionamento do sistema de governança mu
         \draw[arrow] (key1) -- (wallet);
         \draw[arrow] (key2) -- (wallet);
     \end{tikzpicture}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{figure}
 
 \section{Regras Operacionais}
@@ -231,6 +232,22 @@ Os recursos são bloqueados até a aposentadoria, com exceções limitadas:
 \end{alineas}
 
 Diferentemente do FGTS atual, não há saque para compra de imóvel ou demissão, reforçando o caráter estritamente previdenciário dos recursos.
+
+\subsection{Operações}
+
+As contribuições mensais do trabalhador são depositadas inicialmente na forma de \textbf{stablecoin pareada ao Real} (token BRL), representando saldo disponível para investimento. A partir do primeiro mês de contribuição, o trabalhador pode converter esses tokens em \textbf{ativos tokenizados} --- ações, debêntures, fundos imobiliários e demais ativos elegíveis conforme descrito na Seção \ref{sec:universo-investimentos}.
+
+Uma vez investidos, os ativos geram rendimentos conforme sua natureza: dividendos de ações, juros de debêntures, aluguéis de FIIs, entre outros. Esses \textbf{dividendos são creditados mensalmente} na carteira do trabalhador, também na forma de tokens BRL. Contudo, diferentemente do saldo principal, os dividendos \textbf{não são sacáveis} --- permanecem sujeitos às mesmas regras de bloqueio até a aposentadoria.
+
+A utilidade imediata dos dividendos está no \textbf{reinvestimento}: o trabalhador pode, dentro do lote mensal de operações permitido, converter os dividendos recebidos em novos ativos tokenizados. Este mecanismo cria um ciclo virtuoso de capitalização composta:
+
+\begin{alineas}
+    \item \textbf{Mês 1}: Contribuição inicial convertida em ativos;
+    \item \textbf{Mês 2 em diante}: Contribuição + dividendos do mês anterior disponíveis para reinvestimento;
+    \item \textbf{Efeito acumulativo}: Os dividendos reinvestidos geram novos dividendos, acelerando o crescimento patrimonial.
+\end{alineas}
+
+Esta arquitetura incentiva o trabalhador a manter seus recursos investidos em ativos produtivos, maximizando o potencial de crescimento de longo prazo enquanto mantém a disciplina previdenciária de não permitir saques antecipados.
 
 \subsection{Limites de Concentração}
 
@@ -265,7 +282,7 @@ A Tabela \ref{tab:regras} resume as principais regras operacionais do sistema.
         Governança & Multi-sig 2-de-2 (trabalhador + governo) \\
         \bottomrule
     \end{tabular}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{table}
 
 \section{Mecanismo de Herança}
@@ -323,7 +340,15 @@ As \textbf{velocidades de migração} devem ser proporcionais à capacidade de p
     \item \textbf{50\% para a frente sênior}: Cobre muitas faixas etárias rapidamente, pois há poucas pessoas com saldo devedor reduzido.
 \end{alineas}
 
-A Figura \ref{fig:transicao-geracional} ilustra esta dinâmica, mostrando a relação entre idade e valor \textit{líquido} devido --- ou seja, contribuições menos benefícios já recebidos.
+Esta estratégia bidirecional apresenta vantagens significativas:
+
+\begin{alineas}
+    \item \textbf{Sinalização política}: O pagamento aos sêniores demonstra que não se trata de calote geracional;
+    \item \textbf{Transferência de conhecimento}: Os jovens, nativos digitais, auxiliam os mais velhos na adaptação ao novo sistema;
+    \item \textbf{Convergência gradual}: As duas frentes eventualmente se encontram na faixa etária intermediária (40-50 anos), onde estão os maiores saldos devedores.
+\end{alineas}
+
+A Figura \ref{fig:transicao-geracional} ilustra a dinâmica da transição, mostrando a relação entre idade e valor \textit{líquido} devido --- ou seja, contribuições menos benefícios já recebidos.
 
 \begin{figure}[htb]
     \centering
@@ -353,9 +378,9 @@ A Figura \ref{fig:transicao-geracional} ilustra esta dinâmica, mostrando a rela
         \fill[green!30, opacity=0.5] (1,0) -- (1,0.2) -- (2,0.5) -- (2.5,0.75) -- (2.5,0) -- cycle;
         \node[green!50!black, font=\footnotesize, align=center] at (1.75, 1.5) {50\%};
         
-        % Área de migração sêniores (50% do orçamento - área pequena pois valores baixos por pessoa)
-        \fill[orange!30, opacity=0.5] (8,0) -- (8,4.0) -- (9,2.5) -- (10,1.2) -- (11,0.5) -- (12,0.2) -- (13,0.1) -- (13,0) -- cycle;
-        \node[orange!70!black, font=\footnotesize, align=center] at (10.5, 3.0) {50\%};
+        % Área de migração sêniores (50% do orçamento - área igual pois valores baixos por pessoa)
+        \fill[orange!30, opacity=0.5] (11.5,0) -- (11.5,0.35) -- (12,0.2) -- (13,0.1) -- (13,0) -- cycle;
+        \node[orange!70!black, font=\footnotesize, align=center] at (12.25, 1.5) {50\%};
         
         % Linha vertical indicando idade de aposentadoria
         \draw[dashed, gray] (7, 0) -- (7, 5.2);
@@ -363,33 +388,17 @@ A Figura \ref{fig:transicao-geracional} ilustra esta dinâmica, mostrando a rela
         
         % Setas indicando direção da migração
         \draw[->, very thick, green!50!black] (1.5, -0.8) -- (3.5, -0.8) node[midway, below] {\footnotesize Jovens $\rightarrow$};
-        \draw[->, very thick, orange!70!black] (12.5, -0.8) -- (8.5, -0.8) node[midway, below] {\footnotesize $\leftarrow$ Sêniores};
+        \draw[->, very thick, orange!70!black] (12.5, -0.8) -- (10.5, -0.8) node[midway, below] {\footnotesize $\leftarrow$ Sêniores};
         
         % Anotações explicativas
         \node[font=\scriptsize, align=center, text width=2.5cm] at (1.75, 3.2) {Poucas faixas\\etárias cobertas};
         \draw[->, gray, thin] (1.75, 2.7) -- (1.75, 1.0);
         
-        \node[font=\scriptsize, align=center, text width=2.5cm] at (10.5, 5.0) {Muitas faixas\\etárias cobertas};
-        \draw[->, gray, thin] (10.5, 4.5) -- (10.5, 3.3);
-        
-        % Texto explicativo sobre as áreas
-        \node[align=center, font=\tiny] at (7, -1.5) {
-            \begin{minipage}{6cm}
-                Ambas as áreas destacadas no gráfico --- tanto para jovens quanto para sêniores --- são pequenas, pois os valores devidos por pessoa em cada grupo são baixos. Nos jovens, o saldo é baixo porque pouco contribuíram; nos idosos, porque já receberam boa parte do que aportaram em vida. Assim, a simetria das áreas representa a divisão igualitária do orçamento, mas não implica grandes volumes financeiros individuais em nenhuma das pontas.
-            \end{minipage}
-        };
+        \node[font=\scriptsize, align=center, text width=2.5cm] at (12.25, 3.2) {Poucas faixas\\etárias cobertas};
+        \draw[->, gray, thin] (12.25, 2.7) -- (12.25, 1.0);
     \end{tikzpicture}
-    \fonte{Elaborado pelo autor com base em dados do Anuário Estatístico da Previdência Social \cite{aeps2023}.}
+    \fonte{LIMA (2026), com base em dados do Anuário Estatístico da Previdência Social \cite{aeps2023}.}
 \end{figure}
-
-Esta estratégia bidirecional apresenta vantagens significativas:
-
-\begin{alineas}
-    \item \textbf{Viabilidade financeira}: Com o mesmo orçamento, a frente sênior avança mais rápido em número de faixas etárias;
-    \item \textbf{Sinalização política}: O pagamento aos sêniores demonstra que não se trata de calote geracional;
-    \item \textbf{Transferência de conhecimento}: Os jovens, nativos digitais, auxiliam os mais velhos na adaptação ao novo sistema;
-    \item \textbf{Convergência gradual}: As duas frentes eventualmente se encontram na faixa etária intermediária (40-50 anos), onde estão os maiores saldos devedores.
-\end{alineas}
 
 \subsection{Financiamento da Transição}
 
@@ -412,7 +421,8 @@ A implementação do sistema proposto traria benefícios em múltiplas dimensõe
     \item Propriedade real sobre os recursos poupados;
     \item Rentabilidade potencialmente superior à inflação;
     \item Herança garantida para a família;
-    \item Transparência nas regras, com privacidade sobre saldos individuais.
+    \item Transparência nas regras, com privacidade sobre saldos individuais;
+    \item Segurança jurídica equivalente à que hoje leva pessoas a investirem em criptomoedas e mercado de capitais internacional.
 \end{alineas}
 
 \subsection{Para a Economia}
@@ -421,7 +431,8 @@ A implementação do sistema proposto traria benefícios em múltiplas dimensõe
     \item Aumento da taxa de poupança nacional;
     \item Desenvolvimento do mercado de capitais;
     \item Redução do custo de capital para empresas;
-    \item Financiamento de investimentos produtivos.
+    \item Financiamento de investimentos produtivos;
+    \item Diminuição da evasão de capital para offshores.
 \end{alineas}
 
 \subsection{Para o Estado}
@@ -463,60 +474,55 @@ A proposta também apresenta desafios significativos:
     \item Necessidade de mecanismos de proteção para trabalhadores próximos à aposentadoria.
 \end{alineas}
 
-\section{Arquitetura Descentralizada do Mercado}
+\section{Arquitetura do Mercado em Blockchain Permissionada}
 
-Esta seção detalha como o mercado financeiro poupador pode ser concebido de maneira descentralizada, utilizando tecnologia blockchain para garantir transparência, segurança e governança distribuída.
+Esta seção detalha como o mercado financeiro poupador pode ser implementado utilizando uma blockchain permissionada, onde os nós validadores são operados por entidades autorizadas (governo, instituições financeiras reguladas), garantindo transparência, segurança e conformidade regulatória.
 
-\subsection{Camadas da Arquitetura Descentralizada}
+\subsection{Camadas da Arquitetura}
 
-O sistema é organizado em cinco camadas interdependentes, conforme ilustrado na Figura \ref{fig:camadas-descentralizadas}.
+O sistema é organizado em cinco camadas interdependentes, conforme ilustrado na Figura \ref{fig:camadas-mercado}.
 
 \begin{figure}[htb]
     \centering
-    \caption{Arquitetura em Camadas do Mercado Descentralizado}
-    \label{fig:camadas-descentralizadas}
+    \caption{Arquitetura em Camadas do Mercado}
+    \label{fig:camadas-mercado}
     \begin{tikzpicture}[
         node distance=0.8cm,
         layer/.style={rectangle, draw, minimum width=12cm, minimum height=1.2cm, align=center, font=\small}
     ]
-        \node[layer, fill=blue!15] (l1) {Camada de Interface (dApp Web3 / Mobile App)};
-        \node[layer, fill=green!15, below=of l1] (l2) {Camada de Governança (MultiSigPowers.sol)};
-        \node[layer, fill=yellow!15, below=of l2] (l3) {Camada de Mercado (RetirementVault + TradeController + DividendDistributor)};
-        \node[layer, fill=orange!15, below=of l3] (l4) {Camada de Tokenização (RWAToken.sol - Ações B3 tokenizadas 1:1)};
-        \node[layer, fill=red!15, below=of l4] (l5) {Camada de Oracle (Chainlink / Band Protocol - Preços B3 $\rightarrow$ Blockchain)};
+        \node[layer, fill=blue!15] (l1) {Camada de Interface};
+        \node[layer, fill=green!15, below=of l1] (l2) {Camada de Governança};
+        \node[layer, fill=yellow!15, below=of l2] (l3) {Camada de Mercado};
+        \node[layer, fill=orange!15, below=of l3] (l4) {Camada de Tokenização};
+        \node[layer, fill=red!15, below=of l4] (l5) {Camada de Oracle};
     \end{tikzpicture}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{figure}
 
-\subsubsection{Camada de Tokenização (RWA - Real World Assets)}
+\subsubsection{Camada de Interface}
 
-A tokenização de ativos reais é o fundamento do mercado descentralizado. Cada ação negociada na B3 é representada por um token ERC-20 na blockchain, mantendo paridade 1:1 com o ativo custodiado:
+A camada de interface é o ponto de contato entre o usuário e o sistema previdenciário. Através de aplicações web (dApps) ou aplicativos móveis, o trabalhador pode visualizar seu saldo, executar operações de compra e venda de ativos, gerenciar beneficiários e acompanhar o desempenho de sua carteira. A interface abstrai a complexidade da blockchain, oferecendo uma experiência similar aos aplicativos bancários tradicionais.
+
+\subsubsection{Camada de Governança}
+
+A camada de governança implementa o modelo multi-sig descrito anteriormente, onde as regras de controle compartilhado entre indivíduo e governo são codificadas. Esta camada é responsável por validar permissões, verificar condições (como idade para liquidação) e garantir que nenhuma parte possa agir unilateralmente fora das regras estabelecidas.
+
+\subsubsection{Camada de Mercado}
+
+A camada de mercado é responsável pela execução das operações de compra e venda de ativos tokenizados. Pode ser implementada através de livros de ordens descentralizados, onde compradores e vendedores postam ordens que são casadas automaticamente, ou através de formadores de mercado automatizados que garantem liquidez constante.
+
+\subsubsection{Camada de Tokenização}
+
+A tokenização de ativos reais é o fundamento do mercado descentralizado. Cada ação negociada na B3 é representada por um token na blockchain, mantendo paridade 1:1 com o ativo custodiado:
 
 \begin{alineas}
-    \item \textbf{Custódia Regulada}: Instituição custodiante autorizada pela CVM mantém as ações reais na CBLC (Central de Custódia e Liquidação);
-    \item \textbf{Mint/Burn Controlado}: Tokens só podem ser criados (mint) quando ações são depositadas, e destruídos (burn) quando ações são resgatadas;
-    \item \textbf{Auditoria Trimestral}: Verificação independente de que $\text{totalSupply}() = \text{ações custodiadas}$;
-    \item \textbf{Pausabilidade}: Mecanismo de emergência para pausar operações em caso de inconsistências.
+    \item \textbf{Custódia Regulada}: Instituição custodiante autorizada pela CVM mantém as ações reais na CBLC (Companhia Brasileira de Liquidação e Custódia);
+    \item \textbf{\textit{Circuit Breaker}}: Mecanismo de emergência para pausar operações em caso de inconsistências.
 \end{alineas}
 
 \subsubsection{Camada de Oracle}
 
-Os oracles são responsáveis por sincronizar informações do mundo real (preços da B3) com a blockchain:
-
-\begin{alineas}
-    \item \textbf{Múltiplas Fontes}: Agregação de dados de B3, Bloomberg, Reuters e Yahoo Finance;
-    \item \textbf{Mediana de Preços}: Utilização da mediana para resistir a manipulação de uma única fonte;
-    \item \textbf{Heartbeat Check}: Atualização obrigatória a cada 15 minutos durante pregão;
-    \item \textbf{Circuit Breaker}: Pausa automática se o desvio entre fontes exceder 10\%.
-\end{alineas}
-
-\subsubsection{Camada de Mercado}
-
-O mercado pode ser implementado através de duas abordagens:
-
-\textbf{Opção A - Automated Market Maker (AMM):} Pools de liquidez para cada par de ativos (ex: PETR4/BRL), onde o preço é determinado algoritmicamente pela proporção de ativos no pool. Vantagens: liquidez constante, operação 24/7.
-
-\textbf{Opção B - Order Book On-Chain:} Livro de ordens descentralizado onde compradores e vendedores postam ordens limite. Vantagens: menor slippage para grandes volumes, descoberta de preço mais eficiente.
+Os oracles são responsáveis por sincronizar informações do mundo real com a blockchain. Utilizam dados oficiais da B3 como fonte autoritativa de preços, com \textit{heartbeat} (atualizações periódicas obrigatórias) durante o pregão e pausa automática sincronizada com o \textit{circuit breaker} da B3.
 
 \subsection{Poderes do Smart Contract Multi-Sig}
 
@@ -534,14 +540,12 @@ O elemento central da governança é a definição precisa dos poderes de cada p
         Liquidação total & $\times$ Bloqueado & $\times$ Bloqueado & Idade $<$ 65 anos \\
         Liquidação total & \checkmark Livre & -- N/A & Idade $\geq$ 65 anos \\
         Adicionar herdeiro & \checkmark Exclusivo & $\times$ Bloqueado & Sempre \\
-        Confisco judicial & -- N/A & \checkmark Exclusivo & Com ordem judicial \\
-        Registrar óbito & -- N/A & \checkmark Exclusivo & Com certidão \\
-        Distribuir herança & -- N/A & \checkmark Autoriza & Após óbito \\
+        Distribuir herança & c/ Chave Primária & \checkmark Autoriza & Após óbito \\
         Liquidar estate & -- N/A & \checkmark Pleno & Após 100 anos \\
         Whitelist de ativos & $\times$ Bloqueado & \checkmark Exclusivo & Sempre \\
         \bottomrule
     \end{tabular}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{table}
 
 \subsubsection{Poderes do Indivíduo}
@@ -563,13 +567,9 @@ O governo possui poderes específicos e limitados:
 
 \begin{alineas}
     \item \textbf{Whitelist de Ativos}: Controla quais ativos podem ser negociados no sistema, garantindo que apenas empresas brasileiras reguladas participem;
-    \item \textbf{Registro de Óbito}: Único autorizado a registrar falecimento no sistema, mediante apresentação de certidão;
-    \item \textbf{Distribuição de Herança}: Autoriza a transferência de ativos para os beneficiários cadastrados;
-    \item \textbf{Confisco Judicial}: Pode executar ordens judiciais de confisco, mas apenas com autorização do Poder Judiciário;
+    \item \textbf{Distribuição de Herança}: Autoriza a transferência de ativos para os beneficiários cadastrados, apenas em caso de óbito e mediante posse da chave primária pela família;
     \item \textbf{Plenos Poderes após 100 anos}: Em caso de ausência de prova de vida por 100 anos, assume controle total para liquidação do estate.
 \end{alineas}
-
-É crucial observar que o governo \textbf{não pode} confiscar ativos sem ordem judicial. O smart contract exige a role \texttt{JUDICIAL\_ROLE} além de \texttt{GOVERNMENT\_ROLE} para executar qualquer confisco.
 
 \subsubsection{Checks and Balances}
 
@@ -652,7 +652,7 @@ Para dimensionar a inviabilidade econômica de bloqueios massivos, considere os 
         Processos judiciais gerados & $\sim$30-50 milhões \\
         \bottomrule
     \end{tabular}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{table}
 
 Essa assimetria de custos cria uma \textbf{barreira econômica natural} contra abusos estatais: perseguir um indivíduo exigiria atacar milhões.
@@ -696,7 +696,7 @@ Cada transação mistura a assinatura do remetente com outras assinaturas aleat�
         % Legenda
         \node[below=0.5cm of tx, align=center] {\small Observador não consegue distinguir\\qual usuário é o remetente real};
     \end{tikzpicture}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{figure}
 
 \subsubsection{Stealth Addresses (Endereços Furtivos)}
@@ -731,7 +731,7 @@ Para cada transação, um endereço único e descartável é gerado automaticame
         % Blockchain
         \node[below=0.5cm of a3, align=center] {\small Na blockchain, cada transação\\aparece com endereço diferente};
     \end{tikzpicture}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{figure}
 
 \subsubsection{RingCT (Ring Confidential Transactions)}
@@ -753,10 +753,10 @@ Os valores transacionados são criptografados, impedindo que observadores extern
         \node[box, fill=green!20, right=4cm of normal] (ringct) {Transação RingCT\\Valor: ???};
         
         % Observador
-        \node[below=1.5cm of normal] (obs1) {\includegraphics[width=0.8cm]{example-image}};
+        \node[below=1.5cm of normal] (obs1) {\faEye};
         \node[below=0.3cm of obs1] {\small Visível};
         
-        \node[below=1.5cm of ringct] (obs2) {\includegraphics[width=0.8cm]{example-image}};
+        \node[below=1.5cm of ringct] (obs2) {\faEyeSlash};
         \node[below=0.3cm of obs2] {\small Oculto};
         
         % Setas
@@ -766,7 +766,7 @@ Os valores transacionados são criptografados, impedindo que observadores extern
         % Criptografia
         \node[hidden, above right=-0.3cm and 0.5cm of ringct] {Criptografado};
     \end{tikzpicture}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{figure}
 
 Essas técnicas garantem que, mesmo com a blockchain sendo pública, não seja possível vincular transações a indivíduos específicos --- validando a possibilidade de um sistema previdenciário resistente a bloqueios arbitrários.
@@ -792,8 +792,34 @@ A Tabela \ref{tab:comparativo-sistemas} apresenta um comparativo entre as caract
         Custo operacional & Alto (burocracia estatal) & Baixo (automação) \\
         \bottomrule
     \end{tabular}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{table}
+
+\subsection{O Problema da Autocustódia}
+
+A autocustódia é um dos maiores desafios do ecossistema cripto. Estima-se que \textbf{entre 3 e 4 milhões de Bitcoins} já foram perdidos permanentemente, representando aproximadamente \textbf{17-20\% de todo o supply} --- um valor que ultrapassa centenas de bilhões de dólares aos preços atuais.
+
+\subsubsection{Métodos de Autocustódia}
+
+Existem diversas formas de o indivíduo guardar suas próprias chaves:
+
+\begin{alineas}
+    \item \textbf{Hardware Wallets} (Ledger, Trezor, Coldcard): Dispositivos físicos que armazenam chaves offline, isoladas de computadores conectados à internet;
+    \item \textbf{Paper Wallets}: Seed phrase escrita em papel ou gravada em metal resistente ao fogo e corrosão;
+    \item \textbf{Multisig pessoal}: Divisão de chaves em múltiplos locais geográficos, exigindo acesso a mais de um local para movimentar fundos.
+\end{alineas}
+
+\subsubsection{Alternativas de Custódia Compartilhada}
+
+Para mitigar o risco de perda sem entregar controle total ao governo, existem soluções intermediárias:
+
+\begin{alineas}
+    \item \textbf{Federações de custódia} (como Fedimint): Um grupo de guardiões independentes mantém partes das chaves, sem acesso individual aos fundos;
+    \item \textbf{Custódia colaborativa} (Casa, Unchained Capital): Empresas privadas seguram uma das chaves de um esquema multisig, mas não conseguem mover fundos sozinhas;
+    \item \textbf{Social Recovery Wallets}: Contratos inteligentes que permitem recuperação via guardiões pré-definidos (amigos, família, instituições).
+\end{alineas}
+
+Essas soluções permitem que o indivíduo mantenha soberania sobre seus ativos enquanto possui um mecanismo de recuperação que \textbf{não depende do Estado} e \textbf{não expõe suas chaves} a terceiros sem autenticação própria (login/senha + fatores adicionais).
 
 \subsection{Mitigação de Riscos da Descentralização}
 
@@ -814,5 +840,5 @@ A Tabela \ref{tab:riscos-mitigacao} apresenta os principais riscos do sistema de
         Ataque 51\% & Utilização de redes estabelecidas (Ethereum, Polygon) com alta segurança \\
         \bottomrule
     \end{tabular}
-    \fonte{Elaborado pelo autor (2026).}
+    \fonte{LIMA (2026).}
 \end{table}
