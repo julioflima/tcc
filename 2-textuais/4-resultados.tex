@@ -387,3 +387,178 @@ A proposta também apresenta desafios significativos:
     \item Possibilidade de perdas em períodos de crise;
     \item Necessidade de mecanismos de proteção para trabalhadores próximos à aposentadoria.
 \end{alineas}
+
+\section{Arquitetura Descentralizada do Mercado}
+
+Esta seção detalha como o mercado financeiro poupador pode ser concebido de maneira descentralizada, utilizando tecnologia blockchain para garantir transparência, segurança e governança distribuída.
+
+\subsection{Camadas da Arquitetura Descentralizada}
+
+O sistema é organizado em cinco camadas interdependentes, conforme ilustrado na Figura \ref{fig:camadas-descentralizadas}.
+
+\begin{figure}[htb]
+    \centering
+    \caption{Arquitetura em Camadas do Mercado Descentralizado}
+    \label{fig:camadas-descentralizadas}
+    \begin{tikzpicture}[
+        node distance=0.8cm,
+        layer/.style={rectangle, draw, minimum width=12cm, minimum height=1.2cm, align=center, font=\small}
+    ]
+        \node[layer, fill=blue!15] (l1) {Camada de Interface (dApp Web3 / Mobile App)};
+        \node[layer, fill=green!15, below=of l1] (l2) {Camada de Governança (MultiSigPowers.sol)};
+        \node[layer, fill=yellow!15, below=of l2] (l3) {Camada de Mercado (RetirementVault + TradeController + DividendDistributor)};
+        \node[layer, fill=orange!15, below=of l3] (l4) {Camada de Tokenização (RWAToken.sol - Ações B3 tokenizadas 1:1)};
+        \node[layer, fill=red!15, below=of l4] (l5) {Camada de Oracle (Chainlink / Band Protocol - Preços B3 $\rightarrow$ Blockchain)};
+    \end{tikzpicture}
+    \fonte{Elaborado pelo autor (2026).}
+\end{figure}
+
+\subsubsection{Camada de Tokenização (RWA - Real World Assets)}
+
+A tokenização de ativos reais é o fundamento do mercado descentralizado. Cada ação negociada na B3 é representada por um token ERC-20 na blockchain, mantendo paridade 1:1 com o ativo custodiado:
+
+\begin{alineas}
+    \item \textbf{Custódia Regulada}: Instituição custodiante autorizada pela CVM mantém as ações reais na CBLC (Central de Custódia e Liquidação);
+    \item \textbf{Mint/Burn Controlado}: Tokens só podem ser criados (mint) quando ações são depositadas, e destruídos (burn) quando ações são resgatadas;
+    \item \textbf{Auditoria Trimestral}: Verificação independente de que $\text{totalSupply}() = \text{ações custodiadas}$;
+    \item \textbf{Pausabilidade}: Mecanismo de emergência para pausar operações em caso de inconsistências.
+\end{alineas}
+
+\subsubsection{Camada de Oracle}
+
+Os oracles são responsáveis por sincronizar informações do mundo real (preços da B3) com a blockchain:
+
+\begin{alineas}
+    \item \textbf{Múltiplas Fontes}: Agregação de dados de B3, Bloomberg, Reuters e Yahoo Finance;
+    \item \textbf{Mediana de Preços}: Utilização da mediana para resistir a manipulação de uma única fonte;
+    \item \textbf{Heartbeat Check}: Atualização obrigatória a cada 15 minutos durante pregão;
+    \item \textbf{Circuit Breaker}: Pausa automática se o desvio entre fontes exceder 10\%.
+\end{alineas}
+
+\subsubsection{Camada de Mercado}
+
+O mercado pode ser implementado através de duas abordagens:
+
+\textbf{Opção A - Automated Market Maker (AMM):} Pools de liquidez para cada par de ativos (ex: PETR4/BRL), onde o preço é determinado algoritmicamente pela proporção de ativos no pool. Vantagens: liquidez constante, operação 24/7.
+
+\textbf{Opção B - Order Book On-Chain:} Livro de ordens descentralizado onde compradores e vendedores postam ordens limite. Vantagens: menor slippage para grandes volumes, descoberta de preço mais eficiente.
+
+\subsection{Poderes do Smart Contract Multi-Sig}
+
+O elemento central da governança é a definição precisa dos poderes de cada parte. A Tabela \ref{tab:poderes-multisig} apresenta a matriz de poderes implementada no smart contract.
+
+\begin{table}[htb]
+    \centering
+    \caption{Matriz de Poderes do Smart Contract Multi-Sig}
+    \label{tab:poderes-multisig}
+    \begin{tabular}{p{4cm}ccp{4cm}}
+        \toprule
+        \textbf{Operação} & \textbf{Indivíduo} & \textbf{Governo} & \textbf{Condição} \\
+        \midrule
+        Trade mensal & \checkmark Exclusivo & $\times$ Bloqueado & Cooldown 30 dias \\
+        Liquidação total & $\times$ Bloqueado & $\times$ Bloqueado & Idade $<$ 65 anos \\
+        Liquidação total & \checkmark Livre & -- N/A & Idade $\geq$ 65 anos \\
+        Adicionar herdeiro & \checkmark Exclusivo & $\times$ Bloqueado & Sempre \\
+        Confisco judicial & -- N/A & \checkmark Exclusivo & Com ordem judicial \\
+        Registrar óbito & -- N/A & \checkmark Exclusivo & Com certidão \\
+        Distribuir herança & -- N/A & \checkmark Autoriza & Após óbito \\
+        Liquidar estate & -- N/A & \checkmark Pleno & Após 100 anos \\
+        Whitelist de ativos & $\times$ Bloqueado & \checkmark Exclusivo & Sempre \\
+        \bottomrule
+    \end{tabular}
+    \fonte{Elaborado pelo autor (2026).}
+\end{table}
+
+\subsubsection{Poderes do Indivíduo}
+
+O indivíduo (trabalhador) possui os seguintes poderes exclusivos:
+
+\begin{alineas}
+    \item \textbf{Executar Trades}: Pode comprar e vender ativos livremente dentro do universo de investimentos permitido, respeitando o limite de 1 operação por mês;
+    \item \textbf{Gerenciar Beneficiários}: Tem controle exclusivo sobre quem são seus herdeiros e qual percentual cada um receberá;
+    \item \textbf{Prova de Vida}: Deve submeter prova de vida anual para manter sua carteira ativa;
+    \item \textbf{Plenos Poderes após 65 anos}: Ao atingir a idade de aposentadoria, pode liquidar qualquer posição sem necessidade de aprovação governamental.
+\end{alineas}
+
+É fundamental notar que o governo \textbf{não pode} fazer trades em nome do indivíduo. Esta restrição garante que a alocação de capital seja feita pela ``mão invisível'' das decisões individuais agregadas, não por uma autoridade central.
+
+\subsubsection{Poderes do Governo}
+
+O governo possui poderes específicos e limitados:
+
+\begin{alineas}
+    \item \textbf{Whitelist de Ativos}: Controla quais ativos podem ser negociados no sistema, garantindo que apenas empresas brasileiras reguladas participem;
+    \item \textbf{Registro de Óbito}: Único autorizado a registrar falecimento no sistema, mediante apresentação de certidão;
+    \item \textbf{Distribuição de Herança}: Autoriza a transferência de ativos para os beneficiários cadastrados;
+    \item \textbf{Confisco Judicial}: Pode executar ordens judiciais de confisco, mas apenas com autorização do Poder Judiciário;
+    \item \textbf{Plenos Poderes após 100 anos}: Em caso de ausência de prova de vida por 100 anos, assume controle total para liquidação do estate.
+\end{alineas}
+
+É crucial observar que o governo \textbf{não pode} confiscar ativos sem ordem judicial. O smart contract exige a role \texttt{JUDICIAL\_ROLE} além de \texttt{GOVERNMENT\_ROLE} para executar qualquer confisco.
+
+\subsubsection{Checks and Balances}
+
+O sistema implementa um mecanismo de freios e contrapesos onde:
+
+\begin{alineas}
+    \item O indivíduo sozinho não pode liquidar antes dos 65 anos (protege contra gastos impulsivos);
+    \item O governo sozinho não pode mover os ativos (protege contra confisco arbitrário);
+    \item O código é imutável após deploy (protege contra mudanças políticas);
+    \item Todas as transações são públicas e auditáveis (garante transparência).
+\end{alineas}
+
+\subsection{Descentralização Progressiva}
+
+A implementação do sistema pode seguir um caminho de descentralização progressiva:
+
+\textbf{Fase 1 - Federada (Anos 1-5):} Governo opera os nós validadores, custodiantes regulados pela CVM, contratos auditados mas upgradáveis via timelock.
+
+\textbf{Fase 2 - Híbrida (Anos 6-15):} Validadores distribuídos (40\% governo, 60\% entidades privadas), DAO para propostas de mudança, contratos com timelock de 30 dias para upgrades.
+
+\textbf{Fase 3 - Descentralizada (Anos 16+):} Validadores eleitos por stake, governança 100\% on-chain, contratos imutáveis.
+
+\subsection{Comparativo: Sistema Atual vs Sistema Proposto}
+
+A Tabela \ref{tab:comparativo-sistemas} apresenta um comparativo entre as características do sistema atual (INSS/FGTS) e o sistema proposto baseado em blockchain.
+
+\begin{table}[htb]
+    \centering
+    \caption{Comparativo entre Sistema Atual e Sistema Proposto}
+    \label{tab:comparativo-sistemas}
+    \begin{tabular}{p{3.5cm}p{4.5cm}p{4.5cm}}
+        \toprule
+        \textbf{Aspecto} & \textbf{Sistema Atual} & \textbf{Sistema Proposto} \\
+        \midrule
+        Transparência & Opaca, difícil auditoria & 100\% transparente, auditável \\
+        Propriedade & Governo é dono dos recursos & Indivíduo é dono (com regras) \\
+        Herança & Limitada por lei & Configurável pelo titular \\
+        Rendimento & Abaixo da inflação (FGTS) & Mercado de ações brasileiro \\
+        Portabilidade & Nenhuma & Global (chave privada) \\
+        Resistência a mudanças & Sujeito a políticas & Código imutável é lei \\
+        Custo operacional & Alto (burocracia estatal) & Baixo (automação) \\
+        \bottomrule
+    \end{tabular}
+    \fonte{Elaborado pelo autor (2026).}
+\end{table}
+
+\subsection{Mitigação de Riscos da Descentralização}
+
+A Tabela \ref{tab:riscos-mitigacao} apresenta os principais riscos do sistema descentralizado e suas respectivas mitigações.
+
+\begin{table}[htb]
+    \centering
+    \caption{Riscos e Mitigações do Sistema Descentralizado}
+    \label{tab:riscos-mitigacao}
+    \begin{tabular}{p{4cm}p{8cm}}
+        \toprule
+        \textbf{Risco} & \textbf{Mitigação} \\
+        \midrule
+        Perda de chave privada & Social recovery wallets, custódia colaborativa, federações de custódia (Fedimint) \\
+        Bug em smart contract & Múltiplas auditorias independentes, programa de bug bounty, deploy gradual \\
+        Manipulação de oracle & Múltiplas fontes de dados, mediana, circuit breakers \\
+        Colapso do mercado & Diversificação obrigatória, circuit breakers, reserva em ativos de baixo risco \\
+        Ataque 51\% & Utilização de redes estabelecidas (Ethereum, Polygon) com alta segurança \\
+        \bottomrule
+    \end{tabular}
+    \fonte{Elaborado pelo autor (2026).}
+\end{table}
