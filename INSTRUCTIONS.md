@@ -83,20 +83,24 @@ Um mercado financeiro poupador baseado em blockchain onde:
 ## Comandos de Build
 
 ```bash
-# Compilar o documento
+# Compilar o documento (recomendado - respeita latexmkrc)
+latexmk -pdf documento.tex
+
+# Alternativa (não respeita latexmkrc)
 make
 
 # Limpar arquivos temporários
 make clean
-
-# Usando latexmk diretamente
-latexmk -pdf documento.tex
 ```
 
 ### Configuração Importante
 - PDF gerado na raiz do projeto
 - Arquivos auxiliares em `temp/`
 - Configurado em `latexmkrc`
+- **Nota**: O `Makefile` usa `pdflatex` diretamente e não respeita as configurações do `latexmkrc`. Prefira usar `latexmk -pdf documento.tex`.
+
+### ⚠️ Regra Obrigatória para IA
+**Ao final de cada iteração com a IA, o PDF deve ser renderizado.** Execute o comando `latexmk -pdf documento.tex` para gerar o documento atualizado.
 
 ---
 

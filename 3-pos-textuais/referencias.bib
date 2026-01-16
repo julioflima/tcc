@@ -16,12 +16,55 @@
     address = {Chicago}
 }
 
-@book{furtado1961,
-    author = {Furtado, Celso},
-    title = {Desenvolvimento e Subdesenvolvimento},
-    publisher = {Fundo de Cultura},
-    year = {1961},
-    address = {Rio de Janeiro}
+@book{keynes1936,
+    author = {Keynes, John Maynard},
+    title = {The General Theory of Employment, Interest and Money},
+    publisher = {Macmillan},
+    year = {1936},
+    address = {London}
+}
+
+@report{tesouro2024,
+    author = {{Tesouro Nacional}},
+    title = {Resultado do Regime Geral de Previdência Social (RGPS)},
+    institution = {Ministério da Fazenda},
+    year = {2024},
+    type = {Relatório},
+    note = {Dados consolidados de 2023}
+}
+
+@techreport{insper2019,
+    author = {Carvalho, Laura and Sachsida, Adolfo and Mendes, Marcos},
+    title = {O FGTS e a Perda de Rendimento do Trabalhador Brasileiro},
+    institution = {Centro de Políticas Públicas do Insper},
+    year = {2019},
+    type = {Texto para Discussão},
+    address = {São Paulo}
+}
+
+@legislation{brasil1990fgts,
+    author = {{Brasil}},
+    title = {Lei nº 8.036, de 11 de maio de 1990},
+    year = {1990},
+    note = {Dispõe sobre o Fundo de Garantia do Tempo de Serviço, e dá outras providências}
+}
+
+@misc{siop2023,
+    author = {{Ministério do Planejamento e Orçamento}},
+    title = {Sistema Integrado de Planejamento e Orçamento -- SIOP: Painel do Orçamento Federal},
+    year = {2023},
+    howpublished = {Disponível em: \url{https://www.siop.planejamento.gov.br}},
+    note = {Acesso em: 15 jan. 2026}
+}
+
+@techreport{ifi2023,
+    author = {{Instituição Fiscal Independente}},
+    title = {Relatório de Acompanhamento Fiscal},
+    institution = {Senado Federal},
+    year = {2023},
+    number = {76},
+    month = {dezembro},
+    note = {Análise da composição das despesas primárias do governo federal}
 }
 
 @book{giambiagi2011,
@@ -39,6 +82,14 @@
     publisher = {Elsevier},
     year = {2019},
     address = {Rio de Janeiro}
+}
+
+@misc{aeps2023,
+    author = {{Ministério da Previdência Social}},
+    title = {Anuário Estatístico da Previdência Social -- {AEPS} 2023},
+    year = {2023},
+    howpublished = {Brasília: MPS},
+    note = {Dados sobre contribuições, benefícios e perfil demográfico dos segurados do RGPS}
 }
 
 @article{afonso2016,
@@ -75,11 +126,62 @@
     note = {Disponível em: \url{https://bitcoin.org/bitcoin.pdf}}
 }
 
+@article{lamport1982,
+    author = {Lamport, Leslie and Shostak, Robert and Pease, Marshall},
+    title = {The Byzantine Generals Problem},
+    journal = {ACM Transactions on Programming Languages and Systems},
+    volume = {4},
+    number = {3},
+    pages = {382--401},
+    year = {1982},
+    publisher = {ACM},
+    note = {Formalização do problema fundamental de consenso em sistemas distribuídos}
+}
+
+@inproceedings{back2002,
+    author = {Back, Adam},
+    title = {Hashcash - A Denial of Service Counter-Measure},
+    year = {2002},
+    note = {Disponível em: \url{http://www.hashcash.org/papers/hashcash.pdf}. Proposta original do sistema de prova de trabalho que inspirou o Bitcoin}
+}
+
+@misc{bip32,
+    author = {Wuille, Pieter},
+    title = {BIP-32: Hierarchical Deterministic Wallets},
+    year = {2012},
+    howpublished = {Bitcoin Improvement Proposal},
+    note = {Especificação técnica para derivação hierárquica de chaves criptográficas}
+}
+
+@misc{bip39,
+    author = {Palatinus, Marek and Rusnak, Pavol and Voisine, Aaron and Bowe, Sean},
+    title = {BIP-39: Mnemonic code for generating deterministic keys},
+    year = {2013},
+    howpublished = {Bitcoin Improvement Proposal},
+    note = {Padrão para geração de sementes mnemônicas de 12 ou 24 palavras}
+}
+
+@misc{coleman2015,
+    author = {Coleman, Ian},
+    title = {BIP39 Mnemonic Code Converter},
+    year = {2015},
+    howpublished = {Ferramenta online},
+    url = {https://iancoleman.io/bip39/},
+    note = {Acesso em: 16 jan. 2026}
+}
+
 @article{buterin2014,
     author = {Buterin, Vitalik},
     title = {A Next-Generation Smart Contract and Decentralized Application Platform},
     year = {2014},
     note = {Ethereum Whitepaper. Disponível em: \url{https://ethereum.org/whitepaper}}
+}
+
+@misc{matsunaga2012,
+    author = {{Tribunal de Justiça de São Paulo}},
+    title = {Caso Elize Matsunaga: Processo de homicídio e questões sucessórias},
+    year = {2012},
+    note = {Elize Matsunaga foi condenada pelo homicídio do marido Marcos Matsunaga, mas manteve direitos sucessórios sobre parte do patrimônio conforme legislação brasileira}
 }
 
 @book{gil2008,
@@ -157,14 +259,6 @@
     address = {Princeton}
 }
 
-@book{keynes1936,
-    author = {Keynes, John Maynard},
-    title = {The General Theory of Employment, Interest and Money},
-    publisher = {Macmillan},
-    year = {1936},
-    address = {London}
-}
-
 @article{barr2006,
     author = {Barr, Nicholas and Diamond, Peter},
     title = {The Economics of Pensions},
@@ -197,4 +291,161 @@
     publisher = {Portfolio},
     year = {2016},
     address = {New York}
+}
+
+@misc{satoshi2008,
+  author = {Nakamoto, Satoshi},
+  title = {Bitcoin: A Peer-to-Peer Electronic Cash System},
+  year = {2008},
+  url = {https://bitcoin.org/bitcoin.pdf},
+  note = {Whitepaper original do Bitcoin}
+}
+
+@misc{genesisblock2009,
+  author = {Nakamoto, Satoshi},
+  title = {Bitcoin Genesis Block},
+  year = {2009},
+  howpublished = {Bloco \#0 da blockchain do Bitcoin},
+  note = {Mensagem embutida no coinbase do bloco gênesis: ``The Times 03/Jan/2009 Chancellor on brink of second bailout for banks''. Referência à manchete do jornal The Times sobre o resgate aos bancos britânicos},
+  url = {https://blockchair.com/bitcoin/block/0}
+}
+
+@book{bastiat1850,
+  author = {Frédéric Bastiat},
+  title = {A Lei},
+  year = {1850},
+  publisher = {Instituto Ludwig von Mises Brasil},
+  note = {Discussão sobre a perversão da lei como instrumento de espoliação}
+}
+
+@article{china2021,
+  author = {Huang, Yiping and Miao, Meng and Wang, Pengfei and Xue, Liyan},
+  title = {The Effects of China's Cryptocurrency Ban on Digital Asset Markets},
+  year = {2021},
+  journal = {Journal of Financial Economics},
+  volume = {144},
+  number = {2},
+  pages = {711--731},
+  doi = {10.1016/j.jfineco.2021.10.001},
+  note = {Análise empírica dos efeitos da proibição chinesa de criptomoedas sobre o mercado de ativos digitais, incluindo o fechamento de exchanges centralizadas}
+}
+
+@misc{monero2023,
+  author = {{The Monero Project}},
+  title = {About Monero: Technical Information},
+  year = {2023},
+  howpublished = {Documentação oficial do projeto Monero},
+  url = {https://www.getmonero.org/resources/about/},
+  note = {Descrição das principais tecnologias de privacidade: Ring Signatures, Stealth Addresses e RingCT (Ring Confidential Transactions)},
+  urldate = {2026-01-16}
+}
+
+% Novas referências adicionadas
+
+@article{laffer2004,
+  author = {Laffer, Arthur B.},
+  title = {The Laffer Curve: Past, Present, and Future},
+  journal = {Backgrounder},
+  publisher = {The Heritage Foundation},
+  number = {1765},
+  year = {2004},
+  url = {https://www.heritage.org/taxes/report/the-laffer-curve-past-present-and-future},
+  note = {Análise histórica e aplicações da Curva de Laffer na política tributária}
+}
+
+@article{pinheiro2000,
+  author = {Pinheiro, Armando Castelar},
+  title = {A Privatização no Brasil: O Caso da Vale do Rio Doce},
+  journal = {Pesquisa e Planejamento Econômico},
+  volume = {30},
+  number = {1},
+  pages = {1--36},
+  year = {2000},
+  publisher = {IPEA},
+  note = {Análise crítica do processo de privatização da Companhia Vale do Rio Doce}
+}
+
+@article{telebras1998,
+  author = {Pires, José Cláudio Linhares},
+  title = {A Reestruturação do Setor de Telecomunicações no Brasil},
+  journal = {Revista do BNDES},
+  volume = {6},
+  number = {11},
+  pages = {187--214},
+  year = {1999},
+  publisher = {Banco Nacional de Desenvolvimento Econômico e Social},
+  note = {Análise do processo de privatização do Sistema Telebrás e seus impactos na universalização dos serviços de telecomunicações no Brasil}
+}
+
+@misc{unwto2023,
+  author = {{UNWTO}},
+  title = {World Tourism Barometer},
+  year = {2023},
+  howpublished = {World Tourism Organization},
+  url = {https://www.unwto.org/tourism-statistics/key-tourism-statistics},
+  note = {Estatísticas globais de turismo, incluindo receitas por país e região}
+}
+
+@misc{mallorca2023,
+  author = {{Instituto Nacional de Estadística}},
+  title = {Estadística de Movimientos Turísticos en Fronteras (FRONTUR)},
+  year = {2023},
+  howpublished = {Gobierno de España},
+  url = {https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176996&menu=ultiDatos&idp=1254735576863},
+  note = {Dados oficiais sobre movimento turístico nas Ilhas Baleares (Mallorca)}
+}
+
+@misc{embratur2023,
+  author = {{Embratur}},
+  title = {Anuário Estatístico de Turismo 2023},
+  year = {2023},
+  howpublished = {Ministério do Turismo},
+  url = {https://www.gov.br/turismo/pt-br/acesso-a-informacao/acoes-e-programas/observatorio/anuario-estatistico-de-turismo},
+  note = {Estatísticas oficiais do turismo brasileiro, incluindo receita cambial}
+}
+
+@misc{spacex2023,
+  author = {{SpaceX}},
+  title = {Falcon 9: The World's First Orbital Class Reusable Rocket},
+  year = {2023},
+  howpublished = {Space Exploration Technologies Corp.},
+  url = {https://www.spacex.com/vehicles/falcon-9/},
+  note = {Especificações técnicas e custos operacionais do foguete Falcon 9}
+}
+
+@article{wertz2011,
+  author = {Wertz, James R. and Larson, Wiley J.},
+  title = {Space Mission Engineering: The New SMAD},
+  journal = {Space Technology Library},
+  publisher = {Microcosm Press},
+  year = {2011},
+  note = {Referência técnica sobre engenharia de missões espaciais, incluindo análise de custos de propelente e vantagens de lançamento equatorial}
+}
+
+@misc{inmet2023,
+  author = {{INMET}},
+  title = {Normais Climatológicas do Brasil 1991-2020},
+  year = {2023},
+  howpublished = {Instituto Nacional de Meteorologia},
+  url = {https://portal.inmet.gov.br/normais},
+  note = {Dados climatológicos oficiais do Brasil, incluindo informações sobre o clima semiárido do Ceará}
+}
+
+@article{funceme2022,
+  author = {{FUNCEME}},
+  title = {Caracterização Climática do Estado do Ceará},
+  year = {2022},
+  journal = {Boletim Climatológico},
+  publisher = {Fundação Cearense de Meteorologia e Recursos Hídricos},
+  url = {http://www.funceme.br/},
+  note = {Análise do clima do Ceará, destacando a estabilidade meteorológica e ausência de fenômenos extremos}
+}
+
+@misc{flightradar2024,
+  author = {{Flightradar24}},
+  title = {Live Air Traffic},
+  year = {2024},
+  howpublished = {Flightradar24 AB},
+  url = {https://www.flightradar24.com/},
+  note = {Dados em tempo real de tráfego aéreo global, demonstrando baixa densidade de voos sobre o Nordeste brasileiro}
 }
