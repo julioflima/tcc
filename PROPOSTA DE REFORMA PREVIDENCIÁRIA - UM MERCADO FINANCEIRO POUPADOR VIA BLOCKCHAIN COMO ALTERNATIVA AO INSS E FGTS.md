@@ -1,9 +1,5 @@
 # Proposta de Reforma Econômica: Um Mercado Financeiro Poupador via Blockchain
 
-## As Duas Escolas Econômicas
-
-Há basicamente duas escolas de economia em voga: **Desenvolvimentista** e **Austríaca**. Sem entrar no mérito de quem está correta, há um fato a se considerar: o mercado financeiro é movido — e o que justifica é a quantidade de dinheiro investido no mercado americano — pela **inovação**. A produtividade aumenta, o acesso às coisas melhora (ou seja, o preço cai) e a deflação acontece.
-
 ## Os Verdadeiros Problemas do Brasil
 
 O Brasil tem muitos problemas. Porém, talvez os maiores de todos, por mais que não sejam os que mais engajam, como corrupção, política ou até a polarização política, sejam os problemas de infraestrutura. Afinal, todo povo quer ser rico, independentemente de que lado político esteja. A corrupção nasce da natureza de autopreservação e interesses pessoais. Nesse ponto de vista, a definição de corrupção é quase a mesma de definição de política. O que invalida que sejam os maiores problemas, pois esses nascem da ação intrinsecamente humana e são intrínsecos ao processo social.
@@ -217,10 +213,7 @@ Essas técnicas garantem que, mesmo com a blockchain sendo pública, não seja p
 ## Fontes
 
 - Ações garantem futuro
-- Mises
 - Gurgel
-- Desenvolvimentismo
-- Escola Austríaca
 - Por que o jurado funciona
 - A mágica da mão invisível em alocar capital
 - INSS Australiano

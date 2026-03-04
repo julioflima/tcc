@@ -65,10 +65,6 @@ Um mercado financeiro poupador baseado em blockchain onde:
 
 ## Referências Teóricas Importantes
 
-### Escolas Econômicas
-- **Escola Austríaca**: Mises, Hayek, Rothbard - defesa da poupança e livre mercado
-- **Desenvolvimentista**: Furtado, Keynes - papel do Estado no desenvolvimento
-
 ### Modelos de Referência
 - **Superannuation** (Austrália): Sistema de capitalização obrigatória desde 1992
 - Acumulou >3.5 trilhões AUD (~170% do PIB)

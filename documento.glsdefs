@@ -1,0 +1,140 @@
+\glsdefs@newdocentry{symPercent}%
+{%
+name={\ensuremath {\%}},%
+sort={percent},%
+type={symbols},%
+first={\protect \ensuremath  {\%}},%
+firstplural={\protect \ensuremath  {\%}s},%
+text={\protect \ensuremath  {\%}},%
+plural={\protect \ensuremath  {\%}s},%
+description={Percentual},%
+descriptionplural={Percentual},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{symBRL}%
+{%
+name={\ensuremath {R\$}},%
+sort={real},%
+type={symbols},%
+first={\protect \ensuremath  {R\protect \$}},%
+firstplural={\protect \ensuremath  {R\protect \$}s},%
+text={\protect \ensuremath  {R\protect \$}},%
+plural={\protect \ensuremath  {R\protect \$}s},%
+description={Real brasileiro, moeda corrente nacional},%
+descriptionplural={Real brasileiro, moeda corrente nacional},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{symMultisig}%
+{%
+name={\ensuremath {m/n}},%
+sort={multisig},%
+type={symbols},%
+first={\protect \ensuremath  {m/n}},%
+firstplural={\protect \ensuremath  {m/n}s},%
+text={\protect \ensuremath  {m/n}},%
+plural={\protect \ensuremath  {m/n}s},%
+description={Esquema de multi-assinatura, onde $m$ de $n$ chaves são necessárias para autorizar uma transação},%
+descriptionplural={Esquema de multi-assinatura, onde $m$ de $n$ chaves são necessárias para autorizar uma transação},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{symHash}%
+{%
+name={\ensuremath {H(x)}},%
+sort={hash},%
+type={symbols},%
+first={\protect \ensuremath  {H(x)}},%
+firstplural={\protect \ensuremath  {H(x)}s},%
+text={\protect \ensuremath  {H(x)}},%
+plural={\protect \ensuremath  {H(x)}s},%
+description={Função hash criptográfica aplicada ao valor $x$},%
+descriptionplural={Função hash criptográfica aplicada ao valor $x$},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{symSigma}%
+{%
+name={\ensuremath {\sum }},%
+sort={sigma},%
+type={symbols},%
+first={\protect \ensuremath  {\DOTSB \sum@ \slimits@ }},%
+firstplural={\protect \ensuremath  {\DOTSB \sum@ \slimits@ }s},%
+text={\protect \ensuremath  {\DOTSB \sum@ \slimits@ }},%
+plural={\protect \ensuremath  {\DOTSB \sum@ \slimits@ }s},%
+description={Somatório},%
+descriptionplural={Somatório},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
