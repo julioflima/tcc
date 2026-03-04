@@ -9,7 +9,15 @@ Para compreender a proposta deste trabalho, é fundamental examinar as origens h
 
 \subsection{A Bolsa de Valores de Amsterdã}
 
-A \textbf{Bolsa de Valores de Amsterdã} (\textit{Amsterdam Stock Exchange}), fundada em 1602, é considerada a primeira bolsa de valores do mundo \cite{gelderblom2013}. Sua criação está diretamente vinculada à fundação da \textbf{Companhia Holandesa das Índias Orientais} (\textit{Vereenigde Oostindische Compagnie} --- VOC), a primeira sociedade anônima de capital aberto da história \cite{dejong2005}.
+A \textbf{Bolsa de Valores de Amsterdã} (\textit{Amsterdam Stock Exchange}), fundada em 1602, é considerada a primeira bolsa de valores do mundo \cite{gelderblom2013}. Sua criação está diretamente vinculada à fundação da \textbf{Companhia Holandesa das Índias Orientais} (\textit{Vereenigde Oostindische Compagnie} --- VOC), a primeira sociedade anônima de capital aberto da história \cite{dejong2005}. A Figura \ref{fig:beurs-hendrick-de-keyser} retrata o edifício da Bolsa de Amsterdã, projetado pelo arquiteto Hendrick de Keyser e inaugurado em 1611.
+
+\begin{figure}[htb]
+    \centering
+    \caption{A Bolsa de Valores de Amsterdã (\textit{Beurs van Hendrick de Keyser})}
+    \label{fig:beurs-hendrick-de-keyser}
+    \includegraphics[width=0.85\textwidth]{figuras/beurs_van_hendrick_de_keyser.jpg}
+    \fonte{Pintura de Job Adriaenszoon Berckheyde (c. 1670).}
+\end{figure}
 
 Um aspecto frequentemente negligenciado é que a Bolsa de Amsterdã \textbf{não foi criada por decreto governamental}. Para compreender seu surgimento, é necessário entender o contexto das grandes navegações comerciais da época. As expedições marítimas para as Índias Orientais eram empreendimentos de altíssimo risco e custo proibitivo: uma única viagem podia levar dois anos, enfrentando tempestades, piratas, doenças e naufrágios. Nenhum comerciante individual, por mais rico que fosse, tinha recursos suficientes --- ou estômago para o risco --- de financiar sozinho uma frota inteira.
 
@@ -130,19 +138,106 @@ O \textbf{Problema dos Generais Bizantinos}, formalizado por \citeonline{lamport
 
 Este problema abstrato representa o desafio fundamental de sistemas distribuídos: como múltiplos nós de uma rede podem concordar sobre o estado verdadeiro de um sistema quando alguns nós podem estar comprometidos ou agindo maliciosamente. Durante décadas, cientistas da computação consideraram impossível resolver este problema em redes abertas e sem autoridade central --- até o surgimento do Bitcoin.
 
+\subsubsection{Funções Hash Criptográficas}
+
+Antes de compreender os mecanismos de consenso da blockchain, é necessário introduzir o conceito de função \textit{hash}, uma das primitivas criptográficas mais fundamentais da computação moderna. Conforme definido por \citeonline{tomaz2014}, uma função \textit{hash} é uma função $H$ que recebe como entrada uma mensagem $m$ no formato de uma cadeia de bits de tamanho arbitrário e retorna uma cadeia de bits $x$ de tamanho fixo, chamada de código \textit{hash} ou etiqueta \textit{hash}, em que $|m| > |x|$. Formalmente:
+
+$$H(m) = x$$
+
+Essa propriedade de compressão --- transformar dados de qualquer tamanho em uma representação de tamanho fixo --- faz com que as funções \textit{hash} sejam também conhecidas como funções resumo. Seu objetivo central é gerar uma etiqueta que forneça uma identificação unívoca para cada mensagem: qualquer alteração na entrada, ainda que de um único bit, produz uma saída completamente diferente, permitindo verificar se uma informação foi violada durante a transmissão \cite{tomaz2014}.
+
+A Figura \ref{fig:assinatura-digital-hash} ilustra uma aplicação prática das funções \textit{hash} em assinaturas digitais: o emissor aplica a função \textit{hash} à mensagem original e cifra a etiqueta resultante com sua chave privada. O receptor, ao receber a mensagem, recalcula o \textit{hash} e compara com a etiqueta decifrada pela chave pública do emissor, verificando simultaneamente a integridade e a autenticidade da informação.
+
+\begin{figure}[htb]
+    \centering
+    \caption{Assinatura digital utilizando algoritmos de chave pública e função hash}
+    \label{fig:assinatura-digital-hash}
+    \includegraphics[width=0.85\textwidth]{figuras/assinatura_digital_hash.png}
+    \fonte{Secretaria de Estado de Fazenda do Distrito Federal (2012) \textit{apud} \citeonline{tomaz2014}.}
+\end{figure}
+
+As funções \textit{hash} pertencem ao grupo das funções unidirecionais (\textit{one-way functions}): dado $x$, é fácil computar $H(x) = y$, porém, dado apenas $y$, é computacionalmente inviável encontrar $x$ \cite{tomaz2014}. Para uso em sistemas criptográficos, três propriedades adicionais são exigidas \cite{tomaz2014}:
+
+\begin{alineas}
+    \item \textbf{Resistência à pré-imagem}: em matemática, a \textit{pré-imagem} de um valor $x$ sob uma função $H$ é o elemento $m$ do domínio tal que $H(m) = x$, isto é, a entrada original que produziu aquela saída. Dizer que uma função \textit{hash} é resistente à pré-imagem significa que, dada apenas uma etiqueta \textit{hash} $x$, é computacionalmente inviável recuperar qualquer mensagem $m$ que a tenha gerado. Esta propriedade também é conhecida como \textit{propriedade unidirecional}. Em termos simples: ``me deram um \textit{hash} --- consegue descobrir qual mensagem o gerou?''. A resposta deve ser não. Um atacante que possua somente o \textit{hash} de uma senha, por exemplo, não consegue ``inverter'' a função para descobrir a senha original;
+    \item \textbf{Resistência à segunda pré-imagem}: dada uma mensagem $m$ conhecida, é computacionalmente inviável encontrar uma mensagem diferente $m' \neq m$ que produza a mesma etiqueta \textit{hash}, ou seja, $H(m') = H(m)$. Enquanto a resistência à pré-imagem protege contra a descoberta de \textit{qualquer} entrada a partir de uma saída, a resistência à segunda pré-imagem protege contra a substituição de uma mensagem \textit{específica} por outra equivalente. Em termos simples: dada uma mensagem, é difícil encontrar uma mensagem diferente que produza o mesmo \textit{hash}. Para dimensionar essa dificuldade: em uma função com saída de 256 bits, encontrar uma segunda mensagem que produza o mesmo \textit{hash} de uma mensagem dada exigiria, em média, $2^{256}$ tentativas --- um número superior à quantidade estimada de átomos no universo observável ($\approx 2^{265}$). Mesmo que todos os computadores do planeta trabalhassem em conjunto por bilhões de anos, a tarefa permaneceria inviável;
+    \item \textbf{Resistência à colisão}: é computacionalmente inviável encontrar \textit{qualquer} par de mensagens $(m, m')$ com $m \neq m'$ que produza $H(m) = H(m')$. Note-se que resistência à colisão é uma propriedade mais forte que resistência à segunda pré-imagem: se é difícil encontrar \textit{qualquer} par colidindo, então é ainda mais difícil encontrar uma colisão com uma mensagem específica. Em termos simples: é difícil encontrar duas mensagens diferentes que possuam \textit{hash} iguais. Mesmo com a vantagem estatística do ataque do aniversário (descrito adiante), que reduz o esforço para $2^{128}$ tentativas no caso do SHA-256, essa quantidade ainda é astronomicamente grande --- equivalente a trilhões de trilhões de vezes a capacidade computacional combinada de toda a humanidade.
+\end{alineas}
+
+Essas propriedades garantem que as funções \textit{hash} criptográficas constituam a base sobre a qual se constroem mecanismos de integridade, autenticação e, no contexto da blockchain, os mecanismos de prova de trabalho descritos a seguir.
+
+Além dessas três propriedades de segurança, toda função \textit{hash} deve satisfazer duas propriedades básicas que se confundem com a própria definição \cite{tomaz2014}:
+
+\begin{alineas}
+    \item \textbf{Compressão}: a função deve mapear uma cadeia de bits de tamanho arbitrário para uma cadeia de bits de tamanho fixo. Em termos simples: não importa se a entrada é um documento de 1 byte ou um arquivo de 10 gigabytes --- a saída terá sempre o mesmo tamanho. No caso do SHA-256, por exemplo, qualquer entrada produz uma etiqueta de exatamente 256 bits (32 bytes). Essa propriedade é o que permite comparar a integridade de arquivos enormes verificando apenas uma pequena sequência fixa de bits;
+    \item \textbf{Facilidade de computação}: dada uma mensagem $m$, deve ser fácil e rápido computar $H(m)$. A função \textit{hash} precisa ser eficiente na direção ``entrada $\to$ saída'', pois será executada milhares de vezes por segundo em aplicações reais. Na blockchain, por exemplo, mineradores calculam bilhões de \textit{hashes} por segundo durante a prova de trabalho. Se a função fosse lenta para computar, o sistema se tornaria impraticável. A assimetria está justamente nisso: calcular o \textit{hash} é rápido, mas \textit{inverter} o \textit{hash} (encontrar a entrada a partir da saída) é computacionalmente inviável --- é essa assimetria que fundamenta toda a segurança do mecanismo.
+\end{alineas}
+
+\paragraph{Exemplo prático: verificação de integridade.}
+
+Para ilustrar a aplicação das funções \textit{hash} na verificação de integridade, considere o seguinte cenário baseado em \citeonline{tomaz2014}: suponha que Alice deseje proteger um arquivo $m$, armazenado em seu computador, contra modificações indevidas. Alice gera uma etiqueta \textit{hash} do arquivo com $H(m) = x$ após sua última alteração legítima. Posteriormente, ao desconfiar que o arquivo sofreu alguma modificação e tornou-se $m'$, Alice calcula novamente $H(m') = x'$. Se $x = x'$, há alta probabilidade de o arquivo não ter sido alterado; se $x \neq x'$, Alice constata que o arquivo foi violado.
+
+Esse mecanismo é precisamente o que ocorre na blockchain: cada bloco contém o \textit{hash} do bloco anterior, formando uma cadeia. Se qualquer transação em um bloco passado for adulterada, o \textit{hash} daquele bloco muda, invalidando todos os blocos subsequentes. Assim, a verificação de integridade por funções \textit{hash} --- que no exemplo de Alice protege um único arquivo --- na blockchain protege o histórico completo de todas as transações já registradas. É importante notar que, como aplicação criptográfica, as funções \textit{hash} não têm o objetivo de garantir confidencialidade, e sim integridade \cite{tomaz2014}.
+
+\paragraph{Construção de Merkle-Damgård.}
+
+As principais funções \textit{hash} utilizadas atualmente são construídas com base em uma estrutura conhecida como \textbf{construção de Merkle-Damgård} \cite{stallings2008}. Esse método define como construir funções \textit{hash} resistentes à colisão a partir de \textit{funções de compressão} resistentes à colisão, utilizando uma estrutura iterada.
+
+Uma \textbf{função de compressão} é um mapeamento $C: \{0,1\}^m \to \{0,1\}^n$, com $m > n$, que a partir de uma cadeia de $m$ bits gera uma cadeia de $n$ bits. O procedimento funciona da seguinte forma \cite{tomaz2014}: a mensagem original é dividida em blocos de tamanho fixo. A função de compressão $C$ é então aplicada iterativamente: o primeiro bloco é combinado com um valor inicial fixo (chamado \textbf{vetor de inicialização}), produzindo um resultado intermediário. Esse resultado é combinado com o segundo bloco, e assim por diante, até que todos os blocos tenham sido processados. A saída da última iteração é a etiqueta \textit{hash} final. Em termos simples: a mensagem é ``digerida'' pedaço por pedaço, e cada pedaço influencia o resultado final --- por isso, alterar qualquer parte da mensagem original modifica completamente o \textit{hash} produzido.
+
+\paragraph{Segurança: o ataque do aniversário.}
+
+A segurança das funções \textit{hash} está diretamente relacionada com a dificuldade de gerar colisões. Há basicamente duas formas de atacar a resistência à colisão de uma função \textit{hash}: por \textit{criptoanálise} (explorando a estrutura interna da função de compressão) e por meio do chamado \textbf{ataque do aniversário} \cite{tomaz2014}.
+
+\paragraph{Ataque do aniversário.}
+
+O ataque do aniversário é baseado em um resultado contraintuitivo da teoria das probabilidades: o \textbf{paradoxo do aniversário}. Em um grupo de apenas 23 pessoas, a probabilidade de pelo menos duas compartilharem a mesma data de aniversário já ultrapassa 50\%. Isso ocorre porque a probabilidade de \textit{não} haver coincidência entre $n$ pessoas em 365 dias possíveis é:
+
+$$\bar{p}(n) = \frac{365}{365} \cdot \frac{364}{365} \cdot \frac{363}{365} \cdots \frac{365 - (n-1)}{365} = \frac{365!}{365^n \cdot (365-n)!}$$
+
+Para $n = 23$, a probabilidade de colisão é $p(23) = 1 - \bar{p}(23) \approx 50{,}7\%$ \cite{tomaz2014}. A Figura \ref{fig:paradoxo-aniversario} ilustra como a probabilidade de colisão cresce rapidamente com o aumento do número de pessoas --- atingindo 50\% com apenas 23 e ultrapassando 99\% com cerca de 57.
+
+\begin{figure}[htb]
+    \centering
+    \caption{Probabilidade de colisão no paradoxo do aniversário em função do número de pessoas}
+    \label{fig:paradoxo-aniversario}
+    \includegraphics[width=0.85\textwidth]{figuras/paradoxo_aniversario.png}
+    \fonte{Elaborada pelo autor (2026).}
+\end{figure}
+
+Esse raciocínio se estende diretamente às funções \textit{hash}: se uma função produz etiquetas de $n$ bits, existem $2^n$ saídas possíveis. O ataque do aniversário mostra que são necessárias aproximadamente $\sqrt{2^n} = 2^{n/2}$ tentativas para encontrar uma colisão com probabilidade de 50\%. A Tabela \ref{tab:esforco-hash} resume o esforço computacional exigido para quebrar cada propriedade de segurança.
+
+\begin{table}[htb]
+    \centering
+    \caption{Esforço computacional para quebrar propriedades de uma função \textit{hash} com saída de $n$ bits}
+    \label{tab:esforco-hash}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Propriedade} & \textbf{Tentativas necessárias} \\
+        \midrule
+        Resistência à pré-imagem & $2^n$ \\
+        Resistência à segunda pré-imagem & $2^n$ \\
+        Resistência à colisão & $2^{n/2}$ \\
+        \bottomrule
+    \end{tabular}
+    \fonte{Stallings (2008) \textit{apud} \citeonline{tomaz2014}.}
+\end{table}
+
+Por exemplo, uma função \textit{hash} com saída de 256 bits exige no mínimo $2^{128}$ operações para encontrar uma colisão via ataque do aniversário --- quantidade computacionalmente inviável com a tecnologia atual \cite{tomaz2014}.
+
+\paragraph{Implicação para assinaturas digitais: o algoritmo de Yuval.}
+
+Pode parecer que o ataque do aniversário tem aplicabilidade limitada, afinal um adversário tipicamente deseja forjar uma colisão com uma mensagem \textit{específica} (segunda pré-imagem), não com uma mensagem qualquer. Entretanto, em 1979, \citeonline{yuval1979} demonstrou como o ataque do aniversário pode ser explorado de forma devastadora contra esquemas de assinatura digital.
+
+O algoritmo de Yuval funciona da seguinte forma: dado uma mensagem legítima $m_1$ e uma mensagem fraudulenta $m_2$, o atacante gera $t = 2^{n/2}$ pequenas variações de $m_1$ (modificações que não alteram o sentido original, como trocar espaços ou sinônimos) e armazena seus \textit{hashes} em uma tabela. Em seguida, gera variações de $m_2$ e, para cada uma, verifica se o \textit{hash} coincide com algum da tabela. Pelo paradoxo do aniversário, uma colisão $H(m'_1) = H(m'_2)$ será encontrada com probabilidade de 50\% após aproximadamente $t$ tentativas \cite{yuval1979}.
+
+No contexto da blockchain, esse ataque reforça por que o Bitcoin utiliza SHA-256: com $2^{128}$ operações necessárias para o ataque de Yuval, forjar uma transação que produza o mesmo \textit{hash} de uma transação legítima permanece computacionalmente impossível. Essa garantia é o que permite que assinaturas digitais na blockchain sejam confiáveis.
+
 \subsubsection{Hashcash e Prova de Trabalho}
 
 Em 1997, Adam Back propôs o \textbf{Hashcash}, um sistema anti-spam que exigia dos remetentes de e-mail a realização de um trabalho computacional antes do envio \cite{back2002}. A ideia central é simples: encontrar um valor que, quando combinado com os dados da mensagem e processado por uma função \textit{hash} criptográfica, produza um resultado com determinado número de zeros iniciais.
 
-Este conceito --- exigir ``prova de trabalho'' (\textit{Proof of Work}) --- tornou-se o mecanismo central pelo qual o Bitcoin resolve o Problema dos Generais Bizantinos. Para adicionar um bloco à cadeia, mineradores competem para encontrar um \textit{hash} válido, gastando recursos computacionais reais. Um atacante que desejasse fraudar o sistema precisaria refazer todo esse trabalho, tornando ataques economicamente inviáveis.
-
-A função \textit{hash} criptográfica possui propriedades essenciais:
-\begin{alineas}
-    \item \textbf{Determinística}: A mesma entrada sempre produz a mesma saída;
-    \item \textbf{Unidirecional}: É computacionalmente inviável obter a entrada a partir da saída;
-    \item \textbf{Sensível}: Qualquer alteração mínima na entrada produz saída completamente diferente;
-    \item \textbf{Resistente a colisões}: É extremamente improvável encontrar duas entradas que produzam a mesma saída.
-\end{alineas}
+Este conceito --- exigir ``prova de trabalho'' (\textit{Proof of Work}) --- tornou-se o mecanismo central pelo qual o Bitcoin resolve o Problema dos Generais Bizantinos. Para adicionar um bloco à cadeia, mineradores competem para encontrar um \textit{hash} válido, gastando recursos computacionais reais. Um atacante que desejasse fraudar o sistema precisaria refazer todo esse trabalho, tornando ataques economicamente inviáveis. As propriedades das funções \textit{hash} criptográficas --- unidirecionalidade, resistência à pré-imagem e resistência à colisão, descritas na seção anterior --- são exatamente o que torna esse mecanismo viável.
 
 \subsubsection{O Problema do Gasto Duplo}
 
