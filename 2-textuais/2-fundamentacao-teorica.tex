@@ -143,7 +143,10 @@ Este problema abstrato representa o desafio fundamental de sistemas distribuído
 
 Antes de compreender os mecanismos de consenso da blockchain, é necessário introduzir o conceito de função \textit{hash}, uma das primitivas criptográficas mais fundamentais da computação moderna. Conforme definido por \citeonline{tomaz2014}, uma função \textit{hash} é uma função $H$ que recebe como entrada uma mensagem $m$ no formato de uma cadeia de bits de tamanho arbitrário e retorna uma cadeia de bits $x$ de tamanho fixo, chamada de código \textit{hash} ou etiqueta \textit{hash}, em que $|m| > |x|$. Formalmente:
 
-$$H(m) = x$$
+\begin{equation}
+\label{eq:hash}
+H(m) = x
+\end{equation}
 
 Essa propriedade de compressão --- transformar dados de qualquer tamanho em uma representação de tamanho fixo --- faz com que as funções \textit{hash} sejam também conhecidas como funções resumo. Seu objetivo central é gerar uma etiqueta que forneça uma identificação unívoca para cada mensagem: qualquer alteração na entrada, ainda que de um único bit, produz uma saída completamente diferente, permitindo verificar se uma informação foi violada durante a transmissão \cite{tomaz2014}.
 
@@ -194,7 +197,10 @@ A segurança das funções \textit{hash} está diretamente relacionada com a dif
 
 O ataque do aniversário é baseado em um resultado contraintuitivo da teoria das probabilidades: o \textbf{paradoxo do aniversário}. Em um grupo de apenas 23 pessoas, a probabilidade de pelo menos duas compartilharem a mesma data de aniversário já ultrapassa 50\%. Isso ocorre porque a probabilidade de \textit{não} haver coincidência entre $n$ pessoas em 365 dias possíveis é:
 
-$$\bar{p}(n) = \frac{365}{365} \cdot \frac{364}{365} \cdot \frac{363}{365} \cdots \frac{365 - (n-1)}{365} = \frac{365!}{365^n \cdot (365-n)!}$$
+\begin{equation}
+\label{eq:birthday}
+\bar{p}(n) = \frac{365}{365} \cdot \frac{364}{365} \cdot \frac{363}{365} \cdots \frac{365 - (n-1)}{365} = \frac{365!}{365^n \cdot (365-n)!}
+\end{equation}
 
 Para $n = 23$, a probabilidade de colisão é $p(23) = 1 - \bar{p}(23) \approx 50{,}7\%$ \cite{tomaz2014}. A Figura \ref{fig:paradoxo-aniversario} ilustra como a probabilidade de colisão cresce rapidamente com o aumento do número de pessoas --- atingindo 50\% com apenas 23 e ultrapassando 99\% com cerca de 57.
 
@@ -322,19 +328,31 @@ Ao final, os números $p$ e $q$ devem ser descartados. As chaves resultantes sã
 
 Suponha que Alice queira enviar uma mensagem confidencial a Bob. A mensagem $M$ é representada como um número inteiro (na prática, dividida em blocos numéricos menores que $n$). Alice cifra a mensagem usando a \textbf{chave pública de Bob} \cite{tomaz2014}:
 
-$$C = M^e \mod n$$
+\begin{equation}
+\label{eq:rsa-cifra}
+C = M^e \mod n
+\end{equation}
 
 Bob, ao receber o texto cifrado $C$, usa sua \textbf{chave privada} para recuperar a mensagem:
 
-$$M = C^d \mod n$$
+\begin{equation}
+\label{eq:rsa-decifra}
+M = C^d \mod n
+\end{equation}
 
 Como exemplo numérico simples \cite{tomaz2014}: suponha que a chave pública de Bob seja $(e=5,\; n=119)$ e sua chave privada seja $(d=77,\; n=119)$. Para cifrar a mensagem $M = 65$:
 
-$$C = 65^5 \mod 119 = 46$$
+\begin{equation}
+\label{eq:rsa-cifra-ex}
+C = 65^5 \mod 119 = 46
+\end{equation}
 
 Para decifrar:
 
-$$M = 46^{77} \mod 119 = 65$$
+\begin{equation}
+\label{eq:rsa-decifra-ex}
+M = 46^{77} \mod 119 = 65
+\end{equation}
 
 A segurança do esquema reside no fato de que apenas Bob, que possui $d$, consegue recuperar $M$. Na prática, o módulo $n$ possui centenas de algarismos, tornando a fatoração computacionalmente inviável.
 
@@ -342,11 +360,17 @@ A segurança do esquema reside no fato de que apenas Bob, que possui $d$, conseg
 
 O RSA pode ser utilizado não apenas para confidencialidade, mas também para \textbf{assinaturas digitais} --- bastando inverter a ordem de uso das chaves \cite{tomaz2014}. Quando Alice deseja assinar uma mensagem, ela utiliza sua \textbf{chave privada} para cifrar, em vez da chave pública do destinatário:
 
-$$\text{Assinatura} = H(M)^d \mod n$$
+\begin{equation}
+\label{eq:assinatura}
+\text{Assinatura} = H(M)^d \mod n
+\end{equation}
 
 onde $H(M)$ é o \textit{hash} da mensagem (conforme discutido na Seção \ref{sec:hash}). Qualquer pessoa pode verificar a assinatura usando a \textbf{chave pública de Alice}:
 
-$$H(M) = \text{Assinatura}^e \mod n$$
+\begin{equation}
+\label{eq:verifica-assinatura}
+H(M) = \text{Assinatura}^e \mod n
+\end{equation}
 
 Se o resultado coincidir com o \textit{hash} da mensagem recebida, confirma-se simultaneamente que: (i) a mensagem não foi alterada (\textbf{integridade}), pois qualquer modificação geraria um \textit{hash} diferente; (ii) Alice é realmente a autora (\textbf{autenticidade}), pois apenas ela possui a chave privada capaz de produzir aquela assinatura; e (iii) Alice não pode negar a autoria (\textbf{não repúdio}) \cite{tomaz2014}.
 
@@ -535,25 +559,104 @@ A eficiência dos lançamentos espaciais aumenta significativamente quanto mais 
 
 A explicação é direta: a Terra gira sobre seu eixo com velocidade angular constante $\omega \approx 7{,}27 \times 10^{-5}$ rad/s. A velocidade tangencial $v$ de um ponto na superfície depende do raio efetivo naquela latitude $\phi$:
 
-$$v = \omega \cdot R_T \cdot \cos(\phi)$$
+\begin{equation}
+\label{eq:vel-tangencial}
+v = \omega \cdot R_T \cdot \cos(\phi)
+\end{equation}
 
-\noindent onde $R_T \approx 6.371$ km é o raio médio da Terra. No Equador ($\phi = 0°$), $\cos(0°) = 1$ e a velocidade tangencial atinge seu valor máximo:
+\noindent onde $R_T \approx 6.371$ km é o raio médio da Terra. No Equador ($\phi = 0^{\circ}$), $\cos(0^{\circ}) = 1$ e a velocidade tangencial atinge seu valor máximo:
 
-$$v_{\text{eq}} = 7{,}27 \times 10^{-5} \times 6{,}371 \times 10^{6} \approx 463 \text{ m/s} \approx 1.667 \text{ km/h}$$
+\begin{equation}
+\label{eq:vel-equador}
+v_{\text{eq}} = 7{,}27 \times 10^{-5} \times 6{,}371 \times 10^{6} \approx 463 \text{ m/s} \approx 1.667 \text{ km/h}
+\end{equation}
 
-\noindent Já em Cabo Canaveral ($\phi \approx 28{,}5°$):
+\noindent Já em Cabo Canaveral ($\phi \approx 28{,}5^{\circ}$):
 
-$$v_{\text{CC}} = 463 \times \cos(28{,}5°) \approx 463 \times 0{,}879 \approx 407 \text{ m/s}$$
+\begin{equation}
+\label{eq:vel-canaveral}
+v_{\text{CC}} = 463 \times \cos(28{,}5^{\circ}) \approx 463 \times 0{,}879 \approx 407 \text{ m/s}
+\end{equation}
 
-A diferença de $\Delta v \approx 56$ m/s pode parecer modesta, mas em astrodinâmica cada m/s adicional de $\Delta v$ exige combustível extra de forma \textbf{exponencial}, conforme a equação de Tsiolkovsky \cite{wertz2011}:
+\noindent Em Sobral ($\phi \approx 3{,}7^{\circ}$):
 
-$$\Delta v = v_e \cdot \ln\!\left(\frac{m_0}{m_f}\right)$$
+\begin{equation}
+\label{eq:vel-sobral}
+v_{\text{Sobral}} = 463 \times \cos(3{,}7^{\circ}) \approx 463 \times 0{,}998 \approx 462 \text{ m/s}
+\end{equation}
+
+\noindent E em Alcântara ($\phi \approx 2{,}3^{\circ}$):
+
+\begin{equation}
+\label{eq:vel-alcantara}
+v_{\text{Alc}} = 463 \times \cos(2{,}3^{\circ}) \approx 463 \times 0{,}999 \approx 462{,}6 \text{ m/s}
+\end{equation}
+
+A Tabela \ref{tab:velocidade-tangencial} resume os valores calculados. Nota-se que Sobral retém \textbf{99,8\%} da velocidade equatorial, perdendo apenas $\sim$1 m/s em relação ao Equador, enquanto Cabo Canaveral perde 56 m/s.
+
+\begin{table}[htb]
+    \centering
+    \caption{Velocidade tangencial por localidade}
+    \label{tab:velocidade-tangencial}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Local} & \textbf{Latitude} & \textbf{$v$ (m/s)} & \textbf{$\Delta v$ vs Equador} \\
+        \midrule
+        Equador & 0° & 463,0 & 0 \\
+        Alcântara (MA) & 2,3° S & 462,6 & $-$0,4 \\
+        Sobral (CE) & 3,7° S & 462,0 & $-$1,0 \\
+        Cabo Canaveral (EUA) & 28,5° N & 407,0 & $-$56,0 \\
+        \bottomrule
+    \end{tabular}
+    \fonte{LIMA (2026), com base em \citeonline{wertz2011}.}
+\end{table}
+
+A diferença entre Sobral e Cabo Canaveral é de $\Delta v \approx 55$ m/s. Essa diferença pode parecer modesta, mas em astrodinâmica cada m/s adicional de $\Delta v$ exige combustível extra de forma \textbf{exponencial}, conforme a equação de Tsiolkovsky \cite{wertz2011}:
+
+\begin{equation}
+\label{eq:tsiolkovsky}
+\Delta v = v_e \cdot \ln\!\left(\frac{m_0}{m_f}\right)
+\end{equation}
 
 \noindent onde $v_e$ é a velocidade de exaustão dos gases, $m_0$ a massa inicial (com combustível) e $m_f$ a massa final (sem combustível). Rearranjando, a razão de massa necessária cresce exponencialmente com o $\Delta v$ requerido:
 
-$$\frac{m_0}{m_f} = e^{\Delta v / v_e}$$
+\begin{equation}
+\label{eq:razao-massa}
+\frac{m_0}{m_f} = e^{\Delta v / v_e}
+\end{equation}
 
-Para atingir uma órbita terrestre baixa (LEO), o foguete precisa alcançar aproximadamente 7.800 m/s. Cada m/s ``gratuito'' fornecido pela rotação terrestre reduz o $\Delta v$ que o propulsor precisa gerar. Assim, os $\sim$56 m/s extras do Equador em relação a Cabo Canaveral representam, na prática, centenas de quilos a menos de combustível por tonelada de carga útil --- uma vantagem que se traduz diretamente em economia financeira ou em capacidade adicional de carga.
+Para quantificar o ganho concreto de Sobral sobre Cabo Canaveral, considere um foguete típico com velocidade de exaustão $v_e \approx 3.000$ m/s (representativo de motores a querosene/LOX como o Merlin da SpaceX). A velocidade necessária para LEO é $\Delta v_{\text{LEO}} \approx 7.800$ m/s. Descontando o impulso gratuito da rotação terrestre:
+
+\begin{equation}
+\label{eq:dv-canaveral}
+\Delta v_{\text{CC}} = 7.800 - 407 = 7.393 \text{ m/s}
+\end{equation}
+
+\begin{equation}
+\label{eq:dv-sobral}
+\Delta v_{\text{Sobral}} = 7.800 - 462 = 7.338 \text{ m/s}
+\end{equation}
+
+\noindent Aplicando a Equação \ref{eq:razao-massa}, a razão de massa necessária em cada local é:
+
+\begin{equation}
+\label{eq:razao-cc}
+\left(\frac{m_0}{m_f}\right)_{\text{CC}} = e^{7393/3000} = e^{2{,}464} \approx 11{,}75
+\end{equation}
+
+\begin{equation}
+\label{eq:razao-sobral}
+\left(\frac{m_0}{m_f}\right)_{\text{Sobral}} = e^{7338/3000} = e^{2{,}446} \approx 11{,}54
+\end{equation}
+
+\noindent A diferença relativa na razão de massa é:
+
+\begin{equation}
+\label{eq:ganho-massa}
+\text{Ganho} = 1 - \frac{11{,}54}{11{,}75} \approx 1{,}8\%
+\end{equation}
+
+Em termos práticos, para um foguete como o Falcon 9, com massa total de aproximadamente 549 toneladas \cite{spacex2023}, essa redução de 1,8\% na razão de massa representa cerca de \textbf{10 toneladas a menos de combustível} por lançamento --- ou, equivalentemente, 10 toneladas adicionais de carga útil. Considerando o custo médio de US\$ 2.720/kg para colocar carga em LEO \cite{spacex2023}, o ganho por lançamento é de aproximadamente \textbf{US\$ 27 milhões}, tornando Sobral uma alternativa economicamente superior a Cabo Canaveral.
 
 A Tabela \ref{tab:lancamento-foguetes} demonstra a vantagem geográfica do Brasil em relação aos principais centros de lançamento do mundo.
 
@@ -580,6 +683,12 @@ Fatores adicionais favorecem a região Norte e Nordeste do Brasil:
     \item \textbf{Baixo tráfego aéreo}: menor interferência no espaço aéreo reduz atrasos operacionais, conforme demonstrado na Figura \ref{fig:trafego-aereo};
     \item \textbf{Condições meteorológicas estáveis}: clima predominantemente ensolarado durante todo o ano, com alta previsibilidade \cite{inmet2023, funceme2022}.
 \end{alineas}
+
+O problema do espaço aéreo merece atenção especial. A cada lançamento de foguete em Cabo Canaveral, a \textit{Federal Aviation Administration} (FAA) é obrigada a emitir \textit{Temporary Flight Restrictions} (TFRs) --- zonas de exclusão aérea que proíbem voos comerciais em amplas áreas sobre o Oceano Atlântico e o litoral da Flórida \cite{faa2023}. Com a cadência de lançamentos da SpaceX ultrapassando 90 missões anuais em 2023, essas restrições tornaram-se fonte recorrente de conflitos com a aviação comercial.
+
+Conforme reportado por \citeonline{murray2024}, os lançamentos frequentes a partir da costa leste da Flórida já provocam atrasos significativos em rotas comerciais, afetando companhias aéreas que operam nos corredores entre a América do Norte e o Caribe/América do Sul. A FAA precisa coordenar janelas de lançamento com o tráfego aéreo de três grandes aeroportos da região --- Orlando (MCO), Miami (MIA) e Fort Lauderdale (FLL) ---, um dos espaços aéreos mais congestionados do mundo. Em diversos casos, voos comerciais foram desviados ou atrasados em até 45 minutos para acomodar uma única janela de lançamento.
+
+Essa tensão tende a se agravar: com a projeção de mais de 150 lançamentos anuais nos próximos anos, o espaço aéreo da Flórida aproxima-se de um ponto de saturação. Uma base em Sobral eliminaria completamente esse problema --- o tráfego aéreo sobre o semiárido cearense é praticamente inexistente comparado à Flórida, e não há aeroportos de grande porte nas proximidades da trajetória de lançamento, permitindo uma cadência virtualmente ilimitada sem impacto na aviação civil.
 
 \begin{figure}[htb]
     \centering

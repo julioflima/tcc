@@ -829,13 +829,19 @@ As Ring Signatures ocultam quem enviou e os Stealth Addresses ocultam quem receb
 
 O RingCT utiliza um esquema criptográfico chamado \textbf{Pedersen Commitment} para ocultar os valores transacionados. Um \textit{Pedersen Commitment} é uma função matemática que ``lacra'' um valor dentro de um envelope criptográfico: quem olha o envelope sabe que há um valor válido dentro, mas não consegue descobrir qual é. Formalmente, o compromisso de um valor $v$ é calculado como:
 
-$$C = vG + rH$$
+\begin{equation}
+\label{eq:pedersen}
+C = vG + rH
+\end{equation}
 
 onde $G$ e $H$ são pontos geradores de uma curva elíptica (constantes públicas conhecidas por todos) e $r$ é um número aleatório secreto chamado \textit{blinding factor} (fator de cegamento). A propriedade fundamental é que, conhecendo apenas $C$, é computacionalmente impossível descobrir $v$ ou $r$ --- porém, quem conhece ambos pode provar que o compromisso é válido.
 
 O desafio é garantir que ninguém crie dinheiro do nada. Se os valores estão ocultos, como verificar que a soma das entradas é igual à soma das saídas? A elegância do Pedersen Commitment está em sua propriedade \textbf{homomórfica aditiva}: a soma dos compromissos das entradas menos a soma dos compromissos das saídas deve ser zero:
 
-$$\sum C_{in} - \sum C_{out} = 0$$
+\begin{equation}
+\label{eq:ringct-soma}
+\sum C_{in} - \sum C_{out} = 0
+\end{equation}
 
 Essa verificação pode ser feita por qualquer nó da rede \textbf{sem conhecer os valores individuais}. Se um atacante tentasse inflar uma saída (por exemplo, declarar 100 XMR quando recebeu apenas 10), a equação não fecharia e a transação seria rejeitada pela rede. A Figura \ref{fig:ringct} ilustra esse processo.
 
@@ -844,91 +850,77 @@ Essa verificação pode ser feita por qualquer nó da rede \textbf{sem conhecer 
     \caption{Funcionamento do RingCT --- Pedersen Commitments}
     \label{fig:ringct}
     \begin{tikzpicture}[
-        arrow/.style={->, >=stealth, line width=1pt, shorten >=2pt, shorten <=2pt},
-        darrow/.style={->, >=stealth, line width=1pt, dashed, shorten >=2pt, shorten <=2pt},
-        realbox/.style={rectangle, rounded corners=5pt, draw=black!70, fill=green!5, minimum width=2.4cm, minimum height=0.9cm, font=\small, align=center, line width=0.6pt},
-        hiddenbox/.style={rectangle, rounded corners=5pt, draw=black!70, fill=red!5, minimum width=2.4cm, minimum height=0.9cm, font=\small, align=center, line width=0.6pt},
-        sectionlabel/.style={font=\footnotesize\bfseries, fill=white, inner sep=4pt, rounded corners=3pt},
-        sublabel/.style={font=\scriptsize, text=black!55}
+        arrow/.style={->, >=stealth, thick, shorten >=1pt, shorten <=1pt},
+        darrow/.style={->, >=stealth, thick, dashed, shorten >=1pt, shorten <=1pt}
     ]
         % ============================================================
-        %  SEÇÃO 1 — Valores reais (visíveis só aos participantes)
+        %  LINHA SUPERIOR — Valores reais (visíveis só aos participantes)
         % ============================================================
+        \node[font=\small\bfseries] at (0, 6.5) {Visão do Remetente (valores reais)};
 
-        % Fundo da seção real
-        \fill[green!4, rounded corners=10pt] (-6.2, 3.0) rectangle (6.2, 6.6);
-        \draw[green!40!black!30, rounded corners=10pt, line width=0.8pt] (-6.2, 3.0) rectangle (6.2, 6.6);
+        % Caixa de fundo — valores reais
+        \fill[gray!6, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
+        \draw[gray!40, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
 
-        % Título da seção
-        \node[sectionlabel, text=green!50!black] at (0, 6.6) {\faEye\ \ Visão do Remetente (valores reais)};
+        % Entradas reais
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in1) at (-3.5, 4.8) {\faCoins\ \textbf{7 XMR}};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in2) at (-3.5, 3.7) {\faCoins\ \textbf{5 XMR}};
+        \node[font=\scriptsize, gray!60!black] at (-3.5, 5.8) {Entradas};
 
-        % --- Coluna esquerda: Entradas ---
-        \node[sublabel] at (-3.5, 5.95) {Entradas};
-        \node[realbox] (in1) at (-3.5, 5.3) {\faCoins\ \ \textbf{7 XMR}};
-        \node[realbox] (in2) at (-3.5, 4.1) {\faCoins\ \ \textbf{5 XMR}};
+        % Sinal de igual
+        \node[font=\Large] at (0, 4.25) {$\longrightarrow$};
 
-        % Soma entradas
-        \node[font=\scriptsize, text=black!60] at (-3.5, 3.45) {$\sum = 12$};
+        % Saídas reais
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out1) at (3.5, 4.8) {\faCoins\ \textbf{9 XMR}};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out2) at (3.5, 3.7) {\faCoins\ \textbf{3 XMR}};
+        \node[font=\scriptsize, gray!60!black] at (3.5, 5.8) {Saídas};
 
-        % --- Coluna direita: Saídas ---
-        \node[sublabel] at (3.5, 5.95) {Saídas};
-        \node[realbox] (out1) at (3.5, 5.3) {\faCoins\ \ \textbf{9 XMR}};
-        \node[realbox] (out2) at (3.5, 4.1) {\faCoins\ \ \textbf{3 XMR}};
-
-        % Soma saídas
-        \node[font=\scriptsize, text=black!60] at (3.5, 3.45) {$\sum = 12$};
-
-        % --- Seta central + verificação ---
-        \draw[arrow, black!50] (-2.0, 4.7) -- (2.0, 4.7);
-        \node[font=\scriptsize\bfseries, text=green!50!black, fill=green!4, inner sep=2pt] at (0, 5.05) {$7 + 5 = 9 + 3$};
-        \node[font=\scriptsize\bfseries, text=green!50!black] at (0, 4.35) {\faCheck\ $12 = 12$};
+        % Soma
+        \node[font=\scriptsize, align=center] at (-0.9, 4.8) {$7 + 5$};
+        \node[font=\scriptsize, align=center] at (0.9, 4.8) {$9 + 3$};
+        \node[font=\scriptsize\bfseries] at (0, 3.5) {$12 = 12$ \faCheck};
 
         % ============================================================
-        %  SEÇÃO 2 — Transformação via Pedersen Commitment
+        %  SETAS DE TRANSFORMAÇÃO — Pedersen Commitment
         % ============================================================
-        \node[rectangle, rounded corners=6pt, draw=black!50, fill=white, line width=0.8pt, minimum width=10cm, minimum height=0.9cm, font=\small\bfseries, inner sep=5pt] (pedersen) at (0, 2.2) {\faLock\ \ Pedersen Commitment: $C = vG + rH$};
+        \draw[arrow, gray!70, line width=1.2pt] (-3.5, 3.15) -- (-3.5, 2.05) node[midway, left, font=\scriptsize, text=black] {$C = vG + rH$};
+        \draw[arrow, gray!70, line width=1.2pt] (3.5, 3.15) -- (3.5, 2.05) node[midway, right, font=\scriptsize, text=black] {$C = vG + rH$};
 
-        % Setas de transformação
-        \draw[arrow, black!40, line width=1.2pt] (-3.5, 2.95) -- (-3.5, 2.7);
-        \draw[arrow, black!40, line width=1.2pt] (3.5, 2.95) -- (3.5, 2.7);
-        \draw[arrow, black!40, line width=1.2pt] (-3.5, 1.75) -- (-3.5, 1.5);
-        \draw[arrow, black!40, line width=1.2pt] (3.5, 1.75) -- (3.5, 1.5);
+        \node[font=\small\bfseries, fill=white, inner sep=3pt] at (0, 2.8) {\faLock\ Pedersen Commitment};
 
         % ============================================================
-        %  SEÇÃO 3 — Blockchain (valores ocultos)
+        %  LINHA INFERIOR — O que a blockchain registra (público)
         % ============================================================
+        \node[font=\small\bfseries] at (0, 2) {Visão da Blockchain (valores ocultos)};
 
-        % Fundo da seção oculta
-        \fill[red!3, rounded corners=10pt] (-6.2, -1.6) rectangle (6.2, 1.5);
-        \draw[red!40!black!30, rounded corners=10pt, line width=0.8pt] (-6.2, -1.6) rectangle (6.2, 1.5);
+        % Caixa de fundo — commitments
+        \fill[gray!18, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
+        \draw[gray!50, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
 
-        % Título da seção
-        \node[sectionlabel, text=red!50!black] at (0, 1.5) {\faEyeSlash\ \ Visão da Blockchain (valores ocultos)};
+        % Commitments de entrada
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin1) at (-3.5, 0.6) {$C_{in_1}$ \faQuestion};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin2) at (-3.5, -0.5) {$C_{in_2}$ \faQuestion};
+        \node[font=\scriptsize, gray!60!black] at (-3.5, 1.5) {Entradas ocultas};
 
-        % --- Coluna esquerda: Commitments de entrada ---
-        \node[sublabel] at (-3.5, 0.95) {Entradas ocultas};
-        \node[hiddenbox] (cin1) at (-3.5, 0.3) {\faLock\ $C_{in_1}$};
-        \node[hiddenbox] (cin2) at (-3.5, -0.8) {\faLock\ $C_{in_2}$};
+        % Seta central
+        \node[font=\Large] at (0, 0.05) {$\longrightarrow$};
 
-        % --- Coluna direita: Commitments de saída ---
-        \node[sublabel] at (3.5, 0.95) {Saídas ocultas};
-        \node[hiddenbox] (cout1) at (3.5, 0.3) {\faLock\ $C_{out_1}$};
-        \node[hiddenbox] (cout2) at (3.5, -0.8) {\faLock\ $C_{out_2}$};
-
-        % --- Seta central ---
-        \draw[arrow, black!50] (-2.0, -0.25) -- (2.0, -0.25);
+        % Commitments de saída
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout1) at (3.5, 0.6) {$C_{out_1}$ \faQuestion};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout2) at (3.5, -0.5) {$C_{out_2}$ \faQuestion};
+        \node[font=\scriptsize, gray!60!black] at (3.5, 1.5) {Saídas ocultas};
 
         % ============================================================
-        %  SEÇÃO 4 — Verificação da rede
+        %  VERIFICAÇÃO
         % ============================================================
-        \node[rectangle, rounded corners=6pt, draw=black!60, dashed, fill=blue!3, line width=0.8pt, minimum width=11cm, minimum height=1cm, align=center, font=\small] (proof) at (0, -2.6) {\faCheck\ \ A rede verifica: $\displaystyle\sum C_{in} - \sum C_{out} = 0$ \quad \textit{sem conhecer os valores}};
-        \draw[darrow, black!40] (0, -1.65) -- (proof.north);
+        \node[rectangle, rounded corners=6pt, draw=black, dashed, fill=white, minimum width=10cm, minimum height=0.9cm, align=center, font=\small] (proof) at (0, -2.2) {\faCheck\ \ Rede verifica: $\displaystyle\sum C_{in} - \sum C_{out} = 0$ \quad sem conhecer os valores};
+        \draw[darrow] (0, -1.25) -- (proof.north);
 
         % ============================================================
-        %  SEÇÃO 5 — Observador externo
+        %  OBSERVADOR
         % ============================================================
-        \node[rectangle, rounded corners=6pt, draw=black!50, fill=gray!10, line width=0.8pt, minimum width=11cm, minimum height=1cm, align=center, font=\scriptsize] (obs) at (0, -4.1) {\faEyeSlash\quad \textbf{Observador externo:} vê $C_{in_1}, C_{in_2} \rightarrow C_{out_1}, C_{out_2}$ --- valores e identidades permanecem ocultos};
-        \draw[darrow, black!40] (proof.south) -- (obs.north);
+        \node[rectangle, rounded corners=6pt, draw=black, fill=gray!40, minimum width=10cm, minimum height=0.9cm, align=center, font=\scriptsize] (obs) at (0, -3.6) {\faEyeSlash\quad \textbf{Observador externo:} vê $C_{in_1}, C_{in_2} \rightarrow C_{out_1}, C_{out_2}$ --- valores e identidades permanecem ocultos};
+        \draw[darrow] (proof.south) -- (obs.north);
 
     \end{tikzpicture}
     \fonte{LIMA (2026).}
