@@ -273,21 +273,49 @@ Todo o funcionamento do RSA se baseia na \textbf{aritmética modular} e em um fa
 
 \paragraph{Geração das Chaves}
 
-Para utilizar o RSA, cada usuário gera seu próprio par de chaves seguindo estes passos \cite{tomaz2014, stallings2008}:
+Para utilizar o RSA, cada usuário gera seu próprio par de chaves. O processo pode parecer abstrato, mas cada passo tem uma razão clara \cite{tomaz2014, stallings2008}:
 
-\begin{enumerate}
-    \item \textbf{Escolher dois números primos grandes} $p$ e $q$, aleatórios e de tamanho semelhante (na prática, cada um com mais de 100 algarismos);
-    \item \textbf{Calcular o módulo} $n = p \times q$. Este $n$ será parte de ambas as chaves;
-    \item \textbf{Calcular a função totiente de Euler}: $\phi(n) = (p-1)(q-1)$. A função totiente indica quantos números inteiros entre $1$ e $n$ são primos relativos a $n$ --- ou seja, não compartilham nenhum fator com $n$ além do $1$. Este valor é essencial porque define o ``ciclo'' da aritmética modular do RSA;
-    \item \textbf{Escolher o expoente público} $e$, um inteiro primo relativo a $\phi(n)$ (isto é, $\text{mdc}(e, \phi(n)) = 1$);
-    \item \textbf{Calcular o expoente privado} $d$, tal que $e \cdot d \equiv 1 \pmod{\phi(n)}$ --- em outras palavras, $d$ é o inverso multiplicativo de $e$ módulo $\phi(n)$.
-\end{enumerate}
+\textbf{Passo 1 --- Escolher dois números primos grandes $p$ e $q$.} São escolhidos aleatoriamente dois primos de tamanho semelhante, cada um com mais de 100 algarismos. Esses dois números são o ``segredo de fabricação'' das chaves --- todo o restante do processo deriva deles. Eles devem permanecer secretos e, ao final, ser descartados.
+
+\textbf{Passo 2 --- Calcular o módulo $n = p \times q$.} Multiplica-se os dois primos. O resultado $n$ será parte tanto da chave pública quanto da privada. A segurança do RSA reside neste ponto: multiplicar $p \times q$ é trivial, mas dado apenas $n$ (um número com mais de 300 algarismos), descobrir quais eram $p$ e $q$ é computacionalmente inviável --- este é o problema da fatoração de inteiros.
+
+\textbf{Passo 3 --- Calcular a função totiente de Euler: $\phi(n) = (p-1)(q-1)$.} A função totiente de Euler $\phi(n)$ responde a uma pergunta simples: \textit{``Quantos números inteiros entre $1$ e $n$ não compartilham nenhum fator com $n$?''} Por exemplo, suponha $p = 3$ e $q = 5$, logo $n = 15$. Os fatores primos de $15$ são $3$ e $5$; portanto, qualquer número divisível por $3$ ou por $5$ é eliminado. Dos inteiros de $1$ a $15$, eliminam-se $3, 5, 6, 9, 10, 12, 15$ --- restando $\{1, 2, 4, 7, 8, 11, 13, 14\}$, logo $\phi(15) = 8$. Pelo atalho: $(p-1)(q-1) = (3-1)(5-1) = 2 \times 4 = 8$ --- o mesmo resultado. Calcular $\phi(n)$ é fácil para quem conhece $p$ e $q$, mas impossível para quem conhece apenas $n$ --- pois exigiria fatorá-lo primeiro.
+
+\textbf{Passo 4 --- Escolher o expoente público $e$.} Escolhe-se um número $e$ que seja \textit{primo relativo} a $\phi(n)$. Dois números são primos relativos quando o \textbf{MDC} --- \textit{Máximo Divisor Comum}, isto é, o maior número que divide ambos --- é igual a $1$. Isso significa que eles não compartilham nenhum fator além do $1$. Por exemplo, $8$ e $15$ são primos relativos ($\text{mdc}(8, 15) = 1$), pois $8 = 2^3$ e $15 = 3 \times 5$ não têm fatores em comum. Já $8$ e $12$ não são ($\text{mdc}(8, 12) = 4$), pois ambos são divisíveis por $4$.
+
+Não é coincidência que $\text{mdc}(e, \phi(n)) = 1$ --- o $e$ é deliberadamente \textbf{escolhido} para satisfazer essa condição. Basta escolher um número que não compartilhe fatores com $\phi(n)$. A forma mais simples de garantir isso é usar um número primo: se $e$ é primo e não divide $\phi(n)$, então necessariamente $\text{mdc}(e, \phi(n)) = 1$. Na prática, o valor $e = 65537$ (que é primo) é quase universalmente adotado por ser eficiente e funcionar com praticamente qualquer $\phi(n)$. Essa condição é necessária para que exista o inverso multiplicativo de $e$, ou seja, para que o passo seguinte seja possível.
+
+\textbf{Passo 5 --- Calcular o expoente privado $d$.} Encontra-se o número $d$ tal que $e \cdot d \equiv 1 \pmod{\phi(n)}$. O símbolo $\equiv$ (``congruente'') com $\pmod{\phi(n)}$ significa que estamos trabalhando com \textbf{aritmética modular} --- em que apenas o resto da divisão importa. A expressão diz: \textit{``o produto $e \times d$, dividido por $\phi(n)$, deve dar resto $1$''}.
+
+Na prática, esse cálculo é feito pelo \textbf{algoritmo euclidiano estendido} \cite{tomaz2014}. Para ilustrar, considere o exemplo com $e = 3$ e $\phi(n) = 8$. O objetivo é encontrar $d$ tal que $3 \times d$, dividido por $8$, dê resto $1$.
+
+O algoritmo tem duas etapas. Na primeira, divide-se o maior pelo menor repetidamente, anotando o resto, até o resto ser zero:
+
+\begin{alineas}
+    \item Divide-se $8$ por $3$: $8 = \mathbf{2} \times 3 + \mathbf{2}$ (cabe $2$ vezes, sobra $2$);
+    \item Divide-se $3$ por $2$: $3 = \mathbf{1} \times 2 + \mathbf{1}$ (cabe $1$ vez, sobra $1$);
+    \item Divide-se $2$ por $1$: $2 = \mathbf{2} \times 1 + \mathbf{0}$ (cabe $2$ vezes, sobra $0$ --- fim).
+\end{alineas}
+
+O último resto diferente de zero é $1$, confirmando que $\text{mdc}(3, 8) = 1$ e que o inverso existe.
+
+Na segunda etapa, ``volta-se'' pelas equações para expressar o número $1$ em função de $e$ e $\phi(n)$:
+
+\begin{alineas}
+    \item Da segunda linha, isola-se o resto: $1 = 3 - 1 \times 2$;
+    \item Mas o $2$ veio da primeira linha: $2 = 8 - 2 \times 3$. Substitui-se: $1 = 3 - 1 \times (8 - 2 \times 3)$;
+    \item Expandindo: $1 = 3 - 8 + 2 \times 3 = \mathbf{3} \times 3 - \mathbf{1} \times 8$.
+\end{alineas}
+
+O resultado $1 = \mathbf{3} \times 3 - 1 \times 8$ mostra que $3 \times 3 = 9$ e $9 \div 8 = 1$ com resto $1$ --- portanto $d = 3$. Este procedimento funciona de forma direta e eficiente mesmo quando os números possuem centenas de algarismos.
+
+Em termos simples, $d$ é o número que ``desfaz'' a operação de $e$ --- é como encontrar a chave que abre exatamente o cadeado que $e$ fechou. É por isso que cifrar com $e$ e decifrar com $d$ (ou vice-versa) sempre recupera a mensagem original. Este cálculo só é possível para quem conhece $\phi(n)$, ou seja, para quem conhece $p$ e $q$.
 
 Ao final, os números $p$ e $q$ devem ser descartados. As chaves resultantes são:
 
 \begin{alineas}
-    \item \textbf{Chave pública}: o par $(e, n)$;
-    \item \textbf{Chave privada}: o par $(d, n)$.
+    \item \textbf{Chave pública}: o par $(e, n)$ --- pode ser divulgada livremente;
+    \item \textbf{Chave privada}: o par $(d, n)$ --- deve ser mantida em segredo absoluto.
 \end{alineas}
 
 \paragraph{Cifragem e Decifragem}
@@ -331,6 +359,49 @@ Toda a segurança do RSA depende fundamentalmente da dificuldade de calcular o e
 É por isso que a escolha adequada dos primos $p$ e $q$ é fundamental: eles devem ser grandes (tipicamente mais de 1024 bits cada), aleatórios e de tamanho semelhante, pois existem métodos capazes de explorar fatores primos pequenos \cite{tomaz2014}.
 
 No contexto da blockchain, embora o Bitcoin utilize \textbf{criptografia de curvas elípticas} (ECDSA) em vez de RSA --- por oferecer o mesmo nível de segurança com chaves significativamente menores --- o princípio fundamental é idêntico: a chave privada assina transações, e a chave pública permite que qualquer nó da rede verifique a autenticidade da assinatura, sem jamais revelar a chave privada.
+
+\subsubsection{Assinaturas em Anel e Privacidade}
+
+Nos esquemas de assinatura digital apresentados até aqui, a identidade do assinante é sempre revelada: quem verifica a assinatura sabe exatamente quem a produziu. Porém, existem situações em que é desejável provar que uma mensagem foi assinada por \textit{alguém} de um grupo legítimo, sem revelar \textit{quem} especificamente. Esta é a ideia central das \textbf{assinaturas em anel}, introduzidas por \citeonline{rivest2001} \cite{tomaz2014}.
+
+\paragraph{Conceito e motivação.}
+
+Uma assinatura em anel permite que um membro de um grupo assine uma mensagem de forma que qualquer verificador possa confirmar que a assinatura foi produzida por \textit{algum} membro do grupo, mas não consiga identificar qual deles. O nome ``anel'' vem da estrutura matemática circular utilizada na construção da assinatura \cite{tomaz2014}.
+
+Diferentemente das \textit{assinaturas em grupo} propostas por \citeonline{chaum1991}, as assinaturas em anel possuem características que as tornam mais flexíveis \cite{rivest2001, tomaz2014}:
+
+\begin{alineas}
+    \item \textbf{Sem gerente}: Não existe autoridade central que possa revogar o anonimato do assinante;
+    \item \textbf{Sem configuração prévia}: O grupo não precisa ser organizado antecipadamente --- o assinante escolhe livremente quais chaves públicas comporão o anel;
+    \item \textbf{Sem colaboração}: Os demais membros do grupo sequer precisam saber que suas chaves públicas estão sendo utilizadas;
+    \item \textbf{Grupo variável}: O assinante pode escolher um anel diferente a cada mensagem.
+\end{alineas}
+
+\paragraph{Como funciona.}
+
+Imagine um grupo de cinco assessores: Alice, Bob, Carol, David e Eva. Alice quer assinar uma mensagem anonimamente. Ela precisa de: sua própria chave privada, as chaves públicas dos cinco membros (incluindo a dela), e a mensagem $m$. O processo, conforme descrito por \citeonline{tomaz2014}, funciona assim:
+
+\textbf{Etapa 1 --- Preparação.} Alice calcula o \textit{hash} da mensagem, $z = H(m)$, que servirá como chave para uma cifra simétrica $E$, e sorteia um valor aleatório de inicialização $v$.
+
+\textbf{Etapa 2 --- Preencher as posições dos outros membros.} Para cada membro que \textit{não} é ela (Bob, Carol, David, Eva), Alice gera um valor aleatório $x_i$ e o cifra com a \textbf{chave pública} daquele membro usando RSA: $y_i = g_{P_i}(x_i)$. Ela pode fazer isso sem a colaboração deles --- basta conhecer suas chaves públicas.
+
+\textbf{Etapa 3 --- Montar o anel.} Os valores $y_i$ são encadeados em uma cadeia circular de cifragens simétricas --- uma sequência em que a saída de cada ``elo'' alimenta a entrada do próximo, formando um circuito fechado (daí o nome ``anel'').
+
+\textbf{Etapa 4 --- Fechar o anel.} Falta preencher a posição de Alice. Existe um único valor $y_s$ que faz a cadeia circular ``fechar'' --- isto é, que faz a composição retornar exatamente ao valor inicial $v$. Alice calcula esse $y_s$ e, usando sua \textbf{chave privada}, obtém $x_s = g_{S_s}(y_s)$. Este é o único passo que exige uma chave privada, e é o que torna Alice a verdadeira assinante.
+
+\textbf{Resultado.} A assinatura final é a tupla $(P_1, P_2, \ldots, P_n,\; v,\; x_1, x_2, \ldots, x_n)$.
+
+A \textbf{verificação} é direta: qualquer pessoa recalcula $y_i = g_{P_i}(x_i)$ para todos os membros e verifica se a cadeia circular retorna ao valor $v$. Se sim, a assinatura é válida. O ponto crucial é que todos os $x_i$ --- tanto os aleatórios quanto o calculado com a chave privada --- parecem igualmente aleatórios. Não há como distinguir qual posição do anel foi completada pelo verdadeiro assinante.
+
+\paragraph{Resgate de autoria.}
+
+Uma limitação do esquema original de \citeonline{rivest2001} é que o anonimato é \textit{permanente}: nem mesmo o próprio assinante consegue provar posteriormente que foi ele quem assinou. \citeonline{tomaz2014} propôs uma solução elegante para esse problema: o \textbf{resgate de autoria}.
+
+A ideia consiste em, durante a construção da assinatura, o assinante embutir \textbf{segredos} que somente ele conhece nos valores atribuídos aos demais membros do anel. A assinatura permanece válida e anônima --- os segredos são invisíveis para quem apenas verifica. Porém, quando o assinante desejar sair do anonimato, basta revelar esses segredos: qualquer verificador pode recalculá-los e confirmar que coincidem com os valores presentes na assinatura, provando que apenas quem possuía aqueles segredos poderia ter construído a assinatura \cite{tomaz2014}.
+
+\paragraph{Aplicação no sistema proposto.}
+
+Para o token previdenciário proposto neste trabalho, as assinaturas em anel oferecem uma propriedade fundamental: o \textbf{trabalhador pode assinar transações provando que é um participante legítimo do sistema, sem revelar sua identidade}. O anel pode ser composto pelas chaves públicas de todos os trabalhadores de uma determinada categoria ou faixa, e a assinatura garante que a transação foi autorizada por \textit{alguém} do grupo --- sem expor quem. Isso protege informações sensíveis como saldo acumulado, padrão de contribuição, movimentações financeiras e quais ativos aquele trabalhador possui, preservando a privacidade do trabalhador enquanto mantém a auditabilidade do sistema. Porém, graças ao mecanismo de resgate de autoria de \citeonline{tomaz2014}, no momento oportuno --- como o resgate dos ativos acumulados --- o trabalhador pode revelar os segredos utilizados na construção das assinaturas e assim provar que todos aqueles saldos, movimentações e ativos pertencem a ele.
 
 \subsubsection{Carteiras Hierárquicas Determinísticas (HD Wallets)}
 
