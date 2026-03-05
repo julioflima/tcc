@@ -24,102 +24,140 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     \centering
     \caption{Arquitetura do Sistema Proposto}
     \label{fig:arquitetura}
+    % ── cores do diagrama ──
+    \definecolor{cBlue}{HTML}{2563EB}
+    \definecolor{cAmber}{HTML}{D97706}
+    \definecolor{cGreen}{HTML}{059669}
+    \definecolor{cViolet}{HTML}{7C3AED}
+    \definecolor{cSlate}{HTML}{334155}
     \begin{tikzpicture}[
-        node distance=0.6cm and 0.8cm,
-        actor/.style={rectangle, rounded corners=4pt, draw=black!70, fill=white, minimum width=2.2cm, minimum height=0.9cm, align=center, font=\scriptsize},
-        contract/.style={rectangle, rounded corners=3pt, draw=black!60, fill=gray!12, minimum width=2.0cm, minimum height=0.7cm, align=center, font=\scriptsize},
-        layer/.style={rectangle, rounded corners=6pt, draw=gray!50, minimum height=1.6cm, align=center, font=\scriptsize, line width=0.6pt},
-        conn/.style={->, >=stealth, thick, gray!60},
-        biconn/.style={<->, >=stealth, thick, gray!60},
-        lbl/.style={font=\tiny, text=gray!70!black, fill=white, inner sep=1pt}
+        % ── estilos ──
+        actor/.style={
+            rectangle, rounded corners=10pt,
+            fill=cSlate, text=white,
+            font=\small\bfseries,
+            minimum width=2.8cm, minimum height=0.85cm,
+            align=center, inner sep=5pt,
+            blur shadow={shadow blur steps=6, shadow xshift=0pt, shadow yshift=-1.5pt, shadow blur radius=3pt, shadow opacity=18}
+        },
+        card/.style={
+            rectangle, rounded corners=4pt,
+            draw=gray!30, fill=white,
+            font=\scriptsize, align=center,
+            minimum width=2.1cm, minimum height=1.05cm,
+            inner sep=3pt, line width=0.5pt,
+            blur shadow={shadow blur steps=4, shadow xshift=0.5pt, shadow yshift=-1pt, shadow blur radius=2pt, shadow opacity=12}
+        },
+        sidebar/.style={
+            rectangle, rounded corners=0pt,
+            minimum width=0.45cm, inner sep=0pt,
+            rounded corners=3pt
+        },
+        layerlbl/.style={
+            font=\sffamily\bfseries\tiny,
+            rotate=90, anchor=south, text=white,
+            inner sep=2pt
+        },
+        conn/.style={->, >=stealth, line width=0.9pt, cSlate!50},
+        biconn/.style={<->, >=stealth, line width=0.9pt, cSlate!50},
+        flowlbl/.style={font=\tiny\sffamily, fill=white, inner sep=1.5pt, text=cSlate!80, rounded corners=1pt}
     ]
-        % ====================================================================
-        %  ATORES EXTERNOS (topo)
-        % ====================================================================
-        \node[actor, fill=gray!8] (trab) at (-4.5, 5.5) {\faUser\ \textbf{Trabalhador}};
-        \node[actor, fill=gray!8] (emp)  at (0, 5.5)    {\faBuilding\ \textbf{Empregador}};
-        \node[actor, fill=gray!8] (gov)  at (4.5, 5.5)  {\faUniversity\ \textbf{Governo}};
 
-        % ====================================================================
-        %  CAMADA 1 — Interface (App / Web)
-        % ====================================================================
-        \fill[gray!5, rounded corners=6pt] (-6.3, 3.6) rectangle (6.3, 4.9);
-        \draw[gray!40, rounded corners=6pt, line width=0.6pt] (-6.3, 3.6) rectangle (6.3, 4.9);
-        \node[font=\scriptsize\bfseries, gray!60!black] at (-4.8, 4.65) {\faDesktop\ Interface};
+    % ═══════════════════════════════════════
+    %  ATORES (topo) — badges escuros
+    % ═══════════════════════════════════════
+    \node[actor] (trab) at (-4.5, 8) {\faUser\ Trabalhador};
+    \node[actor] (emp)  at (0, 8)    {\faBuilding\ Empregador};
+    \node[actor] (gov)  at (4.5, 8)  {\faUniversity\ Governo};
 
-        \node[contract] (app) at (-2.5, 4.25) {App/Web\\do Trabalhador};
-        \node[contract] (folha) at (1.0, 4.25) {Sistema\\de Folha};
-        \node[contract] (painel) at (4.5, 4.25) {Painel\\Governamental};
+    % ═══════════════════════════════════════
+    %  CAMADA 1 — INTERFACE  (azul)
+    % ═══════════════════════════════════════
+    \fill[cBlue!5, rounded corners=8pt] (-6.6, 5.35) rectangle (6.6, 7.15);
+    \draw[cBlue!25, rounded corners=8pt, line width=0.5pt] (-6.6, 5.35) rectangle (6.6, 7.15);
+    % Sidebar
+    \fill[cBlue, rounded corners=3pt] (-6.6, 5.35) rectangle (-6.15, 7.15);
+    \node[layerlbl] at (-6.375, 6.25) {INTERFACE};
+    % Cards
+    \node[card, draw=cBlue!30] (app)    at (-3.5, 6.25) {\faDesktop\\[2pt] App/Web\\[-1pt]do Trabalhador};
+    \node[card, draw=cBlue!30] (folha)  at (0, 6.25)    {\faFileCode\\[2pt] Sistema\\[-1pt]de Folha};
+    \node[card, draw=cBlue!30] (painel) at (3.5, 6.25)  {\faUniversity\\[2pt] Painel\\[-1pt]Governamental};
 
-        % Conexões atores → interface
-        \draw[conn] (trab) -- (app);
-        \draw[conn] (emp) -- (folha);
-        \draw[conn] (gov) -- (painel);
+    % Setas atores → interface
+    \draw[conn] (trab) -- (app);
+    \draw[conn] (emp) -- (folha);
+    \draw[conn] (gov) -- (painel);
 
-        % ====================================================================
-        %  CAMADA 2 — Governança Multi-sig 2-de-3
-        % ====================================================================
-        \fill[gray!10, rounded corners=6pt] (-6.3, 1.8) rectangle (6.3, 3.3);
-        \draw[gray!40, rounded corners=6pt, line width=0.6pt] (-6.3, 1.8) rectangle (6.3, 3.3);
-        \node[font=\scriptsize\bfseries, gray!60!black] at (-4.5, 3.05) {\faKey\ Governança};
+    % ═══════════════════════════════════════
+    %  CAMADA 2 — GOVERNANÇA  (âmbar)
+    % ═══════════════════════════════════════
+    \fill[cAmber!5, rounded corners=8pt] (-6.6, 3.15) rectangle (6.6, 5.0);
+    \draw[cAmber!25, rounded corners=8pt, line width=0.5pt] (-6.6, 3.15) rectangle (6.6, 5.0);
+    % Sidebar
+    \fill[cAmber, rounded corners=3pt] (-6.6, 3.15) rectangle (-6.15, 5.0);
+    \node[layerlbl] at (-6.375, 4.075) {GOVERNANÇA};
+    % Cards
+    \node[card, draw=cAmber!40] (k1) at (-3.5, 4.1) {\faKey\\[2pt] Chave\\[-1pt]Trabalhador};
+    \node[card, draw=cAmber!40] (k2) at (0, 4.1)    {\faKey\\[2pt] Chave\\[-1pt]Governo};
+    \node[card, draw=cAmber!40] (k3) at (3.5, 4.1)  {\faKey\\[2pt] Chave\\[-1pt]Auditoria};
+    % Badge multi-sig
+    \node[fill=cAmber!12, draw=cAmber!40, rounded corners=3pt, font=\sffamily\tiny\bfseries, text=cAmber!80!black, inner sep=3pt, line width=0.4pt] at (0, 3.38) {Multi-sig 2-de-3};
 
-        \node[contract] (keytrab) at (-3.5, 2.55) {\faKey\ Chave\\Trabalhador};
-        \node[contract] (keygov)  at (0, 2.55)    {\faKey\ Chave\\Governo};
-        \node[contract] (keyaud)  at (3.5, 2.55)  {\faKey\ Chave\\Auditoria};
+    % Setas interface → governança
+    \draw[conn] (app) -- (k1);
+    \draw[conn] (folha) -- (k2) node[flowlbl, midway, right, xshift=1pt] { };
+    \draw[conn] (painel) -- (k3);
 
-        % Multi-sig label
-        \node[font=\tiny\bfseries, text=black!60] at (0, 2.0) {Carteira Multi-sig 2-de-3};
+    % ═══════════════════════════════════════
+    %  CAMADA 3 — SMART CONTRACTS  (verde)
+    % ═══════════════════════════════════════
+    \fill[cGreen!5, rounded corners=8pt] (-6.6, 0.85) rectangle (6.6, 2.8);
+    \draw[cGreen!25, rounded corners=8pt, line width=0.5pt] (-6.6, 0.85) rectangle (6.6, 2.8);
+    % Sidebar
+    \fill[cGreen, rounded corners=3pt] (-6.6, 0.85) rectangle (-6.15, 2.8);
+    \node[layerlbl] at (-6.375, 1.825) {CONTRATOS};
+    % Cards
+    \node[card, draw=cGreen!35] (c1) at (-4.2, 1.85) {\faPiggyBank\\[2pt] Contribuição};
+    \node[card, draw=cGreen!35] (c2) at (-1.4, 1.85) {\faChartLine\\[2pt] Investimento};
+    \node[card, draw=cGreen!35] (c3) at (1.4, 1.85)  {\faUsers\\[2pt] Herança};
+    \node[card, draw=cGreen!35] (c4) at (4.2, 1.85)  {\faUserShield\\[2pt] Compliance};
 
-        % Conexões interface → governança
-        \draw[conn] (app) -- (keytrab);
-        \draw[conn] (painel) -- (keygov);
+    % Setas governança → contratos
+    \draw[conn] (k1.south) -- ++(0,-0.3) -| (c1.north);
+    \draw[conn] (k2.south) -- ++(0,-0.15) -| (c2.north);
+    \draw[conn] (k2.south) -- ++(0,-0.15) -| (c3.north);
+    \draw[conn] (k3.south) -- ++(0,-0.3) -| (c4.north);
 
-        % ====================================================================
-        %  CAMADA 3 — Smart Contracts
-        % ====================================================================
-        \fill[gray!15, rounded corners=6pt] (-6.3, -0.4) rectangle (6.3, 1.5);
-        \draw[gray!40, rounded corners=6pt, line width=0.6pt] (-6.3, -0.4) rectangle (6.3, 1.5);
-        \node[font=\scriptsize\bfseries, gray!60!black] at (-4.3, 1.25) {\faFileCode\ Smart Contracts};
+    % ═══════════════════════════════════════
+    %  CAMADA 4 — BLOCKCHAIN  (violeta)
+    % ═══════════════════════════════════════
+    \fill[cViolet!5, rounded corners=8pt] (-6.6, -1.45) rectangle (6.6, 0.5);
+    \draw[cViolet!25, rounded corners=8pt, line width=0.5pt] (-6.6, -1.45) rectangle (6.6, 0.5);
+    % Sidebar
+    \fill[cViolet, rounded corners=3pt] (-6.6, -1.45) rectangle (-6.15, 0.5);
+    \node[layerlbl] at (-6.375, -0.475) {BLOCKCHAIN};
+    % Cards
+    \node[card, draw=cViolet!35] (t1) at (-3.5, -0.45) {\faCoins\\[2pt] Tokens\\[-1pt]BRL / Ativos};
+    \node[card, draw=cViolet!35] (t2) at (0, -0.45)    {\faBook\\[2pt] Livro de\\[-1pt]Ordens};
+    \node[card, draw=cViolet!35] (t3) at (3.5, -0.45)  {\faLock\\[2pt] Módulo de\\[-1pt]Privacidade};
 
-        \node[contract] (contrib) at (-4.2, 0.55) {\faPiggyBank\\Contribuição};
-        \node[contract] (invest) at (-1.4, 0.55)  {\faChartLine\\Investimento};
-        \node[contract] (herd) at (1.4, 0.55)     {\faUsers\\Herança};
-        \node[contract] (compl) at (4.2, 0.55)    {\faUserShield\\Compliance};
+    % Setas contratos → blockchain
+    \draw[conn] (c1.south) -- ++(0,-0.2) -| (t1.north);
+    \draw[conn] (c2.south) -- (t2.north);
+    \draw[conn] (c3.south) -- ++(0,-0.1) -| (t2.north east);
+    \draw[conn] (c4.south) -- ++(0,-0.2) -| (t3.north);
 
-        % Conexão governança → contracts
-        \draw[conn] (0, 1.8) -- (0, 1.5);
+    % ═══════════════════════════════════════
+    %  ENTIDADES EXTERNAS (base)
+    % ═══════════════════════════════════════
+    \node[actor] (b3)    at (-3.5, -2.8) {\faChartBar\ B3};
+    \node[actor] (bacen) at (0, -2.8)    {\faLandmark\ Bacen};
+    \node[actor] (nos)   at (3.5, -2.8)  {\faServer\ Validadores};
 
-        % ====================================================================
-        %  CAMADA 4 — Mercado Tokenizado + Blockchain
-        % ====================================================================
-        \fill[gray!20, rounded corners=6pt] (-6.3, -2.8) rectangle (6.3, -0.7);
-        \draw[gray!40, rounded corners=6pt, line width=0.6pt] (-6.3, -2.8) rectangle (6.3, -0.7);
-        \node[font=\scriptsize\bfseries, gray!60!black] at (-4.1, -0.95) {\faLink\ Blockchain Permissionada};
-
-        \node[contract] (token) at (-3.5, -1.75) {\faCoins\ Tokens\\BRL / Ativos};
-        \node[contract] (livro) at (0, -1.75)    {\faBook\ Livro de\\Ordens};
-        \node[contract] (priv) at (3.5, -1.75)  {\faLock\ Módulo de\\Privacidade};
-
-        % Conexão contracts → blockchain
-        \draw[conn] (-1.4, -0.4) -- (-1.4, -0.7);
-        \draw[conn] (1.4, -0.4) -- (1.4, -0.7);
-
-        % ====================================================================
-        %  MUNDO EXTERNO (base)
-        % ====================================================================
-        \node[actor, fill=gray!8] (b3)    at (-3.5, -3.8) {\faChartBar\ \textbf{B3}};
-        \node[actor, fill=gray!8] (bacen) at (0, -3.8)    {\faLandmark\ \textbf{Bacen}};
-        \node[actor, fill=gray!8] (noval) at (3.5, -3.8)  {\faServer\ \textbf{Nós Validadores}};
-
-        % Conexões blockchain → mundo externo
-        \draw[biconn] (token) -- (b3);
-        \draw[biconn] (livro) -- (bacen);
-        \draw[biconn] (priv) -- (noval);
-
-        % ====================================================================
-        %  LABELS nas setas de desconto em folha
-        % ====================================================================
-        \draw[conn, black!50] (folha) -- (contrib) node[lbl, midway, right, xshift=2pt] {R\$ $\rightarrow$ BRL};
+    % Setas blockchain ↔ entidades
+    \draw[biconn] (t1) -- (b3);
+    \draw[biconn] (t2) -- (bacen);
+    \draw[biconn] (t3) -- (nos);
 
     \end{tikzpicture}
     \fonte{LIMA (2026).}
