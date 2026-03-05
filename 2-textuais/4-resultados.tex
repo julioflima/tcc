@@ -26,17 +26,17 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     \label{fig:arquitetura}
     \begin{tikzpicture}[
         node distance=1.5cm,
-        box/.style={rectangle, draw, minimum width=4cm, minimum height=1cm, align=center},
+        box/.style={rectangle, minimum width=4cm, minimum height=1cm, align=center},
         arrow/.style={->, >=stealth, thick}
     ]
         % Camada de Usuário
-        \node[box, fill=blue!20] (user) {Camada de Usuário\\(Interface Web/Mobile)};
+        \node[box, fill=gray!15] (user) {Camada de Usuário\\(Interface Web/Mobile)};
         
         % Camada de Aplicação
-        \node[box, fill=green!20, below=of user] (app) {Camada de Aplicação\\(Smart Contracts)};
+        \node[box, fill=gray!30, below=of user] (app) {Camada de Aplicação\\(Smart Contracts)};
         
         % Camada de Blockchain
-        \node[box, fill=orange!20, below=of app] (chain) {Camada de Blockchain\\(Rede Distribuída)};
+        \node[box, fill=gray!45, below=of app] (chain) {Camada de Blockchain\\(Rede Distribuída)};
         
         % Conexões
         \draw[arrow] (user) -- (app);
@@ -176,34 +176,6 @@ Este modelo garante que:
     \item O trabalhador sozinho não pode violar as regras do sistema;
     \item Há transparência nas regras, preservando a privacidade individual das transações.
 \end{alineas}
-
-\subsection{Diagrama do Sistema Multi-sig}
-
-A Figura \ref{fig:multisig} ilustra o funcionamento do sistema de governança multi-sig.
-
-\begin{figure}[htb]
-    \centering
-    \caption{Sistema de Governança Multi-sig}
-    \label{fig:multisig}
-    \begin{tikzpicture}[
-        node distance=2cm,
-        key/.style={circle, draw, minimum size=1.5cm, align=center, fill=yellow!30},
-        wallet/.style={rectangle, draw, minimum width=3cm, minimum height=2cm, align=center, fill=green!20},
-        arrow/.style={->, >=stealth, thick}
-    ]
-        % Carteira central
-        \node[wallet] (wallet) {Carteira\\Multi-sig\\(2 de 2)};
-        
-        % Chaves
-        \node[key, above left=of wallet] (key1) {Chave\\Trabalhador};
-        \node[key, above right=of wallet] (key2) {Chave\\Governo};
-        
-        % Conexões
-        \draw[arrow] (key1) -- (wallet);
-        \draw[arrow] (key2) -- (wallet);
-    \end{tikzpicture}
-    \fonte{LIMA (2026).}
-\end{figure}
 
 \section{Regras Operacionais}
 
@@ -487,14 +459,54 @@ O sistema é organizado em cinco camadas interdependentes, conforme ilustrado na
     \caption{Arquitetura em Camadas do Mercado}
     \label{fig:camadas-mercado}
     \begin{tikzpicture}[
-        node distance=0.8cm,
-        layer/.style={rectangle, draw, minimum width=12cm, minimum height=1.2cm, align=center, font=\small}
+        node distance=0.5cm,
+        layer/.style={rectangle, rounded corners=4pt, minimum width=12cm, minimum height=1.4cm, align=center, font=\small, draw=gray!60, line width=0.6pt},
+        conn/.style={->, >=stealth, thick, gray!50, line width=1pt},
+        actor/.style={font=\scriptsize, align=center, fill=white, rounded corners=3pt, draw=gray!40, inner sep=5pt}
     ]
-        \node[layer, fill=blue!15] (l1) {Camada de Interface};
-        \node[layer, fill=green!15, below=of l1] (l2) {Camada de Governança};
-        \node[layer, fill=yellow!15, below=of l2] (l3) {Camada de Mercado};
-        \node[layer, fill=orange!15, below=of l3] (l4) {Camada de Tokenização};
-        \node[layer, fill=red!15, below=of l4] (l5) {Camada de Oracle};
+        % Camada 1 - Interface
+        \node[layer, fill=gray!8] (l1) {%
+            \faDesktop\enspace\textbf{Camada de Interface}\\[-1pt]
+            {\scriptsize\color{gray!70!black} dApps Web/Mobile\enspace$\cdot$\enspace Carteira\enspace$\cdot$\enspace Dashboard}};
+
+        % Camada 2 - Governança
+        \node[layer, fill=gray!16, below=of l1] (l2) {%
+            \faBalanceScale\enspace\textbf{Camada de Governança}\\[-1pt]
+            {\scriptsize\color{gray!70!black} Multi-sig 2-de-2\enspace$\cdot$\enspace Permissões\enspace$\cdot$\enspace Compliance}};
+
+        % Camada 3 - Mercado
+        \node[layer, fill=gray!24, below=of l2] (l3) {%
+            \faChartLine\enspace\textbf{Camada de Mercado}\\[-1pt]
+            {\scriptsize\color{gray!70!black} Livro de Ordens\enspace$\cdot$\enspace Matching\enspace$\cdot$\enspace Liquidação}};
+
+        % Camada 4 - Tokenização
+        \node[layer, fill=gray!32, below=of l3] (l4) {%
+            \faCoins\enspace\textbf{Camada de Tokenização}\\[-1pt]
+            {\scriptsize\color{gray!70!black} Ações $\rightarrow$ Tokens\enspace$\cdot$\enspace Custódia\enspace$\cdot$\enspace Paridade 1:1}};
+
+        % Camada 5 - Oracle
+        \node[layer, fill=gray!40, below=of l4] (l5) {%
+            \faDatabase\enspace\textbf{Camada de Oracle}\\[-1pt]
+            {\scriptsize\color{gray!70!black} Preços B3\enspace$\cdot$\enspace Heartbeat\enspace$\cdot$\enspace Circuit Breaker}};
+
+        % Setas bidirecionais entre camadas
+        \draw[conn] ([xshift=-1.5cm]l1.south) -- ([xshift=-1.5cm]l2.north);
+        \draw[conn] ([xshift=1.5cm]l2.north) -- ([xshift=1.5cm]l1.south);
+        \draw[conn] ([xshift=-1.5cm]l2.south) -- ([xshift=-1.5cm]l3.north);
+        \draw[conn] ([xshift=1.5cm]l3.north) -- ([xshift=1.5cm]l2.south);
+        \draw[conn] ([xshift=-1.5cm]l3.south) -- ([xshift=-1.5cm]l4.north);
+        \draw[conn] ([xshift=1.5cm]l4.north) -- ([xshift=1.5cm]l3.south);
+        \draw[conn] ([xshift=-1.5cm]l4.south) -- ([xshift=-1.5cm]l5.north);
+        \draw[conn] ([xshift=1.5cm]l5.north) -- ([xshift=1.5cm]l4.south);
+
+        % Atores externos (posicionados rente à borda direita)
+        \node[actor] (trab) at ([xshift=1.8cm]l1.east) {\faUser\ Trabalhador};
+        \node[actor] (gov) at ([xshift=1.8cm]l2.east) {\faLandmark\ Governo};
+        \node[actor] (b3) at ([xshift=1.8cm]l5.east) {\faUniversity\ B3};
+
+        \draw[conn, gray!40] (trab.west) -- (l1.east);
+        \draw[conn, gray!40] (gov.west) -- (l2.east);
+        \draw[conn, gray!40] (b3.west) -- (l5.east);
     \end{tikzpicture}
     \fonte{LIMA (2026).}
 \end{figure}
@@ -659,111 +671,255 @@ Criptomoedas como \textbf{Monero (XMR)} demonstram que a anonimização é tecni
 
 \subsubsection{Ring Signatures (Assinaturas em Anel)}
 
-Cada transação mistura a assinatura do remetente com outras assinaturas aleatórias, tornando impossível identificar quem realmente enviou os fundos. O remetente real é ``escondido'' entre múltiplos participantes fictícios, conforme ilustrado na Figura \ref{fig:ring-signatures}.
+Conforme apresentado na Seção \ref{sec:hash}, as funções \textit{hash} criptográficas constituem uma das primitivas fundamentais para a construção de protocolos de segurança em blockchain. As assinaturas em anel, introduzidas por \citeonline{rivest2001} e detalhadas na fundamentação teórica deste trabalho, estendem esse princípio ao permitir que um membro de um grupo assine uma mensagem sem revelar sua identidade individual.
+
+No contexto da Monero, cada transação utiliza essa técnica para misturar a assinatura do remetente real com as chaves públicas de outros participantes da rede, selecionados aleatoriamente. O resultado é que um observador externo --- seja um governo, uma \textit{exchange} ou qualquer outra entidade --- não consegue distinguir qual dos membros do anel é o verdadeiro autor da transação.
+
+Na implementação da Monero, o tamanho do anel (número de participantes fictícios) é configurável e atualmente fixado em 16 membros por transação. Isso significa que, para cada transação, existem 16 possíveis remetentes --- tornando a probabilidade de identificação do remetente real de apenas $\frac{1}{16}$, ou aproximadamente 6,25\%. Combinado com o volume de transações na rede, a rastreabilidade torna-se estatisticamente inviável.
 
 \begin{figure}[htb]
     \centering
-    \caption{Funcionamento das Ring Signatures}
+    \caption{Estrutura em Anel (\textit{Ring Structure}) das Ring Signatures}
     \label{fig:ring-signatures}
     \begin{tikzpicture}[
-        node distance=1.2cm,
-        user/.style={circle, draw, minimum size=1cm, fill=gray!20},
-        realuser/.style={circle, draw, minimum size=1cm, fill=green!40},
-        tx/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, fill=blue!20},
-        arrow/.style={->, >=stealth, thick}
+        ek/.style={circle, minimum size=1cm, draw=black, fill=white, line width=0.8pt, font=\footnotesize},
+        xornode/.style={circle, minimum size=1cm, draw=black, fill=white, line width=0.8pt, font=\normalsize},
+        znode/.style={circle, minimum size=1cm, draw=black, fill=white, line width=0.8pt, font=\large},
+        ringarrow/.style={->, >=stealth, line width=1.2pt, shorten >=3pt, shorten <=3pt},
+        inputarrow/.style={->, >=stealth, thick, shorten >=3pt}
     ]
-        % Usuários do anel
-        \node[user] (u1) {A};
-        \node[user, right=of u1] (u2) {B};
-        \node[realuser, right=of u2] (u3) {C};
-        \node[user, right=of u3] (u4) {D};
-        \node[user, right=of u4] (u5) {E};
-        
-        % Transação
-        \node[tx, below=2cm of u3] (tx) {Transação};
-        
-        % Conexões
-        \draw[arrow, dashed] (u1) -- (tx);
-        \draw[arrow, dashed] (u2) -- (tx);
-        \draw[arrow, thick, green!60!black] (u3) -- (tx);
-        \draw[arrow, dashed] (u4) -- (tx);
-        \draw[arrow, dashed] (u5) -- (tx);
-        
-        % Legenda
-        \node[below=0.5cm of tx, align=center] {\small Observador não consegue distinguir\\qual usuário é o remetente real};
+        \def\R{3.2}
+
+        % Anel de fundo
+        \draw[line width=2.5pt, gray!50] (0,0) circle (\R);
+
+        % Nós do anel (sentido horário, 36° entre cada)
+        \node[znode] (zv) at (90:\R) {$|$};
+        \node[xornode] (xor1) at (54:\R) {$\oplus$};
+        \node[ek] (ek1) at (18:\R) {$E_k$};
+        \node[xornode] (xor2) at (-18:\R) {$\oplus$};
+        \node[ek] (ek2) at (-54:\R) {$E_k$};
+        \node[xornode] (xor3) at (-90:\R) {$\oplus$};
+        \node[ek] (ek3) at (-126:\R) {$E_k$};
+        \node[ek] (ekr1) at (-162:\R) {$E_k$};
+        \node[xornode] (xorr) at (162:\R) {$\oplus$};
+        \node[ek] (ekr) at (126:\R) {$E_k$};
+
+        % Setas do anel (sentido horário)
+        \draw[ringarrow] (zv) -- (xor1);
+        \draw[ringarrow] (xor1) -- (ek1);
+        \draw[ringarrow] (ek1) -- (xor2);
+        \draw[ringarrow] (xor2) -- (ek2);
+        \draw[ringarrow] (ek2) -- (xor3);
+        \draw[ringarrow] (xor3) -- (ek3);
+        \draw[ringarrow, densely dashed] (ek3) -- (ekr1);
+        \draw[ringarrow] (ekr1) -- (xorr);
+        \draw[ringarrow] (xorr) -- (ekr);
+        \draw[ringarrow] (ekr) -- (zv);
+
+        % Rótulo z=v
+        \node at (90:\R+0.7) {$z = v$};
+
+        % Entradas externas (y_i alimentam os nós XOR)
+        \node[anchor=south west] at (54:\R+0.9) {$y_1 = g_1(x_1)$};
+        \draw[inputarrow] (54:\R+0.8) -- (xor1);
+
+        \node[anchor=west] at (-18:\R+0.9) {$y_2 = g_2(x_2)$};
+        \draw[inputarrow] (-18:\R+0.8) -- (xor2);
+
+        \node[anchor=north] at (-90:\R+1.3) {$y_3 = g_3(x_3)$};
+        \draw[inputarrow] (-90:\R+0.8) -- (xor3);
+
+        \node[anchor=south east] at (162:\R+0.9) {$y_r = g_r(x_r)$};
+        \draw[inputarrow] (162:\R+0.8) -- (xorr);
+
     \end{tikzpicture}
     \fonte{LIMA (2026).}
 \end{figure}
 
 \subsubsection{Stealth Addresses (Endereços Furtivos)}
 
-Para cada transação, um endereço único e descartável é gerado automaticamente. Mesmo que alguém conheça o endereço público de um usuário, não consegue rastrear os recebimentos na blockchain. A Figura \ref{fig:stealth-addresses} ilustra este mecanismo.
+Enquanto as Ring Signatures ocultam o remetente, os \textit{Stealth Addresses} resolvem o problema complementar: proteger a identidade do \textbf{destinatário}. No Bitcoin, por exemplo, se Alice publica seu endereço para receber doações, qualquer pessoa pode consultar a blockchain e ver todas as transações recebidas naquele endereço, calculando seu saldo total. Os Stealth Addresses eliminam essa vulnerabilidade.
+
+O mecanismo funciona da seguinte forma: o destinatário publica duas chaves públicas --- uma \textit{view key} (chave de visualização) e uma \textit{spend key} (chave de gasto). Quando o remetente deseja enviar fundos, ele utiliza a \textit{view key} pública do destinatário combinada com um número aleatório efêmero ($r$) para derivar um \textbf{endereço único e descartável} exclusivo para aquela transação. Esse endereço derivado não possui nenhuma ligação visível com a chave pública original do destinatário.
+
+Na blockchain, cada transação aparece direcionada a um endereço diferente e aparentemente não relacionado. Somente o destinatário, de posse de sua chave privada de visualização, consegue escanear a blockchain e identificar quais transações são destinadas a ele. Para gastar os fundos recebidos, utiliza a \textit{spend key} privada correspondente.
+
+Conforme discutido na fundamentação teórica sobre Carteiras Hierárquicas Determinísticas (HD Wallets), o conceito de derivar múltiplos endereços a partir de uma única semente já existe no ecossistema Bitcoin. Os Stealth Addresses levam esse princípio adiante: em vez de o próprio usuário gerar novos endereços, é o \textbf{remetente} quem gera o endereço descartável, sem necessidade de interação prévia com o destinatário. A Figura \ref{fig:stealth-addresses} ilustra este mecanismo.
 
 \begin{figure}[htb]
     \centering
     \caption{Funcionamento dos Stealth Addresses}
     \label{fig:stealth-addresses}
     \begin{tikzpicture}[
-        node distance=1.5cm,
-        box/.style={rectangle, draw, minimum width=2.5cm, minimum height=0.8cm, align=center},
-        addr/.style={rectangle, draw, minimum width=3cm, minimum height=0.6cm, fill=yellow!30, font=\tiny},
-        arrow/.style={->, >=stealth, thick}
+        node distance=1cm,
+        person/.style={rectangle, rounded corners=6pt, draw=black, minimum width=2.8cm, minimum height=1cm, align=center, font=\small},
+        key/.style={rectangle, rounded corners=4pt, draw=black, fill=gray!15, minimum width=2.5cm, minimum height=0.7cm, align=center, font=\scriptsize},
+        stealth/.style={rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=3cm, minimum height=0.7cm, align=center, font=\scriptsize},
+        blockchain/.style={rectangle, rounded corners=6pt, draw=black, fill=gray!10, minimum width=12cm, minimum height=2.3cm, align=center},
+        arrow/.style={->, >=stealth, thick, shorten >=2pt, shorten <=2pt},
+        darrow/.style={->, >=stealth, thick, dashed, shorten >=2pt, shorten <=2pt},
+        label/.style={font=\scriptsize, align=center}
     ]
-        % Remetente e destinatário
-        \node[box, fill=blue!20] (sender) {Remetente};
-        \node[box, fill=green!20, right=5cm of sender] (receiver) {Destinatário\\(Endereço Público)};
+        % === DESTINATÁRIO (BOB) ===
+        \node[person, fill=gray!25] (bob) at (8, 4) {\textbf{Destinatário (Bob)}};
+        \node[key] (viewkey) at (8, 2.8) {\faKey\ View Key (pública)};
+        \node[key] (spendkey) at (8, 2) {\faLock\ Spend Key (privada)};
         
-        % Endereços gerados
-        \node[addr, below=1cm of sender] (a1) {Endereço Único \#1};
-        \node[addr, below=0.5cm of a1] (a2) {Endereço Único \#2};
-        \node[addr, below=0.5cm of a2] (a3) {Endereço Único \#3};
+        \draw[arrow] (bob) -- (viewkey);
         
-        % Conexões
-        \draw[arrow] (sender) -- (a1);
-        \draw[arrow, dashed] (a1) -| (receiver);
-        \draw[arrow, dashed] (a2) -| (receiver);
-        \draw[arrow, dashed] (a3) -| (receiver);
+        % === REMETENTES ===
+        \node[person, fill=gray!10] (alice) at (-3, 4) {\textbf{Alice}};
+        \node[person, fill=gray!10] (carol) at (-3, 2.5) {\textbf{Carol}};
+        \node[person, fill=gray!10] (dave) at (-3, 1) {\textbf{Dave}};
         
-        % Blockchain
-        \node[below=0.5cm of a3, align=center] {\small Na blockchain, cada transação\\aparece com endereço diferente};
+        % === DERIVAÇÃO ===
+        \node[label] at (1.5, 4.5) {\textit{usa View Key + número}};
+        \node[label] at (1.5, 4.1) {\textit{aleatório $r$ para derivar}};
+        
+        \draw[darrow] (viewkey.west) -- ++(-2,0) node[midway, above, font=\scriptsize] {publica};
+        
+        % === BLOCKCHAIN ===
+        \node[blockchain] (chain) at (1.5, -1.3) {};
+        \node[font=\small\bfseries] at (1.5, -2.2) {Blockchain (registros público, de Bob)};
+        
+        \node[stealth] (sa1) at (-2.5, -1.2) {Endereço: \texttt{0x7a3f...}};
+        \node[stealth] (sa2) at (1.5, -1.2) {Endereço: \texttt{0xb91c...}};
+        \node[stealth] (sa3) at (5.5, -1.2) {Endereço: \texttt{0x2e8d...}};
+        
+        \node[label] at (-2.5, -1.8) {Tx de Alice};
+        \node[label] at (1.5, -1.8) {Tx de Carol};
+        \node[label] at (5.5, -1.8) {Tx de Dave};
+        
+        % === SETAS DOS REMETENTES PARA BLOCKCHAIN ===
+        \draw[arrow] (alice.west) -- (-6, 4) -- (-6, -1.2) -- (sa1.west);
+        \draw[arrow] (carol.south) -- ++(0,-0.3) -| (sa2.north);
+        \draw[arrow] (dave.south) -- ++(0,-0.5) -| (sa3.north);
+        
+        % === OBSERVADOR ===
+        \node[rectangle, rounded corners=6pt, draw=black, fill=gray!40, minimum width=11cm, minimum height=0.9cm, align=center, font=\scriptsize] (obs) at (1.5, -3.5) {\faEyeSlash\quad \textbf{Observador:} três endereços distintos --- impossível saber que todos são de Bob};
+        
+        % === BOB ESCANEIA ===
+        \draw[darrow, gray] (spendkey.south) -- ++(0,-0.5) -| (sa1.north east) node[pos=0.25, right=4.5cm, font=\scriptsize, text=black] {Bob escaneia};
+        
     \end{tikzpicture}
     \fonte{LIMA (2026).}
 \end{figure}
 
 \subsubsection{RingCT (Ring Confidential Transactions)}
 
-Os valores transacionados são criptografados, impedindo que observadores externos saibam quanto foi transferido. A Figura \ref{fig:ringct} demonstra como os valores são ocultados.
+As Ring Signatures ocultam quem enviou e os Stealth Addresses ocultam quem recebeu, mas nenhum dos dois mecanismos esconde \textbf{quanto} foi transferido. Em blockchains como o Bitcoin, os valores de cada transação são visíveis publicamente --- qualquer pessoa pode verificar que o endereço \texttt{0xabc...} enviou 0,5 BTC para \texttt{0xdef...}. O protocolo \textbf{RingCT} (\textit{Ring Confidential Transactions}), introduzido na Monero em 2017, resolve essa última lacuna de privacidade.
+
+O RingCT utiliza um esquema criptográfico chamado \textbf{Pedersen Commitment} para ocultar os valores transacionados. Um \textit{Pedersen Commitment} é uma função matemática que ``lacra'' um valor dentro de um envelope criptográfico: quem olha o envelope sabe que há um valor válido dentro, mas não consegue descobrir qual é. Formalmente, o compromisso de um valor $v$ é calculado como:
+
+$$C = vG + rH$$
+
+onde $G$ e $H$ são pontos geradores de uma curva elíptica (constantes públicas conhecidas por todos) e $r$ é um número aleatório secreto chamado \textit{blinding factor} (fator de cegamento). A propriedade fundamental é que, conhecendo apenas $C$, é computacionalmente impossível descobrir $v$ ou $r$ --- porém, quem conhece ambos pode provar que o compromisso é válido.
+
+O desafio é garantir que ninguém crie dinheiro do nada. Se os valores estão ocultos, como verificar que a soma das entradas é igual à soma das saídas? A elegância do Pedersen Commitment está em sua propriedade \textbf{homomórfica aditiva}: a soma dos compromissos das entradas menos a soma dos compromissos das saídas deve ser zero:
+
+$$\sum C_{in} - \sum C_{out} = 0$$
+
+Essa verificação pode ser feita por qualquer nó da rede \textbf{sem conhecer os valores individuais}. Se um atacante tentasse inflar uma saída (por exemplo, declarar 100 XMR quando recebeu apenas 10), a equação não fecharia e a transação seria rejeitada pela rede. A Figura \ref{fig:ringct} ilustra esse processo.
 
 \begin{figure}[htb]
     \centering
-    \caption{Funcionamento do RingCT}
+    \caption{Funcionamento do RingCT --- Pedersen Commitments}
     \label{fig:ringct}
     \begin{tikzpicture}[
-        node distance=1.2cm,
-        box/.style={rectangle, draw, minimum width=3cm, minimum height=1cm, align=center},
-        hidden/.style={rectangle, draw, minimum width=2cm, minimum height=0.8cm, fill=red!20, align=center},
-        arrow/.style={->, >=stealth, thick}
+        arrow/.style={->, >=stealth, thick, shorten >=1pt, shorten <=1pt},
+        darrow/.style={->, >=stealth, thick, dashed, shorten >=1pt, shorten <=1pt}
     ]
-        % Transação normal vs RingCT
-        \node[box, fill=gray!20] (normal) {Transação Normal\\Valor: 10 XMR};
-        \node[box, fill=green!20, right=4cm of normal] (ringct) {Transação RingCT\\Valor: ???};
-        
-        % Observador
-        \node[below=1.5cm of normal] (obs1) {\faEye};
-        \node[below=0.3cm of obs1] {\small Visível};
-        
-        \node[below=1.5cm of ringct] (obs2) {\faEyeSlash};
-        \node[below=0.3cm of obs2] {\small Oculto};
-        
-        % Setas
-        \draw[arrow] (normal) -- (obs1);
-        \draw[arrow, dashed, red] (ringct) -- (obs2);
-        
-        % Criptografia
-        \node[hidden, above right=-0.3cm and 0.5cm of ringct] {Criptografado};
+        % ============================================================
+        %  LINHA SUPERIOR — Valores reais (visíveis só aos participantes)
+        % ============================================================
+        \node[font=\small\bfseries] at (0, 6.5) {Visão do Remetente (valores reais)};
+
+        % Caixa de fundo — valores reais
+        \fill[gray!6, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
+        \draw[gray!40, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
+
+        % Entradas reais
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in1) at (-3.5, 4.8) {\faCoins\ \textbf{7 XMR}};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in2) at (-3.5, 3.7) {\faCoins\ \textbf{5 XMR}};
+        \node[font=\scriptsize, gray!60!black] at (-3.5, 5.8) {Entradas};
+
+        % Sinal de igual
+        \node[font=\Large] at (0, 4.25) {$\longrightarrow$};
+
+        % Saídas reais
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out1) at (3.5, 4.8) {\faCoins\ \textbf{9 XMR}};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out2) at (3.5, 3.7) {\faCoins\ \textbf{3 XMR}};
+        \node[font=\scriptsize, gray!60!black] at (3.5, 5.8) {Saídas};
+
+        % Soma
+        \node[font=\scriptsize, align=center] at (-0.9, 4.8) {$7 + 5$};
+        \node[font=\scriptsize, align=center] at (0.9, 4.8) {$9 + 3$};
+        \node[font=\scriptsize\bfseries] at (0, 3.5) {$12 = 12$ \faCheck};
+
+        % ============================================================
+        %  SETAS DE TRANSFORMAÇÃO — Pedersen Commitment
+        % ============================================================
+        \draw[arrow, gray!70, line width=1.2pt] (-3.5, 3.15) -- (-3.5, 2.05) node[midway, left, font=\scriptsize, text=black] {$C = vG + rH$};
+        \draw[arrow, gray!70, line width=1.2pt] (3.5, 3.15) -- (3.5, 2.05) node[midway, right, font=\scriptsize, text=black] {$C = vG + rH$};
+
+        \node[font=\small\bfseries, fill=white, inner sep=3pt] at (0, 2.8) {\faLock\ Pedersen Commitment};
+
+        % ============================================================
+        %  LINHA INFERIOR — O que a blockchain registra (público)
+        % ============================================================
+        \node[font=\small\bfseries] at (0, 2) {Visão da Blockchain (valores ocultos)};
+
+        % Caixa de fundo — commitments
+        \fill[gray!18, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
+        \draw[gray!50, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
+
+        % Commitments de entrada
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin1) at (-3.5, 0.6) {$C_{in_1}$ \faQuestion};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin2) at (-3.5, -0.5) {$C_{in_2}$ \faQuestion};
+        \node[font=\scriptsize, gray!60!black] at (-3.5, 1.5) {Entradas ocultas};
+
+        % Seta central
+        \node[font=\Large] at (0, 0.05) {$\longrightarrow$};
+
+        % Commitments de saída
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout1) at (3.5, 0.6) {$C_{out_1}$ \faQuestion};
+        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout2) at (3.5, -0.5) {$C_{out_2}$ \faQuestion};
+        \node[font=\scriptsize, gray!60!black] at (3.5, 1.5) {Saídas ocultas};
+
+        % ============================================================
+        %  VERIFICAÇÃO
+        % ============================================================
+        \node[rectangle, rounded corners=6pt, draw=black, dashed, fill=white, minimum width=10cm, minimum height=0.9cm, align=center, font=\small] (proof) at (0, -2.2) {\faCheck\ \ Rede verifica: $\displaystyle\sum C_{in} - \sum C_{out} = 0$ \quad sem conhecer os valores};
+        \draw[darrow] (0, -1.25) -- (proof.north);
+
+        % ============================================================
+        %  OBSERVADOR
+        % ============================================================
+        \node[rectangle, rounded corners=6pt, draw=black, fill=gray!40, minimum width=10cm, minimum height=0.9cm, align=center, font=\scriptsize] (obs) at (0, -3.6) {\faEyeSlash\quad \textbf{Observador externo:} vê $C_{in_1}, C_{in_2} \rightarrow C_{out_1}, C_{out_2}$ --- valores e identidades permanecem ocultos};
+        \draw[darrow] (proof.south) -- (obs.north);
+
     \end{tikzpicture}
     \fonte{LIMA (2026).}
 \end{figure}
+
+A Tabela \ref{tab:mecanismos-privacidade} sintetiza os três mecanismos de privacidade e o aspecto da transação que cada um oculta.
+
+\begin{table}[htb]
+    \centering
+    \caption{Mecanismos de Privacidade da Monero}
+    \label{tab:mecanismos-privacidade}
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Mecanismo} & \textbf{O que oculta} \\
+        \midrule
+        Ring Signatures & Quem enviou \\
+        Stealth Addresses & Quem recebeu \\
+        RingCT & Quanto foi enviado \\
+        \bottomrule
+    \end{tabular}
+    \fonte{LIMA (2026).}
+\end{table}
 
 Essas técnicas garantem que, mesmo com a blockchain sendo pública, não seja possível vincular transações a indivíduos específicos --- validando a possibilidade de um sistema previdenciário resistente a bloqueios arbitrários.
 

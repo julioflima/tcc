@@ -443,10 +443,10 @@ A Figura \ref{fig:multisig-2de3} ilustra o funcionamento de uma carteira multi-a
     \label{fig:multisig-2de3}
     \begin{tikzpicture}[
         node distance=1.5cm,
-        key/.style={circle, draw=black, fill=yellow!30, minimum size=1.4cm, font=\footnotesize, align=center, line width=1.5pt},
-        contract/.style={rectangle, draw=black, fill=green!20, rounded corners=8pt, minimum width=3.5cm, minimum height=1.5cm, font=\small, align=center, line width=1.5pt},
-        vault/.style={rectangle, draw=black, fill=blue!20, rounded corners=3pt, minimum width=3cm, minimum height=1.2cm, font=\small, align=center, line width=1.5pt},
-        arrow/.style={->, thick, >=stealth, line width=1.2pt}
+        key/.style={circle, fill=gray!20, minimum size=1.4cm, font=\footnotesize, align=center},
+        contract/.style={rectangle, fill=gray!35, rounded corners=8pt, minimum width=3.5cm, minimum height=1.5cm, font=\small, align=center},
+        vault/.style={rectangle, fill=gray!50, rounded corners=3pt, minimum width=3cm, minimum height=1.2cm, font=\small, align=center},
+        arrow/.style={->, thick, >=stealth, line width=1.2pt, shorten >=3pt, shorten <=3pt}
     ]
     
     % Chaves com ícones
@@ -455,9 +455,9 @@ A Figura \ref{fig:multisig-2de3} ilustra o funcionamento de uma carteira multi-a
     \node[key] (key3) at (8, 4) {\faBalanceScale};
     
     % Labels das chaves
-    \node[below=0.3cm of key1, font=\footnotesize, align=center, text width=2cm] {\textbf{Trabalhador} \\ {\scriptsize Chave 1}};
-    \node[below=0.3cm of key2, font=\footnotesize, align=center, text width=2cm] {\textbf{Governo} \\ {\scriptsize Chave 2}};
-    \node[below=0.3cm of key3, font=\footnotesize, align=center, text width=2cm] {\textbf{Auditoria} \\ {\scriptsize Chave 3}};
+    \node[below=0.3cm of key1, font=\footnotesize, align=center, text width=2cm] (lbl1) {\textbf{Trabalhador} \\ {\scriptsize Chave 1}};
+    \node[below=0.3cm of key2, font=\footnotesize, align=center, text width=2cm] (lbl2) {\textbf{Governo} \\ {\scriptsize Chave 2}};
+    \node[below=0.3cm of key3, font=\footnotesize, align=center, text width=2cm] (lbl3) {\textbf{Auditoria} \\ {\scriptsize Chave 3}};
     
     % Smart Contract
     \node[contract] (smart) at (4, 1) {\faFileContract\ \textbf{Smart Contract 2-de-3}};
@@ -466,26 +466,23 @@ A Figura \ref{fig:multisig-2de3} ilustra o funcionamento de uma carteira multi-a
     \node[vault] (vault) at (4, -1.5) {\faLock\ \textbf{Carteira Previdenciária}};
     
     % Setas das chaves para o contrato
-    \draw[arrow, color=orange!80!black] (key1.south) -- (smart.north west);
-    \draw[arrow, color=blue!80!black] (key2.south) -- (smart.north);
-    \draw[arrow, color=purple!80!black] (key3.south) -- (smart.north east);
+    \draw[arrow, color=black] (lbl1.south) -- (smart.north west);
+    \draw[arrow, color=black] (lbl2.south) -- (smart.north);
+    \draw[arrow, color=black] (lbl3.south) -- (smart.north east);
     
     % Seta do contrato para a carteira
-    \draw[arrow, color=green!60!black, line width=2pt] (smart.south) -- node[right, font=\scriptsize, color=black] {Autorização} (vault.north);
+    \draw[arrow, color=black, line width=2pt] (smart.south) -- node[right=3pt, font=\scriptsize, color=black] {Autorização} (vault.north);
     
     % Indicador de quórum
-    \node[draw=orange, fill=orange!10, rounded corners=5pt, font=\scriptsize, line width=1pt, text width=2.2cm, align=center] at (8.5, 1) {\faCheckDouble\ Mínimo: 2 assinaturas};
+    \node[fill=gray!10, rounded corners=5pt, font=\scriptsize, text width=2.2cm, align=center] at (8.5, 1) {\faCheckDouble\ Mínimo: 2 assinaturas};
     
     % Cenários de uso
-    \node[font=\scriptsize, align=left, text width=3.5cm, draw=gray!50, fill=gray!5, rounded corners=3pt, inner sep=5pt] at (-1.5, 0.5) {
-        \textbf{Combinações válidas:} \\[2pt]
-        {\color{green!60!black}\faCheck} Trabalhador + Governo \\[1pt]
-        {\color{green!60!black}\faCheck} Trabalhador + Auditoria \\[1pt]
-        {\color{green!60!black}\faCheck} Governo + Auditoria
+    \node[font=\small, align=left, text width=4.5cm, fill=gray!5, rounded corners=3pt, inner sep=8pt] at (-2, 0.5) {
+        \textbf{Combinações válidas:} \\[4pt]
+        {\color{black}\faCheck} Trabalhador + Governo \\[3pt]
+        {\color{black}\faCheck} Trabalhador + Auditoria \\[3pt]
+        {\color{black}\faCheck} Governo + Auditoria
     };
-    
-    % Ícone de segurança
-    \node[font=\large, color=blue!60] at (8.5, -1.5) {\faLock};
     
     \end{tikzpicture}
     \fonte{Elaborada pelo autor (2026).}
