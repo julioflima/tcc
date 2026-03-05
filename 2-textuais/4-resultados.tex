@@ -24,12 +24,8 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     \centering
     \caption{Arquitetura do Sistema Proposto}
     \label{fig:arquitetura}
-    % ── cores do diagrama ──
-    \definecolor{cBlue}{HTML}{2563EB}
-    \definecolor{cAmber}{HTML}{D97706}
-    \definecolor{cGreen}{HTML}{059669}
-    \definecolor{cViolet}{HTML}{7C3AED}
-    \definecolor{cSlate}{HTML}{334155}
+    % ── tons de cinza ──
+    \definecolor{cSlate}{HTML}{404040}
     \begin{tikzpicture}[
         % ── estilos ──
         actor/.style={
@@ -54,13 +50,13 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
             rounded corners=3pt
         },
         layerlbl/.style={
-            font=\sffamily\bfseries\tiny,
-            rotate=90, anchor=south, text=white,
-            inner sep=2pt
+            font=\sffamily\bfseries\fontsize{5}{6}\selectfont,
+            rotate=90, anchor=south, text=gray!50,
+            inner sep=1pt
         },
-        conn/.style={->, >=stealth, line width=0.9pt, cSlate!50},
-        biconn/.style={<->, >=stealth, line width=0.9pt, cSlate!50},
-        flowlbl/.style={font=\tiny\sffamily, fill=white, inner sep=1.5pt, text=cSlate!80, rounded corners=1pt}
+        conn/.style={->, >=stealth, line width=0.9pt, black!35},
+        biconn/.style={<->, >=stealth, line width=0.9pt, black!35},
+        flowlbl/.style={font=\tiny\sffamily, fill=white, inner sep=1.5pt, text=black!60, rounded corners=1pt}
     ]
 
     % ═══════════════════════════════════════
@@ -73,15 +69,14 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     % ═══════════════════════════════════════
     %  CAMADA 1 — INTERFACE  (azul)
     % ═══════════════════════════════════════
-    \fill[cBlue!5, rounded corners=8pt] (-6.6, 5.35) rectangle (6.6, 7.15);
-    \draw[cBlue!25, rounded corners=8pt, line width=0.5pt] (-6.6, 5.35) rectangle (6.6, 7.15);
-    % Sidebar
-    \fill[cBlue, rounded corners=3pt] (-6.6, 5.35) rectangle (-6.15, 7.15);
-    \node[layerlbl] at (-6.375, 6.25) {INTERFACE};
+    \fill[black!4, rounded corners=8pt] (-6.6, 5.35) rectangle (6.6, 7.15);
+    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, 5.35) rectangle (6.6, 7.15);
+    % Label
+    \node[layerlbl] at (-5.95, 6.25) {INTERFACE};
     % Cards
-    \node[card, draw=cBlue!30] (app)    at (-3.5, 6.25) {\faDesktop\\[2pt] App/Web\\[-1pt]do Trabalhador};
-    \node[card, draw=cBlue!30] (folha)  at (0, 6.25)    {\faFileCode\\[2pt] Sistema\\[-1pt]de Folha};
-    \node[card, draw=cBlue!30] (painel) at (3.5, 6.25)  {\faUniversity\\[2pt] Painel\\[-1pt]Governamental};
+    \node[card] (app)    at (-3.5, 6.25) {\faDesktop\\[2pt] App/Web\\[-1pt]do Trabalhador};
+    \node[card] (folha)  at (0, 6.25)    {\faFileCode\\[2pt] Sistema\\[-1pt]de Folha};
+    \node[card] (painel) at (3.5, 6.25)  {\faUniversity\\[2pt] Painel\\[-1pt]Governamental};
 
     % Setas atores → interface
     \draw[conn] (trab) -- (app);
@@ -91,17 +86,16 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     % ═══════════════════════════════════════
     %  CAMADA 2 — GOVERNANÇA  (âmbar)
     % ═══════════════════════════════════════
-    \fill[cAmber!5, rounded corners=8pt] (-6.6, 3.15) rectangle (6.6, 5.0);
-    \draw[cAmber!25, rounded corners=8pt, line width=0.5pt] (-6.6, 3.15) rectangle (6.6, 5.0);
-    % Sidebar
-    \fill[cAmber, rounded corners=3pt] (-6.6, 3.15) rectangle (-6.15, 5.0);
-    \node[layerlbl] at (-6.375, 4.075) {GOVERNANÇA};
+    \fill[black!6, rounded corners=8pt] (-6.6, 3.15) rectangle (6.6, 5.0);
+    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, 3.15) rectangle (6.6, 5.0);
+    % Label
+    \node[layerlbl] at (-5.95, 4.075) {GOVERNANÇA};
     % Cards
-    \node[card, draw=cAmber!40] (k1) at (-3.5, 4.1) {\faKey\\[2pt] Chave\\[-1pt]Trabalhador};
-    \node[card, draw=cAmber!40] (k2) at (0, 4.1)    {\faKey\\[2pt] Chave\\[-1pt]Governo};
-    \node[card, draw=cAmber!40] (k3) at (3.5, 4.1)  {\faKey\\[2pt] Chave\\[-1pt]Auditoria};
+    \node[card] (k1) at (-3.5, 4.1) {\faKey\\[2pt] Chave\\[-1pt]Trabalhador};
+    \node[card] (k2) at (0, 4.1)    {\faKey\\[2pt] Chave\\[-1pt]Governo};
+    \node[card] (k3) at (3.5, 4.1)  {\faKey\\[2pt] Chave\\[-1pt]Auditoria};
     % Badge multi-sig
-    \node[fill=cAmber!12, draw=cAmber!40, rounded corners=3pt, font=\sffamily\tiny\bfseries, text=cAmber!80!black, inner sep=3pt, line width=0.4pt] at (5.5, 4.1) {Multi-sig 2-de-3};
+    \node[fill=black!6, draw=black!25, rounded corners=3pt, font=\sffamily\tiny\bfseries, text=black!60, inner sep=3pt, line width=0.4pt] at (5.7, 4.7) {Multi-sig 2-de-3};
 
     % Setas interface → governança
     \draw[conn] (app) -- (k1);
@@ -111,16 +105,15 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     % ═══════════════════════════════════════
     %  CAMADA 3 — SMART CONTRACTS  (verde)
     % ═══════════════════════════════════════
-    \fill[cGreen!5, rounded corners=8pt] (-6.6, 0.85) rectangle (6.6, 2.8);
-    \draw[cGreen!25, rounded corners=8pt, line width=0.5pt] (-6.6, 0.85) rectangle (6.6, 2.8);
-    % Sidebar
-    \fill[cGreen, rounded corners=3pt] (-6.6, 0.85) rectangle (-6.15, 2.8);
-    \node[layerlbl] at (-6.375, 1.825) {CONTRATOS};
+    \fill[black!8, rounded corners=8pt] (-6.6, 0.85) rectangle (6.6, 2.8);
+    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, 0.85) rectangle (6.6, 2.8);
+    % Label
+    \node[layerlbl] at (-5.95, 1.825) {CONTRATOS};
     % Cards
-    \node[card, draw=cGreen!35] (c1) at (-4.2, 1.85) {\faPiggyBank\\[2pt] Contribuição};
-    \node[card, draw=cGreen!35] (c2) at (-1.4, 1.85) {\faChartLine\\[2pt] Investimento};
-    \node[card, draw=cGreen!35] (c3) at (1.4, 1.85)  {\faUsers\\[2pt] Herança};
-    \node[card, draw=cGreen!35] (c4) at (4.2, 1.85)  {\faUserShield\\[2pt] Compliance};
+    \node[card] (c1) at (-4.2, 1.85) {\faPiggyBank\\[2pt] Contribuição};
+    \node[card] (c2) at (-1.4, 1.85) {\faChartLine\\[2pt] Investimento};
+    \node[card] (c3) at (1.4, 1.85)  {\faUsers\\[2pt] Herança};
+    \node[card] (c4) at (4.2, 1.85)  {\faUserShield\\[2pt] Compliance};
 
     % Setas governança → contratos
     \draw[conn] (k1.south) -- ++(0,-0.3) -| (c1.north);
@@ -131,15 +124,14 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     % ═══════════════════════════════════════
     %  CAMADA 4 — BLOCKCHAIN  (violeta)
     % ═══════════════════════════════════════
-    \fill[cViolet!5, rounded corners=8pt] (-6.6, -1.45) rectangle (6.6, 0.5);
-    \draw[cViolet!25, rounded corners=8pt, line width=0.5pt] (-6.6, -1.45) rectangle (6.6, 0.5);
-    % Sidebar
-    \fill[cViolet, rounded corners=3pt] (-6.6, -1.45) rectangle (-6.15, 0.5);
-    \node[layerlbl] at (-6.375, -0.475) {BLOCKCHAIN};
+    \fill[black!10, rounded corners=8pt] (-6.6, -1.45) rectangle (6.6, 0.5);
+    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, -1.45) rectangle (6.6, 0.5);
+    % Label
+    \node[layerlbl] at (-5.95, -0.475) {BLOCKCHAIN};
     % Cards
-    \node[card, draw=cViolet!35] (t1) at (-3.5, -0.45) {\faCoins\\[2pt] Tokens\\[-1pt]BRL / Ativos};
-    \node[card, draw=cViolet!35] (t2) at (0, -0.45)    {\faBook\\[2pt] Livro de\\[-1pt]Ordens};
-    \node[card, draw=cViolet!35] (t3) at (3.5, -0.45)  {\faLock\\[2pt] Módulo de\\[-1pt]Privacidade};
+    \node[card] (t1) at (-3.5, -0.45) {\faCoins\\[2pt] Tokens\\[-1pt]BRL / Ativos};
+    \node[card] (t2) at (0, -0.45)    {\faBook\\[2pt] Livro de\\[-1pt]Ordens};
+    \node[card] (t3) at (3.5, -0.45)  {\faLock\\[2pt] Módulo de\\[-1pt]Privacidade};
 
     % Setas contratos → blockchain
     \draw[conn] (c1.south) -- ++(0,-0.2) -| (t1.north);
