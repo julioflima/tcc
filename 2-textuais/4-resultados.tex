@@ -226,7 +226,7 @@ Esta arquitetura incentiva o trabalhador a manter seus recursos investidos em at
 
 \subsection{Limites de Concentração}
 
-Para proteção do trabalhador, o sistema oferece limites de diversificação configuráveis. Os valores específicos --- como percentual máximo por empresa ou por setor --- podem ser definidos de forma flexível no momento da adesão. Contudo, uma vez escolhidos e aceitos pelo trabalhador, esses limites tornam-se \textbf{imutáveis} para aquela carteira, garantindo que regras não sejam alteradas retroativamente em prejuízo do titular.
+Para proteção do trabalhador, o sistema oferece limites de diversificação configuráveis. Os valores específicos --- como percentual máximo por empresa ou por setor --- negociados e oferecidos pelo governo no momento da adesão. Contudo, uma vez escolhidos e aceitos pelo trabalhador, esses limites tornam-se \textbf{imutáveis} para aquela carteira, garantindo que regras não sejam alteradas retroativamente em prejuízo do titular. Na negociação o governo pode pedir um prazo para a aplicação da regra, pós esse prazo o indivíduo poderar remover as restrições.
 
 Alternativamente, o sistema pode oferecer \textbf{atualizações opcionais} de regras: quando novos limites forem propostos pelo órgão regulador, o trabalhador recebe notificação e decide se aceita ou não a mudança. Caso recuse, sua carteira continua operando sob as regras originalmente contratadas. Exemplos de limites configuráveis:
 
@@ -569,7 +569,7 @@ O elemento central da governança é a definição precisa dos poderes de cada p
 O indivíduo (trabalhador) possui os seguintes poderes exclusivos:
 
 \begin{alineas}
-    \item \textbf{Executar Trades}: Pode comprar e vender ativos livremente dentro do universo de investimentos permitido, respeitando o limite de 1 operação por mês. A operação requer co-assinatura automática do governo;
+    \item \textbf{Executar Trades}: Pode comprar e vender ativos livremente dentro do universo de investimentos permitido, respeitando o limite de 1 lote operações por mês. A operação requer co-assinatura automática do governo;
     \item \textbf{Gerenciar Beneficiários}: Tem controle exclusivo sobre quem são seus herdeiros e qual percentual cada um receberá;
     \item \textbf{Prova de Vida}: Deve submeter prova de vida anual para manter sua carteira ativa;
     \item \textbf{Plenos Poderes após 65 anos}: Ao atingir a idade de aposentadoria, pode liquidar qualquer posição sem necessidade de aprovação governamental.
@@ -607,7 +607,6 @@ O sistema implementa um mecanismo de freios e contrapesos onde:
     \item O governo sozinho não pode mover os ativos (protege contra confisco arbitrário);
     \item A auditoria sozinha não pode movimentar fundos (sua chave só funciona em conjunto com a do governo);
     \item Em caso de perda da chave do trabalhador, a recuperação é possível via auditoria + governo;
-    \item O código é imutável após deploy (protege contra mudanças políticas);
     \item O código é público e auditável (garante transparência das regras, não dos saldos individuais).
 \end{alineas}
 
@@ -994,7 +993,7 @@ Existem diversas formas de o indivíduo guardar suas próprias chaves:
 
 \begin{alineas}
     \item \textbf{Hardware Wallets} (Ledger, Trezor, Coldcard): Dispositivos físicos que armazenam chaves offline, isoladas de computadores conectados à internet;
-    \item \textbf{Paper Wallets}: Seed phrase escrita em papel ou gravada em metal resistente ao fogo e corrosão;
+    \item \textbf{Paper Wallets}: Frase semente (\textit{seed phrase}) escrita em papel ou gravada em metal resistente ao fogo e corrosão;
     \item \textbf{Multisig pessoal}: Divisão de chaves em múltiplos locais geográficos, exigindo acesso a mais de um local para movimentar fundos.
 \end{alineas}
 
