@@ -24,133 +24,32 @@ A arquitetura proposta é composta por três camadas principais, conforme ilustr
     \centering
     \caption{Arquitetura do Sistema Proposto}
     \label{fig:arquitetura}
-    % ── tons de cinza ──
-    \definecolor{cSlate}{HTML}{404040}
     \begin{tikzpicture}[
-        % ── estilos ──
-        actor/.style={
-            rectangle, rounded corners=10pt,
-            fill=cSlate, text=white,
-            font=\small\bfseries,
-            minimum width=2.8cm, minimum height=0.85cm,
-            align=center, inner sep=5pt,
-            blur shadow={shadow blur steps=6, shadow xshift=0pt, shadow yshift=-1.5pt, shadow blur radius=3pt, shadow opacity=18}
-        },
-        card/.style={
-            rectangle, rounded corners=4pt,
-            draw=gray!30, fill=white,
-            font=\scriptsize, align=center,
-            minimum width=2.1cm, minimum height=1.05cm,
-            inner sep=3pt, line width=0.5pt,
-            blur shadow={shadow blur steps=4, shadow xshift=0.5pt, shadow yshift=-1pt, shadow blur radius=2pt, shadow opacity=12}
-        },
-        sidebar/.style={
-            rectangle, rounded corners=0pt,
-            minimum width=0.45cm, inner sep=0pt,
-            rounded corners=3pt
-        },
-        layerlbl/.style={
-            font=\sffamily\bfseries\fontsize{5}{6}\selectfont,
-            rotate=90, anchor=south, text=gray!50,
-            inner sep=1pt
-        },
-        conn/.style={->, >=stealth, line width=0.9pt, black!35},
-        biconn/.style={<->, >=stealth, line width=0.9pt, black!35},
-        flowlbl/.style={font=\tiny\sffamily, fill=white, inner sep=1.5pt, text=black!60, rounded corners=1pt}
+        node distance=1.5cm,
+        box/.style={rectangle, minimum width=4cm, minimum height=1cm, align=center},
+        arrow/.style={->, >=stealth, thick}
     ]
-
-    % ═══════════════════════════════════════
-    %  ATORES (topo) — badges escuros
-    % ═══════════════════════════════════════
-    \node[actor] (trab) at (-4.5, 8) {\faUser\ Trabalhador};
-    \node[actor] (emp)  at (0, 8)    {\faBuilding\ Empregador};
-    \node[actor] (gov)  at (4.5, 8)  {\faUniversity\ Governo};
-
-    % ═══════════════════════════════════════
-    %  CAMADA 1 — INTERFACE  (azul)
-    % ═══════════════════════════════════════
-    \fill[black!4, rounded corners=8pt] (-6.6, 5.35) rectangle (6.6, 7.15);
-    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, 5.35) rectangle (6.6, 7.15);
-    % Label
-    \node[layerlbl] at (-5.95, 6.25) {INTERFACE};
-    % Cards
-    \node[card] (app)    at (-3.5, 6.25) {\faDesktop\\[2pt] App/Web\\[-1pt]do Trabalhador};
-    \node[card] (folha)  at (0, 6.25)    {\faFileCode\\[2pt] Sistema\\[-1pt]de Folha};
-    \node[card] (painel) at (3.5, 6.25)  {\faUniversity\\[2pt] Painel\\[-1pt]Governamental};
-
-    % Setas atores → interface
-    \draw[conn] (trab) -- (app);
-    \draw[conn] (emp) -- (folha);
-    \draw[conn] (gov) -- (painel);
-
-    % ═══════════════════════════════════════
-    %  CAMADA 2 — GOVERNANÇA  (âmbar)
-    % ═══════════════════════════════════════
-    \fill[black!6, rounded corners=8pt] (-6.6, 3.15) rectangle (6.6, 5.0);
-    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, 3.15) rectangle (6.6, 5.0);
-    % Label
-    \node[layerlbl] at (-5.95, 4.075) {GOVERNANÇA};
-    % Cards
-    \node[card] (k1) at (-3.5, 4.1) {\faKey\\[2pt] Chave\\[-1pt]Trabalhador};
-    \node[card] (k2) at (0, 4.1)    {\faKey\\[2pt] Chave\\[-1pt]Governo};
-    \node[card] (k3) at (3.5, 4.1)  {\faKey\\[2pt] Chave\\[-1pt]Auditoria};
-    % Badge multi-sig
-    \node[fill=black!6, draw=black!25, rounded corners=3pt, font=\sffamily\tiny\bfseries, text=black!60, inner sep=3pt, line width=0.4pt, align=center] at (5.7, 4.1) {Multi-sig\\2-de-3};
-
-    % Setas interface → governança
-    \draw[conn] (app) -- (k1);
-    \draw[conn] (folha) -- (k2) node[flowlbl, midway, right, xshift=1pt] { };
-    \draw[conn] (painel) -- (k3);
-
-    % ═══════════════════════════════════════
-    %  CAMADA 3 — SMART CONTRACTS  (verde)
-    % ═══════════════════════════════════════
-    \fill[black!8, rounded corners=8pt] (-6.6, 0.85) rectangle (6.6, 2.8);
-    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, 0.85) rectangle (6.6, 2.8);
-    % Label
-    \node[layerlbl] at (-5.95, 1.825) {CONTRATOS};
-    % Cards
-    \node[card] (c1) at (-4.2, 1.85) {\faPiggyBank\\[2pt] Contribuição};
-    \node[card] (c2) at (-1.4, 1.85) {\faChartLine\\[2pt] Investimento};
-    \node[card] (c3) at (1.4, 1.85)  {\faUsers\\[2pt] Herança};
-    \node[card] (c4) at (4.2, 1.85)  {\faUserShield\\[2pt] Compliance};
-
-    % Setas governança → contratos
-    \draw[conn] (k1.south) -- ++(0,-0.3) -| (c1.north);
-    \draw[conn] (k2.south) -- ++(0,-0.15) -| (c2.north);
-    \draw[conn] (k2.south) -- ++(0,-0.15) -| (c3.north);
-    \draw[conn] (k3.south) -- ++(0,-0.3) -| (c4.north);
-
-    % ═══════════════════════════════════════
-    %  CAMADA 4 — BLOCKCHAIN  (violeta)
-    % ═══════════════════════════════════════
-    \fill[black!10, rounded corners=8pt] (-6.6, -1.45) rectangle (6.6, 0.5);
-    \draw[black!15, rounded corners=8pt, line width=0.5pt] (-6.6, -1.45) rectangle (6.6, 0.5);
-    % Label
-    \node[layerlbl] at (-5.95, -0.475) {BLOCKCHAIN};
-    % Cards
-    \node[card] (t1) at (-3.5, -0.45) {\faCoins\\[2pt] Tokens\\[-1pt]BRL / Ativos};
-    \node[card] (t2) at (0, -0.45)    {\faBook\\[2pt] Livro de\\[-1pt]Ordens};
-    \node[card] (t3) at (3.5, -0.45)  {\faLock\\[2pt] Módulo de\\[-1pt]Privacidade};
-
-    % Setas contratos → blockchain
-    \draw[conn] (c1.south) -- ++(0,-0.2) -| (t1.north);
-    \draw[conn] (c2.south) -- (t2.north);
-    \draw[conn] (c3.south) -- ++(0,-0.1) -| (t2.north east);
-    \draw[conn] (c4.south) -- ++(0,-0.2) -| (t3.north);
-
-    % ═══════════════════════════════════════
-    %  ENTIDADES EXTERNAS (base)
-    % ═══════════════════════════════════════
-    \node[actor] (b3)    at (-3.5, -2.8) {\faChartBar\ B3};
-    \node[actor] (bacen) at (0, -2.8)    {\faLandmark\ Bacen};
-    \node[actor] (nos)   at (3.5, -2.8)  {\faServer\ Validadores};
-
-    % Setas blockchain ↔ entidades
-    \draw[biconn] (t1) -- (b3);
-    \draw[biconn] (t2) -- (bacen);
-    \draw[biconn] (t3) -- (nos);
-
+        % Camada de Usuário
+        \node[box, fill=gray!15] (user) {Camada de Usuário\\(Interface Web/Mobile)};
+        
+        % Camada de Aplicação
+        \node[box, fill=gray!30, below=of user] (app) {Camada de Aplicação\\(Smart Contracts)};
+        
+        % Camada de Blockchain
+        \node[box, fill=gray!45, below=of app] (chain) {Camada de Blockchain\\(Rede Distribuída)};
+        
+        % Conexões
+        \draw[arrow] (user) -- (app);
+        \draw[arrow] (app) -- (chain);
+        
+        % Atores externos
+        \node[box, fill=gray!20, right=2cm of user] (trab) {Trabalhador};
+        \node[box, fill=gray!20, right=2cm of app] (gov) {Governo};
+        \node[box, fill=gray!20, right=2cm of chain] (emp) {Empresas};
+        
+        \draw[arrow] (trab) -- (user);
+        \draw[arrow] (gov) -- (app);
+        \draw[arrow] (emp) -- (chain);
     \end{tikzpicture}
     \fonte{LIMA (2026).}
 \end{figure}
@@ -951,77 +850,91 @@ Essa verificação pode ser feita por qualquer nó da rede \textbf{sem conhecer 
     \caption{Funcionamento do RingCT --- Pedersen Commitments}
     \label{fig:ringct}
     \begin{tikzpicture}[
-        arrow/.style={->, >=stealth, thick, shorten >=1pt, shorten <=1pt},
-        darrow/.style={->, >=stealth, thick, dashed, shorten >=1pt, shorten <=1pt}
+        arrow/.style={->, >=stealth, line width=1pt, shorten >=2pt, shorten <=2pt},
+        darrow/.style={->, >=stealth, line width=1pt, dashed, shorten >=2pt, shorten <=2pt},
+        realbox/.style={rectangle, rounded corners=5pt, draw=black!70, fill=green!5, minimum width=2.4cm, minimum height=0.9cm, font=\small, align=center, line width=0.6pt},
+        hiddenbox/.style={rectangle, rounded corners=5pt, draw=black!70, fill=red!5, minimum width=2.4cm, minimum height=0.9cm, font=\small, align=center, line width=0.6pt},
+        sectionlabel/.style={font=\footnotesize\bfseries, fill=white, inner sep=4pt, rounded corners=3pt},
+        sublabel/.style={font=\scriptsize, text=black!55}
     ]
         % ============================================================
-        %  LINHA SUPERIOR — Valores reais (visíveis só aos participantes)
+        %  SEÇÃO 1 — Valores reais (visíveis só aos participantes)
         % ============================================================
-        \node[font=\small\bfseries] at (0, 6.5) {Visão do Remetente (valores reais)};
 
-        % Caixa de fundo — valores reais
-        \fill[gray!6, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
-        \draw[gray!40, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
+        % Fundo da seção real
+        \fill[green!4, rounded corners=10pt] (-6.2, 3.0) rectangle (6.2, 6.6);
+        \draw[green!40!black!30, rounded corners=10pt, line width=0.8pt] (-6.2, 3.0) rectangle (6.2, 6.6);
 
-        % Entradas reais
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in1) at (-3.5, 4.8) {\faCoins\ \textbf{7 XMR}};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in2) at (-3.5, 3.7) {\faCoins\ \textbf{5 XMR}};
-        \node[font=\scriptsize, gray!60!black] at (-3.5, 5.8) {Entradas};
+        % Título da seção
+        \node[sectionlabel, text=green!50!black] at (0, 6.6) {\faEye\ \ Visão do Remetente (valores reais)};
 
-        % Sinal de igual
-        \node[font=\Large] at (0, 4.25) {$\longrightarrow$};
+        % --- Coluna esquerda: Entradas ---
+        \node[sublabel] at (-3.5, 5.95) {Entradas};
+        \node[realbox] (in1) at (-3.5, 5.3) {\faCoins\ \ \textbf{7 XMR}};
+        \node[realbox] (in2) at (-3.5, 4.1) {\faCoins\ \ \textbf{5 XMR}};
 
-        % Saídas reais
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out1) at (3.5, 4.8) {\faCoins\ \textbf{9 XMR}};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out2) at (3.5, 3.7) {\faCoins\ \textbf{3 XMR}};
-        \node[font=\scriptsize, gray!60!black] at (3.5, 5.8) {Saídas};
+        % Soma entradas
+        \node[font=\scriptsize, text=black!60] at (-3.5, 3.45) {$\sum = 12$};
 
-        % Soma
-        \node[font=\scriptsize, align=center] at (-0.9, 4.8) {$7 + 5$};
-        \node[font=\scriptsize, align=center] at (0.9, 4.8) {$9 + 3$};
-        \node[font=\scriptsize\bfseries] at (0, 3.5) {$12 = 12$ \faCheck};
+        % --- Coluna direita: Saídas ---
+        \node[sublabel] at (3.5, 5.95) {Saídas};
+        \node[realbox] (out1) at (3.5, 5.3) {\faCoins\ \ \textbf{9 XMR}};
+        \node[realbox] (out2) at (3.5, 4.1) {\faCoins\ \ \textbf{3 XMR}};
 
-        % ============================================================
-        %  SETAS DE TRANSFORMAÇÃO — Pedersen Commitment
-        % ============================================================
-        \draw[arrow, gray!70, line width=1.2pt] (-3.5, 3.15) -- (-3.5, 2.05) node[midway, left, font=\scriptsize, text=black] {$C = vG + rH$};
-        \draw[arrow, gray!70, line width=1.2pt] (3.5, 3.15) -- (3.5, 2.05) node[midway, right, font=\scriptsize, text=black] {$C = vG + rH$};
+        % Soma saídas
+        \node[font=\scriptsize, text=black!60] at (3.5, 3.45) {$\sum = 12$};
 
-        \node[font=\small\bfseries, fill=white, inner sep=3pt] at (0, 2.8) {\faLock\ Pedersen Commitment};
+        % --- Seta central + verificação ---
+        \draw[arrow, black!50] (-2.0, 4.7) -- (2.0, 4.7);
+        \node[font=\scriptsize\bfseries, text=green!50!black, fill=green!4, inner sep=2pt] at (0, 5.05) {$7 + 5 = 9 + 3$};
+        \node[font=\scriptsize\bfseries, text=green!50!black] at (0, 4.35) {\faCheck\ $12 = 12$};
 
         % ============================================================
-        %  LINHA INFERIOR — O que a blockchain registra (público)
+        %  SEÇÃO 2 — Transformação via Pedersen Commitment
         % ============================================================
-        \node[font=\small\bfseries] at (0, 2) {Visão da Blockchain (valores ocultos)};
+        \node[rectangle, rounded corners=6pt, draw=black!50, fill=white, line width=0.8pt, minimum width=10cm, minimum height=0.9cm, font=\small\bfseries, inner sep=5pt] (pedersen) at (0, 2.2) {\faLock\ \ Pedersen Commitment: $C = vG + rH$};
 
-        % Caixa de fundo — commitments
-        \fill[gray!18, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
-        \draw[gray!50, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
-
-        % Commitments de entrada
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin1) at (-3.5, 0.6) {$C_{in_1}$ \faQuestion};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin2) at (-3.5, -0.5) {$C_{in_2}$ \faQuestion};
-        \node[font=\scriptsize, gray!60!black] at (-3.5, 1.5) {Entradas ocultas};
-
-        % Seta central
-        \node[font=\Large] at (0, 0.05) {$\longrightarrow$};
-
-        % Commitments de saída
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout1) at (3.5, 0.6) {$C_{out_1}$ \faQuestion};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout2) at (3.5, -0.5) {$C_{out_2}$ \faQuestion};
-        \node[font=\scriptsize, gray!60!black] at (3.5, 1.5) {Saídas ocultas};
+        % Setas de transformação
+        \draw[arrow, black!40, line width=1.2pt] (-3.5, 2.95) -- (-3.5, 2.7);
+        \draw[arrow, black!40, line width=1.2pt] (3.5, 2.95) -- (3.5, 2.7);
+        \draw[arrow, black!40, line width=1.2pt] (-3.5, 1.75) -- (-3.5, 1.5);
+        \draw[arrow, black!40, line width=1.2pt] (3.5, 1.75) -- (3.5, 1.5);
 
         % ============================================================
-        %  VERIFICAÇÃO
+        %  SEÇÃO 3 — Blockchain (valores ocultos)
         % ============================================================
-        \node[rectangle, rounded corners=6pt, draw=black, dashed, fill=white, minimum width=10cm, minimum height=0.9cm, align=center, font=\small] (proof) at (0, -2.2) {\faCheck\ \ Rede verifica: $\displaystyle\sum C_{in} - \sum C_{out} = 0$ \quad sem conhecer os valores};
-        \draw[darrow] (0, -1.25) -- (proof.north);
+
+        % Fundo da seção oculta
+        \fill[red!3, rounded corners=10pt] (-6.2, -1.6) rectangle (6.2, 1.5);
+        \draw[red!40!black!30, rounded corners=10pt, line width=0.8pt] (-6.2, -1.6) rectangle (6.2, 1.5);
+
+        % Título da seção
+        \node[sectionlabel, text=red!50!black] at (0, 1.5) {\faEyeSlash\ \ Visão da Blockchain (valores ocultos)};
+
+        % --- Coluna esquerda: Commitments de entrada ---
+        \node[sublabel] at (-3.5, 0.95) {Entradas ocultas};
+        \node[hiddenbox] (cin1) at (-3.5, 0.3) {\faLock\ $C_{in_1}$};
+        \node[hiddenbox] (cin2) at (-3.5, -0.8) {\faLock\ $C_{in_2}$};
+
+        % --- Coluna direita: Commitments de saída ---
+        \node[sublabel] at (3.5, 0.95) {Saídas ocultas};
+        \node[hiddenbox] (cout1) at (3.5, 0.3) {\faLock\ $C_{out_1}$};
+        \node[hiddenbox] (cout2) at (3.5, -0.8) {\faLock\ $C_{out_2}$};
+
+        % --- Seta central ---
+        \draw[arrow, black!50] (-2.0, -0.25) -- (2.0, -0.25);
 
         % ============================================================
-        %  OBSERVADOR
+        %  SEÇÃO 4 — Verificação da rede
         % ============================================================
-        \node[rectangle, rounded corners=6pt, draw=black, fill=gray!40, minimum width=10cm, minimum height=0.9cm, align=center, font=\scriptsize] (obs) at (0, -3.6) {\faEyeSlash\quad \textbf{Observador externo:} vê $C_{in_1}, C_{in_2} \rightarrow C_{out_1}, C_{out_2}$ --- valores e identidades permanecem ocultos};
-        \draw[darrow] (proof.south) -- (obs.north);
+        \node[rectangle, rounded corners=6pt, draw=black!60, dashed, fill=blue!3, line width=0.8pt, minimum width=11cm, minimum height=1cm, align=center, font=\small] (proof) at (0, -2.6) {\faCheck\ \ A rede verifica: $\displaystyle\sum C_{in} - \sum C_{out} = 0$ \quad \textit{sem conhecer os valores}};
+        \draw[darrow, black!40] (0, -1.65) -- (proof.north);
+
+        % ============================================================
+        %  SEÇÃO 5 — Observador externo
+        % ============================================================
+        \node[rectangle, rounded corners=6pt, draw=black!50, fill=gray!10, line width=0.8pt, minimum width=11cm, minimum height=1cm, align=center, font=\scriptsize] (obs) at (0, -4.1) {\faEyeSlash\quad \textbf{Observador externo:} vê $C_{in_1}, C_{in_2} \rightarrow C_{out_1}, C_{out_2}$ --- valores e identidades permanecem ocultos};
+        \draw[darrow, black!40] (proof.south) -- (obs.north);
 
     \end{tikzpicture}
     \fonte{LIMA (2026).}

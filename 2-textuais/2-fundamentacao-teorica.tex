@@ -143,10 +143,7 @@ Este problema abstrato representa o desafio fundamental de sistemas distribuído
 
 Antes de compreender os mecanismos de consenso da blockchain, é necessário introduzir o conceito de função \textit{hash}, uma das primitivas criptográficas mais fundamentais da computação moderna. Conforme definido por \citeonline{tomaz2014}, uma função \textit{hash} é uma função $H$ que recebe como entrada uma mensagem $m$ no formato de uma cadeia de bits de tamanho arbitrário e retorna uma cadeia de bits $x$ de tamanho fixo, chamada de código \textit{hash} ou etiqueta \textit{hash}, em que $|m| > |x|$. Formalmente:
 
-\begin{equation}
-\label{eq:hash}
-H(m) = x
-\end{equation}
+$$H(m) = x$$
 
 Essa propriedade de compressão --- transformar dados de qualquer tamanho em uma representação de tamanho fixo --- faz com que as funções \textit{hash} sejam também conhecidas como funções resumo. Seu objetivo central é gerar uma etiqueta que forneça uma identificação unívoca para cada mensagem: qualquer alteração na entrada, ainda que de um único bit, produz uma saída completamente diferente, permitindo verificar se uma informação foi violada durante a transmissão \cite{tomaz2014}.
 
@@ -535,7 +532,46 @@ Qualquer reforma em larga escala deve evitar gerar desânimo social, especialmen
 
 Se o trabalhador percebe que suas contribuições ao longo de décadas serão confiscadas, diluídas pela inflação ou simplesmente não retornarão com juros reais, o incentivo para trabalhar formalmente, estudar e contribuir para o sistema diminui drasticamente. Portanto, o primeiro passo para implementação de uma reforma deve ser pagar, com juros e correção, os depósitos feitos ao longo da vida de todos os brasileiros vivos, convertidos na forma de ativos no novo sistema.
 
-Custe o que custar, o país deve estar à venda.
+\subsection{O Que São Juros Reais}
+
+Uma distinção fundamental --- e frequentemente ignorada pela população --- é a diferença entre \textbf{juros nominais} e \textbf{juros reais}. A taxa de juros nominal é o número que aparece no contrato ou no extrato bancário. A taxa de juros real, por outro lado, é o que efetivamente resta após descontar a inflação do período. A relação entre ambas é dada pela \textbf{Equação de Fisher}:
+
+\begin{equation}
+\label{eq:fisher}
+(1 + i) = (1 + r) \times (1 + \pi)
+\end{equation}
+
+\noindent onde $i$ é a taxa de juros nominal, $r$ é a taxa de juros real e $\pi$ é a taxa de inflação. Rearranjando para isolar a taxa real:
+
+\begin{equation}
+\label{eq:fisher-real}
+r = \frac{1 + i}{1 + \pi} - 1
+\end{equation}
+
+Quando os juros nominais são \textbf{inferiores} à inflação, os juros reais tornam-se \textbf{negativos} --- o que significa que o dinheiro aplicado \textbf{perde} poder de compra ao longo do tempo, mesmo aparentando ``render'' no extrato.
+
+Para ilustrar o impacto concreto, considere um trabalhador que deposita R\$ 1.000{,}00 e mantém a aplicação por 20 anos. A Tabela \ref{tab:juros-reais} compara três cenários: juros reais positivos (investimento em ações com retorno médio de 8\% a.a. acima da inflação), juros reais zero (apenas correção monetária) e juros reais negativos (FGTS, que historicamente rendeu abaixo da inflação).
+
+\begin{table}[htb]
+    \centering
+    \caption{Impacto dos Juros Reais sobre R\$ 1.000 em 20 anos (valores corrigidos pela inflação)}
+    \label{tab:juros-reais}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Cenário} & \textbf{Taxa real} & \textbf{Valor em 20 anos} & \textbf{Ganho/Perda real} \\
+        \midrule
+        Ações (bolsa brasileira) & +8\% a.a. & R\$ 4.660{,}96 & +366\% \\
+        Tesouro IPCA+ & +5\% a.a. & R\$ 2.653{,}30 & +165\% \\
+        Poupança & $\approx$0\% a.a. & $\approx$ R\$ 1.000{,}00 & 0\% \\
+        FGTS (TR + 3\%) & $\approx$$-$2\% a.a. & R\$ 667{,}61 & $-$33\% \\
+        \bottomrule
+    \end{tabular}
+    \fonte{LIMA (2026). Cálculos baseados em médias históricas.}
+\end{table}
+
+O resultado é revelador: enquanto R\$ 1.000 investidos em ações se transformam em mais de R\$ 4.600 em poder de compra real ao longo de 20 anos, os mesmos R\$ 1.000 depositados no FGTS se reduzem a aproximadamente R\$ 668 em termos reais. Ou seja, o trabalhador que confiou suas economias ao FGTS por duas décadas não apenas \textbf{não ganhou nada}: ele \textbf{perdeu} um terço do que depositou. Em 30 anos --- horizonte típico de uma vida laboral --- a perda real acumulada do FGTS pode chegar a 40\%, conforme estimado pelo Insper \cite{insper2019}.
+
+Então, por esse motivo, custe o que custar, o país deve estar à venda.
 
 \subsection{Aluguel do Patrimônio Nacional}
 
@@ -683,6 +719,12 @@ Fatores adicionais favorecem a região Norte e Nordeste do Brasil:
     \item \textbf{Baixo tráfego aéreo}: menor interferência no espaço aéreo reduz atrasos operacionais, conforme demonstrado na Figura \ref{fig:trafego-aereo};
     \item \textbf{Condições meteorológicas estáveis}: clima predominantemente ensolarado durante todo o ano, com alta previsibilidade \cite{inmet2023, funceme2022}.
 \end{alineas}
+
+O problema do espaço aéreo merece atenção especial. A cada lançamento de foguete em Cabo Canaveral, a \textit{Federal Aviation Administration} (FAA) é obrigada a emitir \textit{Temporary Flight Restrictions} (TFRs) --- zonas de exclusão aérea que proíbem voos comerciais em amplas áreas sobre o Oceano Atlântico e o litoral da Flórida \cite{faa2023}. Com a cadência de lançamentos da SpaceX ultrapassando 90 missões anuais em 2023, essas restrições tornaram-se fonte recorrente de conflitos com a aviação comercial.
+
+Conforme reportado por \citeonline{murray2024}, os lançamentos frequentes a partir da costa leste da Flórida já provocam atrasos significativos em rotas comerciais, afetando companhias aéreas que operam nos corredores entre a América do Norte e o Caribe/América do Sul. A FAA precisa coordenar janelas de lançamento com o tráfego aéreo de três grandes aeroportos da região --- Orlando (MCO), Miami (MIA) e Fort Lauderdale (FLL) ---, um dos espaços aéreos mais congestionados do mundo. Em diversos casos, voos comerciais foram desviados ou atrasados em até 45 minutos para acomodar uma única janela de lançamento.
+
+Essa tensão tende a se agravar: com a projeção de mais de 150 lançamentos anuais nos próximos anos, o espaço aéreo da Flórida aproxima-se de um ponto de saturação. Uma base em Sobral eliminaria completamente esse problema --- o tráfego aéreo sobre o semiárido cearense é praticamente inexistente comparado à Flórida, e não há aeroportos de grande porte nas proximidades da trajetória de lançamento, permitindo uma cadência virtualmente ilimitada sem impacto na aviação civil.
 
 \begin{figure}[htb]
     \centering
