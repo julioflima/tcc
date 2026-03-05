@@ -147,15 +147,16 @@ Os ativos elegíveis seriam tokenizados, ou seja, representados por tokens na bl
 
 \section{Sistema de Governança Multi-sig}
 
-O elemento central da proposta é o sistema de governança baseado em carteiras multi-assinatura, que implementa o controle compartilhado entre trabalhador e governo.
+O elemento central da proposta é o sistema de governança baseado em carteiras multi-assinatura, que implementa o controle compartilhado entre trabalhador, governo e entidade de auditoria independente.
 
 \subsection{Estrutura das Chaves}
 
-Cada carteira previdenciária opera com um esquema 2-de-2, onde ambas as chaves são necessárias para autorizar transações:
+Cada carteira previdenciária opera com um esquema 2-de-3, onde pelo menos duas das três chaves são necessárias para autorizar transações:
 
 \begin{alineas}
     \item \textbf{Chave do Trabalhador}: Controlada exclusivamente pelo titular da conta, armazenada em dispositivo pessoal seguro;
-    \item \textbf{Chave do Governo}: Controlada por órgão regulador (ex: Banco Central ou nova autarquia), utilizada para co-assinar transações válidas.
+    \item \textbf{Chave do Governo}: Controlada por órgão regulador (ex: Banco Central ou nova autarquia), utilizada para co-assinar transações válidas;
+    \item \textbf{Chave da Auditoria}: Custodiada por entidade de auditoria independente, utilizada exclusivamente como mecanismo de recuperação em caso de perda da chave do trabalhador. Esta chave só pode ser acionada em conjunto com a chave do governo, impedindo que a auditoria movimente fundos unilateralmente.
 \end{alineas}
 
 \subsection{Fluxo de Autorização}
@@ -174,6 +175,8 @@ Este modelo garante que:
 \begin{alineas}
     \item O governo sozinho não pode mover os recursos do trabalhador;
     \item O trabalhador sozinho não pode violar as regras do sistema;
+    \item A auditoria não pode movimentar recursos sem o aval do governo;
+    \item Em caso de perda de chave, o trabalhador pode recuperar o acesso via auditoria + governo;
     \item Há transparência nas regras, preservando a privacidade individual das transações.
 \end{alineas}
 
@@ -251,7 +254,7 @@ A Tabela \ref{tab:regras} resume as principais regras operacionais do sistema.
         Ativos elegíveis & Apenas empresas/ativos brasileiros \\
         Limites de concentração & Configuráveis na adesão, imutáveis após aceite \\
         Saque & Apenas na aposentadoria ou exceções legais \\
-        Governança & Multi-sig 2-de-2 (trabalhador + governo) \\
+        Governança & Multi-sig 2-de-3 (trabalhador + governo + auditoria) \\
         \bottomrule
     \end{tabular}
     \fonte{LIMA (2026).}
@@ -284,7 +287,7 @@ Em caso de falecimento:
 
 \begin{enumerate}
     \item A família apresenta certidão de óbito e a chave privada do titular falecido;
-    \item O patrimônio é transferido para novas carteiras multi-sig dos herdeiros;
+    \item O patrimônio é transferido para novas carteiras multi-sig 2-de-3 dos herdeiros;
     \item Os herdeiros assumem o controle, mantendo as mesmas regras operacionais;
     \item Os recursos permanecem bloqueados até que cada herdeiro atinja sua própria idade de aposentadoria.
 \end{enumerate}
@@ -472,7 +475,7 @@ O sistema é organizado em cinco camadas interdependentes, conforme ilustrado na
         % Camada 2 - Governança
         \node[layer, fill=gray!16, below=of l1] (l2) {%
             \faBalanceScale\enspace\textbf{Camada de Governança}\\[-1pt]
-            {\scriptsize\color{gray!70!black} Multi-sig 2-de-2\enspace$\cdot$\enspace Permissões\enspace$\cdot$\enspace Compliance}};
+            {\scriptsize\color{gray!70!black} Multi-sig 2-de-3\enspace$\cdot$\enspace Permissões\enspace$\cdot$\enspace Compliance}};
 
         % Camada 3 - Mercado
         \node[layer, fill=gray!24, below=of l2] (l3) {%
@@ -517,7 +520,7 @@ A camada de interface é o ponto de contato entre o usuário e o sistema previde
 
 \subsubsection{Camada de Governança}
 
-A camada de governança implementa o modelo multi-sig descrito anteriormente, onde as regras de controle compartilhado entre indivíduo e governo são codificadas. Esta camada é responsável por validar permissões, verificar condições (como idade para liquidação) e garantir que nenhuma parte possa agir unilateralmente fora das regras estabelecidas.
+A camada de governança implementa o modelo multi-sig 2-de-3 descrito anteriormente, onde as regras de controle compartilhado entre indivíduo, governo e auditoria são codificadas. Esta camada é responsável por validar permissões, verificar condições (como idade para liquidação) e garantir que nenhuma parte possa agir unilateralmente fora das regras estabelecidas.
 
 \subsubsection{Camada de Mercado}
 
@@ -542,19 +545,20 @@ O elemento central da governança é a definição precisa dos poderes de cada p
 
 \begin{table}[htb]
     \centering
-    \caption{Matriz de Poderes do Smart Contract Multi-Sig}
+    \caption{Matriz de Poderes do Smart Contract Multi-Sig 2-de-3}
     \label{tab:poderes-multisig}
-    \begin{tabular}{p{4cm}ccp{4cm}}
+    \begin{tabular}{p{3cm}cccp{3.5cm}}
         \toprule
-        \textbf{Operação} & \textbf{Indivíduo} & \textbf{Governo} & \textbf{Condição} \\
+        \textbf{Operação} & \textbf{Indivíduo} & \textbf{Governo} & \textbf{Auditoria} & \textbf{Condição} \\
         \midrule
-        Trade mensal & \checkmark Exclusivo & $\times$ Bloqueado & Cooldown 30 dias \\
-        Liquidação total & $\times$ Bloqueado & $\times$ Bloqueado & Idade $<$ 65 anos \\
-        Liquidação total & \checkmark Livre & -- N/A & Idade $\geq$ 65 anos \\
-        Adicionar herdeiro & \checkmark Exclusivo & $\times$ Bloqueado & Sempre \\
-        Distribuir herança & c/ Chave Primária & \checkmark Autoriza & Após óbito \\
-        Liquidar estate & -- N/A & \checkmark Pleno & Após 100 anos \\
-        Whitelist de ativos & $\times$ Bloqueado & \checkmark Exclusivo & Sempre \\
+        Trade mensal & \checkmark Inicia & \checkmark Co-assina & $\times$ Bloqueado & Cooldown 30 dias \\
+        Liquidação total & $\times$ Bloqueado & $\times$ Bloqueado & $\times$ Bloqueado & Idade $<$ 65 anos \\
+        Liquidação total & \checkmark Livre & -- N/A & -- N/A & Idade $\geq$ 65 anos \\
+        Adicionar herdeiro & \checkmark Exclusivo & $\times$ Bloqueado & $\times$ Bloqueado & Sempre \\
+        Distribuir herança & c/ Chave Primária & \checkmark Autoriza & $\times$ Bloqueado & Após óbito \\
+        Recuperação de chave & -- N/A & \checkmark Co-assina & \checkmark Fornece chave & Perda comprovada \\
+        Liquidar estate & -- N/A & \checkmark Pleno & -- N/A & Após 100 anos \\
+        Whitelist de ativos & $\times$ Bloqueado & \checkmark Exclusivo & $\times$ Bloqueado & Sempre \\
         \bottomrule
     \end{tabular}
     \fonte{LIMA (2026).}
@@ -565,7 +569,7 @@ O elemento central da governança é a definição precisa dos poderes de cada p
 O indivíduo (trabalhador) possui os seguintes poderes exclusivos:
 
 \begin{alineas}
-    \item \textbf{Executar Trades}: Pode comprar e vender ativos livremente dentro do universo de investimentos permitido, respeitando o limite de 1 operação por mês;
+    \item \textbf{Executar Trades}: Pode comprar e vender ativos livremente dentro do universo de investimentos permitido, respeitando o limite de 1 operação por mês. A operação requer co-assinatura automática do governo;
     \item \textbf{Gerenciar Beneficiários}: Tem controle exclusivo sobre quem são seus herdeiros e qual percentual cada um receberá;
     \item \textbf{Prova de Vida}: Deve submeter prova de vida anual para manter sua carteira ativa;
     \item \textbf{Plenos Poderes após 65 anos}: Ao atingir a idade de aposentadoria, pode liquidar qualquer posição sem necessidade de aprovação governamental.
@@ -583,6 +587,17 @@ O governo possui poderes específicos e limitados:
     \item \textbf{Plenos Poderes após 100 anos}: Em caso de ausência de prova de vida por 100 anos, assume controle total para liquidação do estate.
 \end{alineas}
 
+\subsubsection{Poderes da Auditoria}
+
+A entidade de auditoria independente possui um papel restrito e específico:
+
+\begin{alineas}
+    \item \textbf{Recuperação de Chave}: Em caso de perda da chave privada pelo trabalhador, a auditoria pode fornecer a chave de recuperação. Contudo, essa chave só pode ser utilizada em conjunto com a assinatura do governo, impedindo a auditoria de movimentar fundos unilateralmente;
+    \item \textbf{Sem Poderes Operacionais}: A auditoria não pode executar trades, gerenciar beneficiários, liquidar posições ou realizar qualquer operação sem o aval do governo.
+\end{alineas}
+
+Este arranjo garante que a auditoria funciona exclusivamente como mecanismo de recuperação, eliminando o risco de uma terceira parte ter acesso autônomo aos recursos do trabalhador.
+
 \subsubsection{Checks and Balances}
 
 O sistema implementa um mecanismo de freios e contrapesos onde:
@@ -590,6 +605,8 @@ O sistema implementa um mecanismo de freios e contrapesos onde:
 \begin{alineas}
     \item O indivíduo sozinho não pode liquidar antes dos 65 anos (protege contra gastos impulsivos);
     \item O governo sozinho não pode mover os ativos (protege contra confisco arbitrário);
+    \item A auditoria sozinha não pode movimentar fundos (sua chave só funciona em conjunto com a do governo);
+    \item Em caso de perda da chave do trabalhador, a recuperação é possível via auditoria + governo;
     \item O código é imutável após deploy (protege contra mudanças políticas);
     \item O código é público e auditável (garante transparência das regras, não dos saldos individuais).
 \end{alineas}
@@ -827,77 +844,91 @@ Essa verificação pode ser feita por qualquer nó da rede \textbf{sem conhecer 
     \caption{Funcionamento do RingCT --- Pedersen Commitments}
     \label{fig:ringct}
     \begin{tikzpicture}[
-        arrow/.style={->, >=stealth, thick, shorten >=1pt, shorten <=1pt},
-        darrow/.style={->, >=stealth, thick, dashed, shorten >=1pt, shorten <=1pt}
+        arrow/.style={->, >=stealth, line width=1pt, shorten >=2pt, shorten <=2pt},
+        darrow/.style={->, >=stealth, line width=1pt, dashed, shorten >=2pt, shorten <=2pt},
+        realbox/.style={rectangle, rounded corners=5pt, draw=black!70, fill=green!5, minimum width=2.4cm, minimum height=0.9cm, font=\small, align=center, line width=0.6pt},
+        hiddenbox/.style={rectangle, rounded corners=5pt, draw=black!70, fill=red!5, minimum width=2.4cm, minimum height=0.9cm, font=\small, align=center, line width=0.6pt},
+        sectionlabel/.style={font=\footnotesize\bfseries, fill=white, inner sep=4pt, rounded corners=3pt},
+        sublabel/.style={font=\scriptsize, text=black!55}
     ]
         % ============================================================
-        %  LINHA SUPERIOR — Valores reais (visíveis só aos participantes)
+        %  SEÇÃO 1 — Valores reais (visíveis só aos participantes)
         % ============================================================
-        \node[font=\small\bfseries] at (0, 6.5) {Visão do Remetente (valores reais)};
 
-        % Caixa de fundo — valores reais
-        \fill[gray!6, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
-        \draw[gray!40, rounded corners=8pt] (-5.8, 3.2) rectangle (5.8, 5.4);
+        % Fundo da seção real
+        \fill[green!4, rounded corners=10pt] (-6.2, 3.0) rectangle (6.2, 6.6);
+        \draw[green!40!black!30, rounded corners=10pt, line width=0.8pt] (-6.2, 3.0) rectangle (6.2, 6.6);
 
-        % Entradas reais
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in1) at (-3.5, 4.8) {\faCoins\ \textbf{7 XMR}};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (in2) at (-3.5, 3.7) {\faCoins\ \textbf{5 XMR}};
-        \node[font=\scriptsize, gray!60!black] at (-3.5, 5.8) {Entradas};
+        % Título da seção
+        \node[sectionlabel, text=green!50!black] at (0, 6.6) {\faEye\ \ Visão do Remetente (valores reais)};
 
-        % Sinal de igual
-        \node[font=\Large] at (0, 4.25) {$\longrightarrow$};
+        % --- Coluna esquerda: Entradas ---
+        \node[sublabel] at (-3.5, 5.95) {Entradas};
+        \node[realbox] (in1) at (-3.5, 5.3) {\faCoins\ \ \textbf{7 XMR}};
+        \node[realbox] (in2) at (-3.5, 4.1) {\faCoins\ \ \textbf{5 XMR}};
 
-        % Saídas reais
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out1) at (3.5, 4.8) {\faCoins\ \textbf{9 XMR}};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=white, minimum width=2.2cm, minimum height=0.8cm, font=\small, align=center] (out2) at (3.5, 3.7) {\faCoins\ \textbf{3 XMR}};
-        \node[font=\scriptsize, gray!60!black] at (3.5, 5.8) {Saídas};
+        % Soma entradas
+        \node[font=\scriptsize, text=black!60] at (-3.5, 3.45) {$\sum = 12$};
 
-        % Soma
-        \node[font=\scriptsize, align=center] at (-0.9, 4.8) {$7 + 5$};
-        \node[font=\scriptsize, align=center] at (0.9, 4.8) {$9 + 3$};
-        \node[font=\scriptsize\bfseries] at (0, 3.5) {$12 = 12$ \faCheck};
+        % --- Coluna direita: Saídas ---
+        \node[sublabel] at (3.5, 5.95) {Saídas};
+        \node[realbox] (out1) at (3.5, 5.3) {\faCoins\ \ \textbf{9 XMR}};
+        \node[realbox] (out2) at (3.5, 4.1) {\faCoins\ \ \textbf{3 XMR}};
 
-        % ============================================================
-        %  SETAS DE TRANSFORMAÇÃO — Pedersen Commitment
-        % ============================================================
-        \draw[arrow, gray!70, line width=1.2pt] (-3.5, 3.15) -- (-3.5, 2.05) node[midway, left, font=\scriptsize, text=black] {$C = vG + rH$};
-        \draw[arrow, gray!70, line width=1.2pt] (3.5, 3.15) -- (3.5, 2.05) node[midway, right, font=\scriptsize, text=black] {$C = vG + rH$};
+        % Soma saídas
+        \node[font=\scriptsize, text=black!60] at (3.5, 3.45) {$\sum = 12$};
 
-        \node[font=\small\bfseries, fill=white, inner sep=3pt] at (0, 2.8) {\faLock\ Pedersen Commitment};
+        % --- Seta central + verificação ---
+        \draw[arrow, black!50] (-2.0, 4.7) -- (2.0, 4.7);
+        \node[font=\scriptsize\bfseries, text=green!50!black, fill=green!4, inner sep=2pt] at (0, 5.05) {$7 + 5 = 9 + 3$};
+        \node[font=\scriptsize\bfseries, text=green!50!black] at (0, 4.35) {\faCheck\ $12 = 12$};
 
         % ============================================================
-        %  LINHA INFERIOR — O que a blockchain registra (público)
+        %  SEÇÃO 2 — Transformação via Pedersen Commitment
         % ============================================================
-        \node[font=\small\bfseries] at (0, 2) {Visão da Blockchain (valores ocultos)};
+        \node[rectangle, rounded corners=6pt, draw=black!50, fill=white, line width=0.8pt, minimum width=10cm, minimum height=0.9cm, font=\small\bfseries, inner sep=5pt] (pedersen) at (0, 2.2) {\faLock\ \ Pedersen Commitment: $C = vG + rH$};
 
-        % Caixa de fundo — commitments
-        \fill[gray!18, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
-        \draw[gray!50, rounded corners=8pt] (-5.8, -1.2) rectangle (5.8, 1.2);
-
-        % Commitments de entrada
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin1) at (-3.5, 0.6) {$C_{in_1}$ \faQuestion};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cin2) at (-3.5, -0.5) {$C_{in_2}$ \faQuestion};
-        \node[font=\scriptsize, gray!60!black] at (-3.5, 1.5) {Entradas ocultas};
-
-        % Seta central
-        \node[font=\Large] at (0, 0.05) {$\longrightarrow$};
-
-        % Commitments de saída
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout1) at (3.5, 0.6) {$C_{out_1}$ \faQuestion};
-        \node[rectangle, rounded corners=4pt, draw=black, fill=gray!30, minimum width=2.6cm, minimum height=0.8cm, font=\small, align=center] (cout2) at (3.5, -0.5) {$C_{out_2}$ \faQuestion};
-        \node[font=\scriptsize, gray!60!black] at (3.5, 1.5) {Saídas ocultas};
+        % Setas de transformação
+        \draw[arrow, black!40, line width=1.2pt] (-3.5, 2.95) -- (-3.5, 2.7);
+        \draw[arrow, black!40, line width=1.2pt] (3.5, 2.95) -- (3.5, 2.7);
+        \draw[arrow, black!40, line width=1.2pt] (-3.5, 1.75) -- (-3.5, 1.5);
+        \draw[arrow, black!40, line width=1.2pt] (3.5, 1.75) -- (3.5, 1.5);
 
         % ============================================================
-        %  VERIFICAÇÃO
+        %  SEÇÃO 3 — Blockchain (valores ocultos)
         % ============================================================
-        \node[rectangle, rounded corners=6pt, draw=black, dashed, fill=white, minimum width=10cm, minimum height=0.9cm, align=center, font=\small] (proof) at (0, -2.2) {\faCheck\ \ Rede verifica: $\displaystyle\sum C_{in} - \sum C_{out} = 0$ \quad sem conhecer os valores};
-        \draw[darrow] (0, -1.25) -- (proof.north);
+
+        % Fundo da seção oculta
+        \fill[red!3, rounded corners=10pt] (-6.2, -1.6) rectangle (6.2, 1.5);
+        \draw[red!40!black!30, rounded corners=10pt, line width=0.8pt] (-6.2, -1.6) rectangle (6.2, 1.5);
+
+        % Título da seção
+        \node[sectionlabel, text=red!50!black] at (0, 1.5) {\faEyeSlash\ \ Visão da Blockchain (valores ocultos)};
+
+        % --- Coluna esquerda: Commitments de entrada ---
+        \node[sublabel] at (-3.5, 0.95) {Entradas ocultas};
+        \node[hiddenbox] (cin1) at (-3.5, 0.3) {\faLock\ $C_{in_1}$};
+        \node[hiddenbox] (cin2) at (-3.5, -0.8) {\faLock\ $C_{in_2}$};
+
+        % --- Coluna direita: Commitments de saída ---
+        \node[sublabel] at (3.5, 0.95) {Saídas ocultas};
+        \node[hiddenbox] (cout1) at (3.5, 0.3) {\faLock\ $C_{out_1}$};
+        \node[hiddenbox] (cout2) at (3.5, -0.8) {\faLock\ $C_{out_2}$};
+
+        % --- Seta central ---
+        \draw[arrow, black!50] (-2.0, -0.25) -- (2.0, -0.25);
 
         % ============================================================
-        %  OBSERVADOR
+        %  SEÇÃO 4 — Verificação da rede
         % ============================================================
-        \node[rectangle, rounded corners=6pt, draw=black, fill=gray!40, minimum width=10cm, minimum height=0.9cm, align=center, font=\scriptsize] (obs) at (0, -3.6) {\faEyeSlash\quad \textbf{Observador externo:} vê $C_{in_1}, C_{in_2} \rightarrow C_{out_1}, C_{out_2}$ --- valores e identidades permanecem ocultos};
-        \draw[darrow] (proof.south) -- (obs.north);
+        \node[rectangle, rounded corners=6pt, draw=black!60, dashed, fill=blue!3, line width=0.8pt, minimum width=11cm, minimum height=1cm, align=center, font=\small] (proof) at (0, -2.6) {\faCheck\ \ A rede verifica: $\displaystyle\sum C_{in} - \sum C_{out} = 0$ \quad \textit{sem conhecer os valores}};
+        \draw[darrow, black!40] (0, -1.65) -- (proof.north);
+
+        % ============================================================
+        %  SEÇÃO 5 — Observador externo
+        % ============================================================
+        \node[rectangle, rounded corners=6pt, draw=black!50, fill=gray!10, line width=0.8pt, minimum width=11cm, minimum height=1cm, align=center, font=\scriptsize] (obs) at (0, -4.1) {\faEyeSlash\quad \textbf{Observador externo:} vê $C_{in_1}, C_{in_2} \rightarrow C_{out_1}, C_{out_2}$ --- valores e identidades permanecem ocultos};
+        \draw[darrow, black!40] (proof.south) -- (obs.north);
 
     \end{tikzpicture}
     \fonte{LIMA (2026).}
@@ -985,7 +1016,7 @@ A Tabela \ref{tab:riscos-mitigacao} apresenta os principais riscos do sistema de
         \toprule
         \textbf{Risco} & \textbf{Mitigação} \\
         \midrule
-        Perda de chave privada & Social recovery wallets, custódia colaborativa, federações de custódia (Fedimint) \\
+        Perda de chave privada & Recuperação via chave da auditoria + governo (multi-sig 2-de-3), social recovery wallets, custódia colaborativa \\
         Bug em smart contract & Múltiplas auditorias independentes, programa de bug bounty, deploy gradual \\
         Manipulação de oracle & Múltiplas fontes de dados, mediana, circuit breakers \\
         Colapso do mercado & Diversificação obrigatória, circuit breakers, reserva em ativos de baixo risco \\

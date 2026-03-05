@@ -460,7 +460,7 @@ A Figura \ref{fig:multisig-2de3} ilustra o funcionamento de uma carteira multi-a
     \node[below=0.3cm of key3, font=\footnotesize, align=center, text width=2cm] (lbl3) {\textbf{Auditoria} \\ {\scriptsize Chave 3}};
     
     % Smart Contract
-    \node[contract] (smart) at (4, 1) {\faFileContract\ \textbf{Smart Contract 2-de-3}};
+    \node[contract] (smart) at (4, 0.5) {\faFileContract\ \textbf{Smart Contract 2-de-3}};
     
     % Carteira/Cofre
     \node[vault] (vault) at (4, -1.5) {\faLock\ \textbf{Carteira Previdenciária}};
@@ -477,20 +477,21 @@ A Figura \ref{fig:multisig-2de3} ilustra o funcionamento de uma carteira multi-a
     \node[fill=gray!10, rounded corners=5pt, font=\scriptsize, text width=2.2cm, align=center] at (8.5, 1) {\faCheckDouble\ Mínimo: 2 assinaturas};
     
     % Cenários de uso
-    \node[font=\small, align=left, text width=4.5cm, fill=gray!5, rounded corners=3pt, inner sep=8pt] at (-2, 0.5) {
-        \textbf{Combinações válidas:} \\[4pt]
-        {\color{black}\faCheck} Trabalhador + Governo \\[3pt]
-        {\color{black}\faCheck} Trabalhador + Auditoria \\[3pt]
-        {\color{black}\faCheck} Governo + Auditoria
+    \node[font=\scriptsize, align=left, text width=4.8cm, fill=gray!5, rounded corners=3pt, inner sep=6pt] at (-2.5, -0.5) {
+        \textbf{Combinações válidas:} \\[3pt]
+        {\color{black}\faCheck} Trabalhador + Governo {\tiny(rotineira)} \\[2pt]
+        {\color{black}\faCheck} Governo + Auditoria {\tiny(recuperação)} \\[5pt]
+        \textbf{Combinação inválida:} \\[3pt]
+        {\color{red}\faTimes} Trabalhador + Auditoria
     };
     
     \end{tikzpicture}
     \fonte{Elaborada pelo autor (2026).}
 \end{figure}
 
-Neste modelo, o trabalhador mantém uma das chaves, o governo (ou órgão regulador) mantém outra, e uma entidade de auditoria independente possui a terceira. Operações rotineiras, como contribuições mensais e investimentos dentro de parâmetros pré-aprovados, podem ser executadas com a assinatura do trabalhador e do sistema automatizado do governo. Operações excepcionais --- como saques antecipados ou transferências para herdeiros --- requerem verificação adicional pela auditoria.
+Neste modelo, o trabalhador mantém uma das chaves e o governo (ou órgão regulador) mantém outra. A terceira chave é custodiada por uma entidade de auditoria independente, cuja função principal é servir como mecanismo de recuperação: caso o trabalhador perca sua chave privada, a auditoria pode fornecer a chave de recuperação, porém esta só pode ser utilizada em conjunto com a assinatura do governo --- garantindo que a auditoria jamais movimente fundos unilateralmente. Operações rotineiras, como contribuições mensais e investimentos dentro de parâmetros pré-aprovados, são executadas com a assinatura do trabalhador e do sistema automatizado do governo. Operações excepcionais --- como saques antecipados, transferências para herdeiros ou recuperação de acesso --- requerem a combinação de duas das três chaves, sempre incluindo a do governo.
 
-Este arranjo garante que: (1) o trabalhador não pode ser impedido de acessar seus recursos sem justa causa; (2) o governo não pode confiscar unilateralmente os fundos; (3) fraudes requerem conluio entre pelo menos duas das três partes.
+Este arranjo garante que: (1) o trabalhador não pode ser impedido de acessar seus recursos sem justa causa; (2) o governo não pode confiscar unilateralmente os fundos, pois necessita de pelo menos mais uma assinatura; (3) a auditoria não pode movimentar recursos sem o aval do governo; (4) em caso de perda de chave, o trabalhador pode recuperar o acesso via auditoria + governo; (5) fraudes requerem conluio entre pelo menos duas das três partes.
 
 \subsection{Aplicações em Sistemas Financeiros}
 
@@ -531,6 +532,28 @@ Essa ineficiência brasileira no setor turístico pode, paradoxalmente, ser tran
 \subsection{Arrendamento para Lançamento de Foguetes}
 
 A eficiência dos lançamentos espaciais aumenta significativamente quanto mais próximo da linha do Equador, devido à maior velocidade tangencial da rotação terrestre nessa região, o que reduz o consumo de combustível necessário para atingir a órbita \cite{wertz2011}.
+
+A explicação é direta: a Terra gira sobre seu eixo com velocidade angular constante $\omega \approx 7{,}27 \times 10^{-5}$ rad/s. A velocidade tangencial $v$ de um ponto na superfície depende do raio efetivo naquela latitude $\phi$:
+
+$$v = \omega \cdot R_T \cdot \cos(\phi)$$
+
+\noindent onde $R_T \approx 6.371$ km é o raio médio da Terra. No Equador ($\phi = 0°$), $\cos(0°) = 1$ e a velocidade tangencial atinge seu valor máximo:
+
+$$v_{\text{eq}} = 7{,}27 \times 10^{-5} \times 6{,}371 \times 10^{6} \approx 463 \text{ m/s} \approx 1.667 \text{ km/h}$$
+
+\noindent Já em Cabo Canaveral ($\phi \approx 28{,}5°$):
+
+$$v_{\text{CC}} = 463 \times \cos(28{,}5°) \approx 463 \times 0{,}879 \approx 407 \text{ m/s}$$
+
+A diferença de $\Delta v \approx 56$ m/s pode parecer modesta, mas em astrodinâmica cada m/s adicional de $\Delta v$ exige combustível extra de forma \textbf{exponencial}, conforme a equação de Tsiolkovsky \cite{wertz2011}:
+
+$$\Delta v = v_e \cdot \ln\!\left(\frac{m_0}{m_f}\right)$$
+
+\noindent onde $v_e$ é a velocidade de exaustão dos gases, $m_0$ a massa inicial (com combustível) e $m_f$ a massa final (sem combustível). Rearranjando, a razão de massa necessária cresce exponencialmente com o $\Delta v$ requerido:
+
+$$\frac{m_0}{m_f} = e^{\Delta v / v_e}$$
+
+Para atingir uma órbita terrestre baixa (LEO), o foguete precisa alcançar aproximadamente 7.800 m/s. Cada m/s ``gratuito'' fornecido pela rotação terrestre reduz o $\Delta v$ que o propulsor precisa gerar. Assim, os $\sim$56 m/s extras do Equador em relação a Cabo Canaveral representam, na prática, centenas de quilos a menos de combustível por tonelada de carga útil --- uma vantagem que se traduz diretamente em economia financeira ou em capacidade adicional de carga.
 
 A Tabela \ref{tab:lancamento-foguetes} demonstra a vantagem geográfica do Brasil em relação aos principais centros de lançamento do mundo.
 
