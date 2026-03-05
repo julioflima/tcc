@@ -9,14 +9,14 @@ Para compreender a proposta deste trabalho, é fundamental examinar as origens h
 
 \subsection{A Bolsa de Valores de Amsterdã}
 
-A \textbf{Bolsa de Valores de Amsterdã} (\textit{Amsterdam Stock Exchange}), fundada em 1602, é considerada a primeira bolsa de valores do mundo \cite{gelderblom2013}. Sua criação está diretamente vinculada à fundação da \textbf{Companhia Holandesa das Índias Orientais} (\textit{Vereenigde Oostindische Compagnie} --- VOC), a primeira sociedade anônima de capital aberto da história \cite{dejong2005}. A Figura \ref{fig:beurs-hendrick-de-keyser} retrata o edifício da Bolsa de Amsterdã, projetado pelo arquiteto Hendrick de Keyser e inaugurado em 1611.
+A \textbf{Bolsa de Valores de Amsterdã} (\textit{Amsterdam Stock Exchange}), fundada em 1602, é considerada a primeira bolsa de valores do mundo \cite{gelderblom2013}. Sua criação está diretamente vinculada à fundação da \textbf{Companhia Holandesa das Índias Orientais} (\textit{Vereenigde Oostindische Compagnie} --- VOC), a primeira sociedade anônima de capital aberto da história \cite{dejong2005}. A Figura \ref{fig:beurs-hendrick-de-keyser} retrata o edifício da Bolsa de Amsterdã visto a partir do Rokin, projetado pelo arquiteto Hendrick de Keyser e inaugurado em 1611.
 
 \begin{figure}[htb]
     \centering
-    \caption{A Bolsa de Valores de Amsterdã (\textit{Beurs van Hendrick de Keyser})}
+    \caption{A Bolsa de Valores de Amsterdã (\textit{De Beurs vanaf het Rokin})}
     \label{fig:beurs-hendrick-de-keyser}
     \includegraphics[width=0.85\textwidth]{figuras/beurs_van_hendrick_de_keyser.jpg}
-    \fonte{Pintura de Job Adriaenszoon Berckheyde (c. 1670).}
+    \fonte{Gravura de C.J. Visscher (1612).}
 \end{figure}
 
 Um aspecto frequentemente negligenciado é que a Bolsa de Amsterdã \textbf{não foi criada por decreto governamental}. Para compreender seu surgimento, é necessário entender o contexto das grandes navegações comerciais da época. As expedições marítimas para as Índias Orientais eram empreendimentos de altíssimo risco e custo proibitivo: uma única viagem podia levar dois anos, enfrentando tempestades, piratas, doenças e naufrágios. Nenhum comerciante individual, por mais rico que fosse, tinha recursos suficientes --- ou estômago para o risco --- de financiar sozinho uma frota inteira.
@@ -139,6 +139,7 @@ O \textbf{Problema dos Generais Bizantinos}, formalizado por \citeonline{lamport
 Este problema abstrato representa o desafio fundamental de sistemas distribuídos: como múltiplos nós de uma rede podem concordar sobre o estado verdadeiro de um sistema quando alguns nós podem estar comprometidos ou agindo maliciosamente. Durante décadas, cientistas da computação consideraram impossível resolver este problema em redes abertas e sem autoridade central --- até o surgimento do Bitcoin.
 
 \subsubsection{Funções Hash Criptográficas}
+\label{sec:hash}
 
 Antes de compreender os mecanismos de consenso da blockchain, é necessário introduzir o conceito de função \textit{hash}, uma das primitivas criptográficas mais fundamentais da computação moderna. Conforme definido por \citeonline{tomaz2014}, uma função \textit{hash} é uma função $H$ que recebe como entrada uma mensagem $m$ no formato de uma cadeia de bits de tamanho arbitrário e retorna uma cadeia de bits $x$ de tamanho fixo, chamada de código \textit{hash} ou etiqueta \textit{hash}, em que $|m| > |x|$. Formalmente:
 
@@ -255,12 +256,81 @@ A blockchain utiliza criptografia de chaves assimétricas, onde cada participant
 
 \begin{alineas}
     \item \textbf{Chave Privada}: Número secreto de 256 bits, gerado aleatoriamente. Quem possui a chave privada tem controle absoluto sobre os fundos associados. Deve ser mantida em segredo absoluto --- se perdida, os fundos tornam-se permanentemente inacessíveis; se roubada, podem ser transferidos pelo ladrão;
-    \item \textbf{Chave Pública}: Derivada matematicamente da chave privada através de multiplicação por curva elíptica. Pode ser compartilhada livremente e é usada para gerar endereços de recebimento. É computacionalmente inviável calcular a chave privada a partir da pública.
+    \item \textbf{Chave Pública}: Derivada matematicamente da chave privada. Pode ser compartilhada livremente e é usada para gerar endereços de recebimento. É computacionalmente inviável calcular a chave privada a partir da pública.
 \end{alineas}
 
-A relação entre as chaves segue o princípio da ``função de mão única com alçapão'' (\textit{trapdoor function}): é trivial calcular a chave pública a partir da privada, mas virtualmente impossível fazer o inverso, a menos que se possua a chave privada original.
+A relação entre as chaves segue o princípio da ``função de mão única com alçapão'' (\textit{trapdoor function}): é trivial calcular a chave pública a partir da privada, mas virtualmente impossível fazer o inverso, a menos que se possua a chave privada original \cite{tomaz2014}. Na blockchain do Bitcoin, a chave pública não é usada diretamente como endereço: ela passa por uma função \textit{hash} (conforme apresentado na Seção \ref{sec:hash}), gerando um endereço compacto e com uma camada adicional de proteção --- mesmo que no futuro se descubra uma forma de derivar a chave privada a partir da pública, o endereço baseado em \textit{hash} acrescenta uma barreira extra.
 
-Para autorizar uma transação, o proprietário utiliza sua chave privada para gerar uma \textbf{assinatura digital}. Qualquer pessoa pode verificar a validade desta assinatura usando a chave pública correspondente, confirmando que apenas o legítimo proprietário poderia ter autorizado a operação --- sem que a chave privada seja revelada.
+Para autorizar uma transação, o proprietário utiliza sua chave privada para gerar uma \textbf{assinatura digital}. Qualquer pessoa pode verificar a validade desta assinatura usando a chave pública correspondente, confirmando que apenas o legítimo proprietário poderia ter autorizado a operação --- sem que a chave privada seja revelada. Esse processo depende diretamente das funções \textit{hash}: em vez de assinar a mensagem inteira, assina-se o \textit{hash} da transação, garantindo integridade e eficiência computacional.
+
+O conceito de criptografia de chave pública foi introduzido por \citeonline{diffie1976}, que propuseram um sistema onde duas partes podem se comunicar de forma segura sem precisar compartilhar previamente uma chave secreta. Porém, na data da publicação, os autores ainda não tinham um algoritmo criptográfico que, de fato, realizasse o processo de cifragem \cite{tomaz2014}. Foi a partir dessa ideia seminal que o principal algoritmo de chave pública surgiu: o \textbf{RSA}.
+
+\paragraph{O Criptossistema RSA}
+
+O algoritmo RSA foi publicado em 1978 pelos pesquisadores do MIT Ron \textbf{R}ivest, Adi \textbf{S}hamir e Len \textbf{A}dleman \cite{rivest1978}, que conseguiram implementar na prática o conceito proposto por Diffie e Hellman. Desde então, o RSA é o algoritmo de chave pública mais utilizado no mundo \cite{tomaz2014}.
+
+Todo o funcionamento do RSA se baseia na \textbf{aritmética modular} e em um fato simples, porém poderoso: é fácil multiplicar dois números primos grandes, mas é extremamente difícil fazer o caminho inverso --- dado o produto, descobrir quais eram os dois primos originais. Este é o chamado \textbf{problema da fatoração de inteiros}.
+
+\paragraph{Geração das Chaves}
+
+Para utilizar o RSA, cada usuário gera seu próprio par de chaves seguindo estes passos \cite{tomaz2014, stallings2008}:
+
+\begin{enumerate}
+    \item \textbf{Escolher dois números primos grandes} $p$ e $q$, aleatórios e de tamanho semelhante (na prática, cada um com mais de 100 algarismos);
+    \item \textbf{Calcular o módulo} $n = p \times q$. Este $n$ será parte de ambas as chaves;
+    \item \textbf{Calcular a função totiente de Euler}: $\phi(n) = (p-1)(q-1)$. A função totiente indica quantos números inteiros entre $1$ e $n$ são primos relativos a $n$ --- ou seja, não compartilham nenhum fator com $n$ além do $1$. Este valor é essencial porque define o ``ciclo'' da aritmética modular do RSA;
+    \item \textbf{Escolher o expoente público} $e$, um inteiro primo relativo a $\phi(n)$ (isto é, $\text{mdc}(e, \phi(n)) = 1$);
+    \item \textbf{Calcular o expoente privado} $d$, tal que $e \cdot d \equiv 1 \pmod{\phi(n)}$ --- em outras palavras, $d$ é o inverso multiplicativo de $e$ módulo $\phi(n)$.
+\end{enumerate}
+
+Ao final, os números $p$ e $q$ devem ser descartados. As chaves resultantes são:
+
+\begin{alineas}
+    \item \textbf{Chave pública}: o par $(e, n)$;
+    \item \textbf{Chave privada}: o par $(d, n)$.
+\end{alineas}
+
+\paragraph{Cifragem e Decifragem}
+
+Suponha que Alice queira enviar uma mensagem confidencial a Bob. A mensagem $M$ é representada como um número inteiro (na prática, dividida em blocos numéricos menores que $n$). Alice cifra a mensagem usando a \textbf{chave pública de Bob} \cite{tomaz2014}:
+
+$$C = M^e \mod n$$
+
+Bob, ao receber o texto cifrado $C$, usa sua \textbf{chave privada} para recuperar a mensagem:
+
+$$M = C^d \mod n$$
+
+Como exemplo numérico simples \cite{tomaz2014}: suponha que a chave pública de Bob seja $(e=5,\; n=119)$ e sua chave privada seja $(d=77,\; n=119)$. Para cifrar a mensagem $M = 65$:
+
+$$C = 65^5 \mod 119 = 46$$
+
+Para decifrar:
+
+$$M = 46^{77} \mod 119 = 65$$
+
+A segurança do esquema reside no fato de que apenas Bob, que possui $d$, consegue recuperar $M$. Na prática, o módulo $n$ possui centenas de algarismos, tornando a fatoração computacionalmente inviável.
+
+\paragraph{Assinaturas Digitais com RSA}
+
+O RSA pode ser utilizado não apenas para confidencialidade, mas também para \textbf{assinaturas digitais} --- bastando inverter a ordem de uso das chaves \cite{tomaz2014}. Quando Alice deseja assinar uma mensagem, ela utiliza sua \textbf{chave privada} para cifrar, em vez da chave pública do destinatário:
+
+$$\text{Assinatura} = H(M)^d \mod n$$
+
+onde $H(M)$ é o \textit{hash} da mensagem (conforme discutido na Seção \ref{sec:hash}). Qualquer pessoa pode verificar a assinatura usando a \textbf{chave pública de Alice}:
+
+$$H(M) = \text{Assinatura}^e \mod n$$
+
+Se o resultado coincidir com o \textit{hash} da mensagem recebida, confirma-se simultaneamente que: (i) a mensagem não foi alterada (\textbf{integridade}), pois qualquer modificação geraria um \textit{hash} diferente; (ii) Alice é realmente a autora (\textbf{autenticidade}), pois apenas ela possui a chave privada capaz de produzir aquela assinatura; e (iii) Alice não pode negar a autoria (\textbf{não repúdio}) \cite{tomaz2014}.
+
+Assinar o \textit{hash} em vez da mensagem inteira traz uma vantagem prática importante: como o \textit{hash} tem tamanho fixo e pequeno (por exemplo, 256 bits no SHA-256), a operação de assinatura é muito mais rápida do que cifrar o documento inteiro, que pode ter megabytes de tamanho \cite{tomaz2014}.
+
+\paragraph{Segurança do RSA}
+
+Toda a segurança do RSA depende fundamentalmente da dificuldade de calcular o expoente privado $d$ a partir da chave pública $(e, n)$ \cite{tomaz2014}. Para descobrir $d$, é necessário conhecer $\phi(n) = (p-1)(q-1)$, o que exige fatorar $n$ em seus fatores primos $p$ e $q$. Porém, fatorar um número inteiro com mais de 300 algarismos é um problema para o qual não se conhece algoritmo eficiente --- os melhores métodos atuais levariam milhões de anos nos computadores mais potentes do mundo.
+
+É por isso que a escolha adequada dos primos $p$ e $q$ é fundamental: eles devem ser grandes (tipicamente mais de 1024 bits cada), aleatórios e de tamanho semelhante, pois existem métodos capazes de explorar fatores primos pequenos \cite{tomaz2014}.
+
+No contexto da blockchain, embora o Bitcoin utilize \textbf{criptografia de curvas elípticas} (ECDSA) em vez de RSA --- por oferecer o mesmo nível de segurança com chaves significativamente menores --- o princípio fundamental é idêntico: a chave privada assina transações, e a chave pública permite que qualquer nó da rede verifique a autenticidade da assinatura, sem jamais revelar a chave privada.
 
 \subsubsection{Carteiras Hierárquicas Determinísticas (HD Wallets)}
 
