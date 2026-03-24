@@ -82,6 +82,72 @@ A história do mercado de capitais holandês oferece lições valiosas para o de
 
 Assim como a VOC democratizou o acesso ao comércio internacional no século XVII, a tecnologia blockchain pode democratizar o acesso à poupança de longo prazo no século XXI, eliminando intermediários custosos e conferindo ao trabalhador controle direto sobre seu patrimônio. A proposta deste trabalho representa, em essência, a aplicação dos princípios originais do mercado de capitais --- autonomia, descentralização e acesso universal --- ao sistema previdenciário brasileiro.
 
+\subsection{O Teorema do Júri de Condorcet}
+
+A superioridade da decisão coletiva sobre a individual possui fundamentação matemática rigorosa. O \textbf{Teorema do Júri de Condorcet}, proposto pelo Marquês de Condorcet em 1785, demonstra que, em uma votação binária (certo \textit{versus} errado), se cada votante possui probabilidade individual $p > 0{,}5$ de tomar a decisão correta, então a probabilidade de a maioria decidir corretamente converge para 1 à medida que o número de votantes $n$ aumenta \cite{condorcet1785}.
+
+Formalmente, considere $n$ votantes independentes, cada um com probabilidade $p$ de acertar. A probabilidade de a maioria estar correta é dada por:
+
+\vspace{0.2cm}
+\noindent\textbf{Onde:}
+\begin{itemize}
+    \item $n$ é o número total de votantes;
+    \item $k$ é o número de votantes que acertam (ou seja, que votam corretamente).
+\end{itemize}
+\vspace{-0.2cm}
+
+\begin{equation}
+    P_n = \sum_{k=\lceil n/2 \rceil}^{n} \binom{n}{k} p^k (1-p)^{n-k}
+    \label{eq:condorcet}
+\end{equation}
+
+\noindent onde $\binom{n}{k}$ é o coeficiente binomial. O teorema estabelece que:
+
+\begin{equation}
+    \lim_{n \to \infty} P_n =
+    \begin{cases}
+        1, & \text{se } p > 0{,}5 \\
+        0, & \text{se } p < 0{,}5
+    \end{cases}
+    \label{eq:condorcet-limite}
+\end{equation}
+
+    \vspace{0.2cm}
+    \noindent\textbf{Exemplo numérico:}
+
+    A soma é feita de $k = 3$ até $k = 5$:
+    \begin{equation*}
+        P_5 = \sum_{k=3}^{5} \binom{5}{k} p^k (1-p)^{5-k}
+    \end{equation*}
+
+    Seja $p = 0{,}6$ (cada um acerta com 60\% de chance):
+    \begin{itemize}
+        \item Para $k = 3$: $\binom{5}{3} \cdot 0{,}6^3 \cdot 0{,}4^2 = 10 \cdot 0{,}216 \cdot 0{,}16 = 0{,}3456$
+        \item Para $k = 4$: $\binom{5}{4} \cdot 0{,}6^4 \cdot 0{,}4^1 = 5 \cdot 0{,}1296 \cdot 0{,}4 = 0{,}2592$
+        \item Para $k = 5$: $\binom{5}{5} \cdot 0{,}6^5 \cdot 0{,}4^0 = 1 \cdot 0{,}07776 \cdot 1 = 0{,}07776$
+    \end{itemize}
+
+    Somando:
+    \begin{equation*}
+        P_5 = 0{,}3456 + 0{,}2592 + 0{,}07776 = 0{,}68256
+    \end{equation*}
+
+    Ou seja, com 5 votantes independentes e $p = 0{,}6$, a chance da maioria acertar é $\approx 68\%$.
+
+A Figura \ref{fig:condorcet-convergencia} ilustra essa convergência para diferentes valores de $p$. Observa-se que, mesmo com competência individual modesta ($p = 0{,}6$), poucos dezenas de agentes já bastam para que a decisão coletiva se aproxime da certeza. Inversamente, quando $p < 0{,}5$, mais participantes \textit{pioram} o resultado.
+
+\begin{figure}[htb]
+    \centering
+    \caption{Convergência da probabilidade de decisão correta pela maioria em função do número de votantes, para diferentes competências individuais $p$.}
+    \label{fig:condorcet-convergencia}
+    \includegraphics[width=0.85\textwidth]{figuras/condorcet_convergencia.pdf}
+    \fonte{Elaborado pelo autor.}
+\end{figure}
+
+As premissas do teorema são: (i) votos independentes, (ii) competência individual $p > 0{,}5$, (iii) decisão binária e (iv) competência homogênea. Embora essas condições sejam idealizadas, o resultado captura a intuição fundamental de que \textbf{cada agente funciona como um sensor imperfeito}, e a agregação reduz o ruído individual.
+
+Essa lógica se aplica diretamente à alocação de recursos financeiros. Quando milhões de trabalhadores direcionam suas poupanças de forma autônoma, o mecanismo de descoberta de preços agrega informações dispersas e tende a alocar capital de maneira mais eficiente do que a gestão centralizada por um único ente estatal --- fenômeno descrito por Hayek como o ``problema do conhecimento'' \cite{hayek1945}. É essa convergência estatística que fundamenta a proposta de permitir aos trabalhadores a gestão individual de seus recursos previdenciários.
+
 \section{O Sistema Previdenciário Brasileiro}
 
 O sistema previdenciário brasileiro é composto por três pilares principais: o Regime Geral de Previdência Social (RGPS), administrado pelo INSS; os Regimes Próprios de Previdência Social (RPPS), para servidores públicos; e a Previdência Complementar, de caráter facultativo.
